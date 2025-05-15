@@ -1,32 +1,19 @@
 import { sponsors } from "@/@data/sponsors";
-import { Icon } from "@/components/ui/extras/icon";
-import { Marquee } from "@devnomic/marquee";
-import { icons } from "lucide-react";
+import Icon from "@/components/icon";
+import { InfiniteSlider } from "@/components/ui/extras/infinite-slider";
 
 export const SponsorsSection = () => {
   return (
-    <section className="pb-12 lg:pb-20">
-      <div className="container">
-        <Marquee
-          className="gap-[3rem] lg:gap-[5rem]"
-          fade
-          innerClassName="gap-[3rem] lg:gap-[5rem]"
-          pauseOnHover
-        >
+    <section className="pb-12 lg:pb-24">
+      <div className="container mask-r-from-50% mask-r-to-90% mask-l-from-50% mask-l-to-90%">
+        <InfiniteSlider gap={50} speedOnHover={40}>
           {sponsors.map(({ icon, name }) => (
-            <div
-              key={name}
-              className="flex items-center text-xl md:text-2xl font-medium"
-            >
-              <Icon
-                name={icon as keyof typeof icons}
-                size={28}
-                className="mr-3 text-foreground"
-              />
+            <div key={name} className="flex items-center text-xl font-medium md:text-2xl">
+              <Icon name={icon} className="text-foreground mr-3 size-6" />
               {name}
             </div>
           ))}
-        </Marquee>
+        </InfiniteSlider>
       </div>
     </section>
   );

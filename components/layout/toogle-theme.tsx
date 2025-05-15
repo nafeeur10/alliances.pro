@@ -8,17 +8,16 @@ export const ToggleTheme = () => {
   return (
     <Button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      size="sm"
+      size="icon"
       variant="ghost"
-      className="w-full justify-start"
     >
       <div className="flex items-center gap-2 dark:hidden">
-        <Moon className="size-5" />
+        <Moon />
         <span className="block lg:hidden">Dark</span>
       </div>
 
       <div className="dark:flex items-center gap-2 hidden">
-        <Sun className="size-5" />
+        <Sun/>
         <span className="block lg:hidden">Light</span>
       </div>
 

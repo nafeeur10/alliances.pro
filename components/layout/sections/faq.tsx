@@ -12,14 +12,14 @@ export const FAQSection = () => {
   return (
     <SectionContainer>
       <SectionHeader subTitle="FAQS" title="Common Questions" />
-      <div className="max-w-screen-md mx-auto">
+      <div className="max-w-(--breakpoint-sm) mx-auto">
         <Accordion type="single" collapsible className="AccordionRoot">
           {FAQList.map(({ question, answer, value }) => (
             <AccordionItem key={value} value={value}>
-              <AccordionTrigger className="text-left">
+              <AccordionTrigger className="text-left text-lg">
                 {question}
               </AccordionTrigger>
-              <AccordionContent>{answer}</AccordionContent>
+              <AccordionContent className="text-base text-muted-foreground">{answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

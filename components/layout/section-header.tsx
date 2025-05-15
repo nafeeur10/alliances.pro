@@ -8,28 +8,16 @@ interface Props {
   className?: string;
 }
 
-export default function SectionHeader({
-  className,
-  title,
-  subTitle,
-  description,
-}: Props) {
+export default function SectionHeader({ className, title, subTitle, description }: Props) {
   return (
-    <header
-      className={cn(
-        "mb-6 lg:mb-12 text-center max-w-screen-md mx-auto",
-        className
-      )}
-    >
+    <header className={cn("mx-auto mb-6 max-w-(--breakpoint-sm) text-center lg:mb-12", className)}>
       {subTitle ? (
-        <div className="text-lg text-primary mb-2 tracking-wider">
+        <div className="from-primary/60 to-primary mb-4 bg-linear-to-b bg-clip-text font-semibold tracking-wider text-transparent uppercase">
           {subTitle}
         </div>
       ) : null}
-      <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
-      {description ? (
-        <p className="text-xl text-muted-foreground mb-8">{description}</p>
-      ) : null}
+      <h2 className="mb-4 text-3xl font-bold md:text-4xl">{title}</h2>
+      {description ? <p className="text-muted-foreground mb-8 text-lg">{description}</p> : null}
     </header>
   );
 }

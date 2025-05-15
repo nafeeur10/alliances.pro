@@ -1,65 +1,67 @@
-"use client";
+import Image from "next/image";
+import { CheckIcon, ChevronRight } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BackgroundBeamsWithCollision } from "@/components/ui/extras/background-beams-with-collision";
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 export const HeroSection = () => {
   return (
     <section className="container w-full">
-      <div className="grid place-items-center lg:max-w-screen-xl mx-auto py-16 md:py-32">
+      <div className="mx-auto grid place-items-center py-16 pb-8 md:py-32 md:pb-14 lg:max-w-(--breakpoint-xl)">
         <BackgroundBeamsWithCollision>
-          <div className="text-center space-y-8 pb-20">
-            <Badge variant="outline" className="text-sm bg-muted py-2">
-              <span className="mr-2 text-primary">
-                <Badge className="bg-background text-foreground hover:bg-background">
-                  New
-                </Badge>
+          <div className="space-y-8 pb-8 text-center lg:pb-20">
+            <Badge variant="outline" className="bg-muted py-2 text-sm">
+              <span className="text-primary mr-2">
+                <Badge className="bg-background text-foreground hover:bg-background">New</Badge>
               </span>
-              <span> Design is out now! </span>
+              <span> AI-Powered Optimization </span>
             </Badge>
-            <div className="max-w-screen-md mx-auto text-center text-4xl md:text-6xl font-bold">
-              <h1>Smart Solutions to Grow Your Business</h1>
+            <div className="mx-auto max-w-(--breakpoint-md) text-center text-4xl font-bold md:text-6xl">
+              <h1>Optimize Your Website with AI Support</h1>
             </div>
-            <p className="max-w-screen-sm mx-auto text-xl text-muted-foreground">
+            <p className="text-muted-foreground mx-auto max-w-(--breakpoint-sm) text-xl">
               {`Meet our AI-powered SaaS solution to lighten your workload, increase efficiency and make more accurate decisions.`}
             </p>
-            <div className="space-y-4 md:space-y-0 md:space-x-4">
-              <Button className="w-5/6 md:w-1/4 font-bold group/arrow">
-                Get Started
-                <ArrowRight className="size-5 ml-2 group-hover/arrow:translate-x-1 transition-transform" />
+            <div className="mt-8 flex flex-col justify-center gap-4 md:flex-row!">
+              <Button className="h-12 px-10 text-base">
+                Start Free Trial
+                <ChevronRight />
               </Button>
-
-              <Button variant="secondary" className="w-5/6 md:w-1/4 font-bold">
-                Learn More
+              <Button variant="outline" className="h-12 px-10 text-base">
+                Book a Demo
               </Button>
+            </div>
+            <div className="text-muted-foreground mt-6 flex flex-col items-center justify-center gap-4 text-sm md:flex-row!">
+              <div className="flex items-center gap-1">
+                <CheckIcon className="text-primary size-4" />
+                <span>No credit card</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <CheckIcon className="text-primary size-4" />
+                <span>14-day trial</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <CheckIcon className="text-primary size-4" />
+                <span>Cancel anytime</span>
+              </div>
             </div>
           </div>
         </BackgroundBeamsWithCollision>
 
-        <div className="relative group">
+        <div className="group relative">
           {/* blur effect */}
-          <div className="absolute top-2 lg:-top-8 left-1/2 transform -translate-x-1/2 w-[90%] mx-auto h-24 lg:h-80 bg-primary/60 rounded-full blur-3xl"></div>
+          <div className="bg-primary/60 absolute top-2 left-1/2 mx-auto h-24 w-[90%] -translate-x-1/2 transform rounded-full blur-3xl lg:-top-8 lg:h-80"></div>
           {/* blur effect */}
 
           <Image
             width={1240}
             height={1200}
-            className="w-full  mx-auto rounded-lg relative rouded-lg leading-none flex items-center dark:hidden"
-            src="/hero-image-light.png"
+            className="rouded-lg relative mx-auto flex w-full items-center rounded-lg mask-b-from-20% mask-b-to-90% leading-none"
+            src="/hero.png"
             alt="shadcn landing page"
+            unoptimized
           />
-          <Image
-            width={1240}
-            height={1200}
-            className="w-full  mx-auto rounded-lg relative rouded-lg leading-none dark:flex items-center hidden"
-            src="/hero-image-dark.png"
-            alt="shadcn landing page"
-          />
-
-          <div className="absolute bottom-0 left-0 w-full h-20 md:h-32 bg-gradient-to-b from-background/0 via-background/60 to-background rounded-lg"></div>
         </div>
       </div>
     </section>
