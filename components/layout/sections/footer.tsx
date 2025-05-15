@@ -1,19 +1,24 @@
-import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import Logo from "../logo";
+import { DribbbleIcon, FacebookIcon, LinkedinIcon, Twitter } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/layout/logo";
 
 export const FooterSection = () => {
   return (
-    <footer id="footer" className="container pb-8 lg:pb-16">
-      <div className="p-10 bg-muted border rounded-2xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-          <div className="col-span-full xl:col-span-2">
+    <footer id="footer" className="container space-y-4 pb-4 lg:pb-8">
+      <div className="bg-muted rounded-2xl border p-10">
+        <div className="grid grid-cols-2 gap-x-12 gap-y-8 md:grid-cols-4 xl:grid-cols-6">
+          <div className="col-span-full space-y-4 xl:col-span-2">
             <Logo />
+            <p className="text-muted-foreground">
+              Meet our AI-powered SaaS solution to lighten your workload, increase efficiency and
+              make more accurate decisions.
+            </p>
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-2">Contact</h3>
+            <h3 className="mb-2 text-lg font-bold">Contact</h3>
             <div>
               <Link href="#" className="opacity-60 hover:opacity-100">
                 Github
@@ -34,7 +39,7 @@ export const FooterSection = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-2">Platforms</h3>
+            <h3 className="mb-2 text-lg font-bold">Platforms</h3>
             <div>
               <Link href="#" className="opacity-60 hover:opacity-100">
                 iOS
@@ -55,7 +60,7 @@ export const FooterSection = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-2">Help</h3>
+            <h3 className="mb-2 text-lg font-bold">Help</h3>
             <div>
               <Link href="#" className="opacity-60 hover:opacity-100">
                 Contact Us
@@ -76,7 +81,7 @@ export const FooterSection = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg mb-2">Socials</h3>
+            <h3 className="mb-2 text-lg font-bold">Socials</h3>
             <div>
               <Link href="#" className="opacity-60 hover:opacity-100">
                 Twitch
@@ -96,17 +101,39 @@ export const FooterSection = () => {
             </div>
           </div>
         </div>
-
-        <Separator className="my-6" />
-
-        <div className="text-sm text-muted-foreground">
-          &copy; 2024 | It is under the roof of{" "}
-          <Button variant="link" className="p-0 h-auto" asChild>
+      </div>
+      <div className="flex flex-col justify-between gap-4 sm:flex-row!">
+        <div className="text-muted-foreground flex items-center justify-center gap-1 text-sm sm:justify-start">
+          <span>&copy; {new Date().getFullYear()}</span>
+          <span>|</span>
+          <Button variant="link" className="h-auto p-0" asChild>
             <Link target="_blank" href="https://bundui.io/">
               Bundui
             </Link>
           </Button>
           .
+        </div>
+        <div className="flex items-center justify-center gap-2">
+          <Button size="icon" variant="ghost" className="hover:opacity-50" asChild>
+            <Link href="#">
+              <FacebookIcon />
+            </Link>
+          </Button>
+          <Button size="icon" variant="ghost" className="hover:opacity-50" asChild>
+            <Link href="#">
+              <Twitter />
+            </Link>
+          </Button>
+          <Button size="icon" variant="ghost" className="hover:opacity-50" asChild>
+            <Link href="#">
+              <DribbbleIcon />
+            </Link>
+          </Button>
+          <Button size="icon" variant="ghost" className="hover:opacity-50" asChild>
+            <Link href="#">
+              <LinkedinIcon />
+            </Link>
+          </Button>
         </div>
       </div>
     </footer>

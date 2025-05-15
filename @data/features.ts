@@ -7,38 +7,38 @@ interface FeaturesProps {
 export const featureList: FeaturesProps[] = [
   {
     icon: "TabletSmartphone",
-    title: "AI-Powered Task Management",
+    title: "AI-Powered Optimization",
     description:
-      "Utilize machine learning algorithms to prioritize tasks, ensuring your team focuses on what matters most.",
+      "Our intelligent algorithms automatically enhance your website's performance, speed, and user experience.",
   },
   {
     icon: "BadgeCheck",
-    title: "Predictive Analytics",
+    title: "Real-Time Analytics",
     description:
-      "Leverage historical data to forecast trends and make proactive decisions, minimizing risks and maximizing opportunities.",
+      "Monitor your website's performance metrics and optimization improvements with comprehensive dashboards.",
   },
   {
     icon: "Goal",
-    title: "Custom Workflow Automation",
+    title: "SEO Enhancement",
     description:
-      "Design automated workflows tailored to your processes, integrating multiple tools to streamline operations seamlessly.",
+      "Boost your search engine rankings with AI-driven content and metadata optimization suggestions.",
   },
   {
     icon: "PictureInPicture",
-    title: "Robust API Integrations",
+    title: "Advanced Security",
     description:
-      "Easily connect our platform with your existing software solutions, enabling data synchronization and enhancing functionality.",
+      "Protect your website with intelligent threat detection and automated security enhancements.",
   },
   {
     icon: "MousePointerClick",
-    title: "Interactive Dashboards",
+    title: "Smart Integrations",
     description:
-      "Visualize key performance indicators (KPIs) and metrics in real-time with customizable dashboards that provide actionable insights.",
+      "Connect seamlessly with your existing tools and platforms through our extensive API ecosystem.",
   },
   {
     icon: "Lock",
-    title: "Privacy and Compliance",
+    title: "24/7 AI Monitoring",
     description:
-      "Ensure your data is protected with end-to-end encryption and compliance with regulations such as GDPR and CCPA.",
+      "Our AI constantly monitors your website, making real-time adjustments to maintain peak performance.",
   },
 ];

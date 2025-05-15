@@ -1,42 +1,40 @@
+"use client";
+
+import React from "react";
+
 import { featureList } from "@/@data/features";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Icon } from "@/components/ui/extras/icon";
-import { icons } from "lucide-react";
-import SectionHeader from "../section-header";
-import SectionContainer from "../section-container";
+import { CardTitle } from "@/components/ui/card";
+import Icon from "@/components/icon";
+import { CardHover, CardsHover } from "@/components/ui/extras/cards-hover";
+import SectionContainer from "@/components/layout/section-container";
+import SectionHeader from "@/components/layout/section-header";
 
 export const FeaturesSection = () => {
+  const [value, setValue] = React.useState<string | null>(null);
+
   return (
     <SectionContainer id="features">
       <SectionHeader
         subTitle="Features"
-        title="What Makes Us Different"
-        description="Unleash the power of our innovative features designed to streamline
-          your workflow, enhance decision-making, and drive business growth."
+        title="Everything You Need to Succeed"
+        description="Our comprehensive platform provides all the tools you need to optimize your website, boost performance, and enhance user experience."
       />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {featureList.map(({ icon, title, description }) => (
-          <div key={title}>
-            <Card className="h-full bg-background border-0 shadow-none text-center">
-              <CardHeader className="flex justify-center items-center">
-                <div className="bg-primary/20 p-2 rounded-full ring-8 ring-primary/10 mb-4">
-                  <Icon
-                    name={icon as keyof typeof icons}
-                    size={24}
-                    color="hsl(var(--primary))"
-                    className="text-primary"
-                  />
-                </div>
-                <CardTitle>{title}</CardTitle>
-              </CardHeader>
-
-              <CardContent className="text-muted-foreground">
-                {description}
-              </CardContent>
-            </Card>
-          </div>
+      <CardsHover
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+        value={value}
+        onValueChange={setValue}>
+        {featureList.map((card) => (
+          <CardHover key={card.icon} value={card.icon} className="flex items-start gap-6">
+            <div className="space-y-4">
+              <CardTitle className="text-lg">{card.title}</CardTitle>
+              <p className="text-muted-foreground font-normal">{card.description}</p>
+            </div>
+            <div className="bg-primary/20 ring-primary/10 rounded-full p-2 ring-8">
+              <Icon name={card.icon} className="text-primary size-6" />
+            </div>
+          </CardHover>
         ))}
-      </div>
+      </CardsHover>
     </SectionContainer>
   );
 };
