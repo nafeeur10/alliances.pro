@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Marketing\BlogPost;
 use App\Models\Marketing\Comparison;
 use App\Models\Marketing\Faq;
 use App\Models\Marketing\Feature;
@@ -26,6 +27,7 @@ class MarketingContentSeeder extends Seeder
         $this->seedSettings();
         $this->seedComparisons();
         $this->seedTestimonialPlaceholder();
+        $this->seedBlogPosts();
     }
 
     protected function seedHomepage(): void
@@ -264,7 +266,8 @@ class MarketingContentSeeder extends Seeder
                 'headline' => 'Education CRM (Beta)',
                 'subheadline' => 'Admissions, programs, applicants, enrollments — coming soon.',
                 'body' => 'Same Alliances PRO platform, education-shaped data. Programs, applicants, enrollments, and admissions workflows. Currently in private beta — join the waitlist.',
-                'is_published' => false,
+                // Published so the page renders the "coming soon" waitlist variant.
+                'is_published' => true,
             ],
         ];
         foreach ($industries as $idx => $row) {
@@ -421,7 +424,19 @@ class MarketingContentSeeder extends Seeder
                 [
                     'competitor_name' => $name,
                     'headline' => $headline,
-                    'is_published' => false,
+                    // Published so /compare/{slug} routes render. Admins fill in the
+                    // body + winner_summary + comparison_table over time.
+                    'is_published' => true,
+                    'winner_summary' => "Alliances PRO costs less, runs flat per-workspace, and bundles email + calls + projects in one tool. Pick {$name} only if a specific {$name} workflow is already irreplaceable for your team.",
+                    'comparison_table' => [
+                        ['feature' => 'Pricing model', 'alliances_value' => 'Flat per workspace', 'competitor_value' => 'Per seat'],
+                        ['feature' => 'Bill for 10 users', 'alliances_value' => '$39/mo', 'competitor_value' => 'Varies — typically $140–$1,000+/mo'],
+                        ['feature' => 'Email campaigns included', 'alliances_value' => 'yes', 'competitor_value' => 'Add-on'],
+                        ['feature' => 'Call logs included', 'alliances_value' => 'yes', 'competitor_value' => 'Add-on'],
+                        ['feature' => 'Multi-vertical platform', 'alliances_value' => 'yes', 'competitor_value' => 'no'],
+                        ['feature' => '14-day trial, no card', 'alliances_value' => 'yes', 'competitor_value' => 'Varies'],
+                        ['feature' => 'CSV export everywhere', 'alliances_value' => 'yes', 'competitor_value' => 'Varies'],
+                    ],
                     'seo_title' => "Alliances PRO vs {$name}",
                     'seo_description' => $headline,
                 ],
@@ -443,5 +458,232 @@ class MarketingContentSeeder extends Seeder
                 'order' => 0,
             ],
         );
+    }
+
+    protected function seedBlogPosts(): void
+    {
+        $posts = [
+            [
+                'slug' => 'how-to-choose-a-crm-for-a-small-agency',
+                'title' => 'How to choose a CRM for a small agency',
+                'category' => 'Playbooks',
+                'tags' => ['crm', 'agencies', 'shopify'],
+                'reading_minutes' => 7,
+                'excerpt' => 'A practical 5-step framework for picking a CRM as a 2–30 person agency, without paying for HubSpot at agency scale.',
+                'body' => <<<'MD'
+# How to choose a CRM for a small agency
+
+Most CRMs were built for two-person sales teams at venture-backed startups, not
+small agencies juggling retainers, projects, and client inboxes. Here's a
+framework we use with our own customers.
+
+## 1. Map your client journey first, tool second
+
+Before evaluating any CRM, write down the *actual* path a lead takes from
+"first inquiry" to "renewed retainer." Most agencies skip this and end up
+buying tools that solve the wrong problem.
+
+Typical agency flow:
+
+- Lead capture (web form, referral, Shopify Partners directory)
+- Qualifying call
+- Proposal + negotiation
+- Project kickoff
+- Delivery + retainer
+- Upsell / cross-sell
+
+Your CRM has to handle every step, or you'll bolt on three more tools.
+
+## 2. Watch out for "starts at" pricing
+
+If the marketing page says **"starts at $X/mo"**, assume you'll pay 5×–10× that
+within 18 months. HubSpot's price ladder is the most aggressive in the
+industry: their "free" tier limits send-volume and contact-list size, then
+once you hit those limits the cheapest paid tier *quintuples* the bill.
+
+> **Rule of thumb:** if pricing is per-seat and you have 10+ teammates, the
+> CRM will eventually be your second-largest SaaS spend after payroll software.
+
+## 3. Insist on flat per-workspace pricing
+
+The single fastest way to keep your CRM bill predictable is to pick one with
+flat pricing. **Alliances PRO Pro is $19/mo for up to 10 users. Business is
+$39/mo for unlimited users.** That's it. The price you see is the price you
+pay.
+
+## 4. Look for industry-specific data shapes
+
+Generic CRMs treat every record as "a contact" or "a deal." That's fine until
+you realize your agency lives and dies on Shopify-specific signals (store URL,
+GMV bracket, app stack, theme vendor). If your CRM doesn't have those fields
+out of the box, you'll re-invent them as custom fields — and lose them every
+time you migrate.
+
+## 5. Run a real 14-day trial
+
+Don't trust the demo. Run an actual lead through the full pipeline. Send a
+campaign. Log a call. Track a project. If anything feels like work that
+shouldn't be work, that's the CRM telling you it doesn't fit your shape.
+
+---
+
+If you're a Shopify agency, [see our agency-specific
+workflow](/industries/shopify-agencies). If you've outgrown HubSpot, the
+[HubSpot comparison](/compare/hubspot) might be useful.
+MD,
+                'author_name' => 'Alliances PRO Team',
+                'is_published' => true,
+                'published_at' => Carbon::now()->subDays(14),
+                'seo_title' => 'How to choose a CRM for a small agency (5-step framework)',
+                'seo_description' => 'A practical 5-step framework for picking a CRM as a 2–30 person agency, without paying for HubSpot at agency scale.',
+            ],
+            [
+                'slug' => 'crm-vs-project-management-tool',
+                'title' => 'CRM vs project management tool — what each is for',
+                'category' => 'Playbooks',
+                'tags' => ['crm', 'project-management', 'tools'],
+                'reading_minutes' => 5,
+                'excerpt' => 'Two of the most-confused tool categories in service businesses. Here\'s how to think about the line between them.',
+                'body' => <<<'MD'
+# CRM vs project management tool — what each is for
+
+A CRM and a project management tool look like they overlap. They don't, and
+mixing them up is one of the most expensive mistakes service businesses
+make. Here's the line.
+
+## CRM: anything pre-contract
+
+A CRM owns everything that happens **before** a contract is signed:
+
+- Lead capture
+- Qualification
+- Proposal + pricing negotiation
+- Pipeline tracking
+- Sales forecasting
+- Email campaigns to prospects
+
+Its job is to answer the question: *"Who might give us money soon, and what
+should we do next?"*
+
+## Project management tool: anything post-contract
+
+A project management tool owns everything **after** a contract is signed:
+
+- Task assignment
+- Sprints / phases / milestones
+- Resource allocation
+- Time tracking
+- Delivery hand-off
+- QA and approval cycles
+
+Its job is to answer: *"What does the team need to do this week, and is it on
+track?"*
+
+## Where the line blurs
+
+The grey zone is **delivery handoff** — the moment a deal closes. Most teams
+fumble it because:
+
+1. The salesperson knows the client's expectations, but those notes live in
+   the CRM.
+2. The delivery team is in the project management tool, blind to the deal
+   notes.
+3. The client experience suffers.
+
+The cleanest fix: **one tool that does both, with a clear deal-→-project link
+when a deal closes.** Alliances PRO does this — every won deal can spawn a
+project automatically, carrying the notes and contacts forward.
+
+## When you should run two tools
+
+If your team is large enough that the salespeople and delivery team are fully
+separate functions, two tools is fine. The hand-off needs to be tight (a
+shared CRM record, an automated trigger) but the surfaces can be split.
+
+If you're under 50 people, one tool is almost always the right answer.
+
+---
+
+Curious what fields a unified CRM + delivery tool actually looks like?
+[See the features tour](/#features).
+MD,
+                'author_name' => 'Alliances PRO Team',
+                'is_published' => true,
+                'published_at' => Carbon::now()->subDays(7),
+                'seo_title' => 'CRM vs project management tool — when to pick which',
+                'seo_description' => 'A CRM and a project management tool look similar but solve different problems. Here\'s the line, and when to run one tool vs two.',
+            ],
+            [
+                'slug' => 'how-much-should-a-crm-cost-for-a-10-person-team',
+                'title' => 'How much should a CRM cost for a 10-person team?',
+                'category' => 'Pricing',
+                'tags' => ['crm', 'pricing', 'sales'],
+                'reading_minutes' => 6,
+                'excerpt' => 'A side-by-side breakdown of what 10-person sales teams actually pay across HubSpot, Pipedrive, Salesforce, and the flat-pricing alternatives.',
+                'body' => <<<'MD'
+# How much should a CRM cost for a 10-person team?
+
+The marketing pages all show entry prices. The real bills look very different.
+Here's what 10-person sales teams actually pay each month, with sources.
+
+## The price comparison table
+
+| CRM                       | Tier             | Per-seat | Bill for 10 |
+|---------------------------|------------------|---------:|------------:|
+| **Alliances PRO Pro**     | Pro (flat)       |       — |   **$19**   |
+| **Alliances PRO Business**| Business (flat)  |       — |   **$39**   |
+| Pipedrive                 | Essential        |     $14 |     $140    |
+| HubSpot Sales Starter     | Starter          |     $20 |     $200    |
+| Zoho CRM                  | Standard         |     $14 |     $140    |
+| Salesforce                | Starter          |     $25 |     $250    |
+| Close                     | Startup          |     $49 |     $490    |
+| HubSpot Sales Pro         | Pro              |    ~$100|   ~$1,000   |
+
+(All prices monthly, billed annually, as of 2026 pricing pages.)
+
+## What's not on the marketing page
+
+The entry-level prices are the *sticker* price. Every per-seat CRM has
+upsells you'll trip over within months:
+
+- **Email send limits.** HubSpot Starter caps marketing emails at 1,000/mo.
+  Pipedrive Essential doesn't include email campaigns at all.
+- **Workflow automation.** HubSpot's good automation is in Pro+ ($1,000+/mo).
+- **Reports / forecasting.** Salesforce Starter caps custom reports at 10.
+- **Integrations.** Some "free" CRMs gate webhooks and API access.
+
+## What to actually budget
+
+For a 10-person SMB sales team that needs a CRM with email campaigns, call
+logs, pipeline, and reporting, the realistic monthly bills are:
+
+- **Alliances PRO Business:** $39 flat, everything included.
+- **Pipedrive Essential + Mailchimp + Aircall:** ~$280/mo combined.
+- **HubSpot Sales Pro:** ~$1,000/mo.
+- **Salesforce + add-ons:** $1,650+/mo.
+
+The structural fact is this: **per-seat pricing punishes growth.** Every new
+hire costs you another $14–$100/mo, forever. Flat per-workspace pricing
+doesn't.
+
+---
+
+If you want the full breakdown by competitor, see our [HubSpot
+comparison](/compare/hubspot) and [Pipedrive comparison](/compare/pipedrive).
+MD,
+                'author_name' => 'Alliances PRO Team',
+                'is_published' => true,
+                'published_at' => Carbon::now()->subDays(2),
+                'seo_title' => 'How much should a CRM cost for a 10-person team in 2026?',
+                'seo_description' => 'Side-by-side bill comparison for 10-person sales teams across HubSpot, Pipedrive, Salesforce, and flat-pricing alternatives.',
+            ],
+        ];
+
+        foreach ($posts as $row) {
+            BlogPost::updateOrCreate(
+                ['slug' => $row['slug']],
+                $row,
+            );
+        }
     }
 }

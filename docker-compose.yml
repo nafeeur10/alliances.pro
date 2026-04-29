@@ -64,6 +64,8 @@ services:
       NEXT_PUBLIC_API_BASE: http://localhost/api/v1/marketing
       NEXT_PUBLIC_SITE_URL: http://localhost
       NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ""
+      # Server-side fetches go through nginx on the docker network.
+      INTERNAL_API_URL: http://nginx/api/v1/marketing
     command: ["npm", "run", "dev"]
     networks:
       - alliances_marketing
