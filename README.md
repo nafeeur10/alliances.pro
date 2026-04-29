@@ -4,13 +4,13 @@ Self-contained marketing site for [alliances.pro](https://alliances.pro), the
 multi-vertical CRM platform.
 
 This repo is **independent of the Sales CRM product** (`~/Projects/crm`). It
-ships the public marketing site (Next.js) and a dedicated Filament 3 admin
+ships the public marketing site (Next.js) and a dedicated Filament 5 admin
 panel (Laravel 13) for editing every section of the site without touching code.
 
 ```
 ~/Projects/cosmic/
-├── frontend/           Next.js 15 marketing site (cosmic theme)
-├── backend/            Laravel 13 + Filament 3 admin + public marketing API
+├── frontend/           Next.js 16.2 marketing site (cosmic theme)
+├── backend/            Laravel 13 + Filament 5 admin + public marketing API
 ├── infra/
 │   └── nginx/          Routes /admin + /api → backend, * → frontend
 ├── docker-compose.yml  Orchestrates everything

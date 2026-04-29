@@ -194,7 +194,7 @@ npm run build
 Your site is now ready to be deployed to cPanel! The static export is optimized and ready for production.
 
 **Built with:**
-- Next.js 15.2.8
+- Next.js 16.2 (latest)
 - React 19
 - TailwindCSS 4
 - TypeScript 5

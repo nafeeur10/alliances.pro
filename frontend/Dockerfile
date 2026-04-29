@@ -1,4 +1,4 @@
-# Alliances PRO marketing frontend — Next.js 15
+# Alliances PRO marketing frontend — Next.js 16.2
 # Two-stage: dev image (default) + production image
 #
 # Build dev:   docker-compose build frontend

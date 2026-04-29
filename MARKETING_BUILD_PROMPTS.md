@@ -10,8 +10,8 @@
 >
 > ```
 > ~/Projects/cosmic/
-> ├── frontend/    Next.js 15 + Tailwind 4 + shadcn/ui (cosmic theme)
-> ├── backend/     Laravel 13 + Filament 3 (admin + public marketing API)
+> ├── frontend/    Next.js 16.2 + Tailwind 4 + shadcn/ui (cosmic theme)
+> ├── backend/     Laravel 13 + Filament 5 (admin + public marketing API)
 > ├── infra/
 > │   └── nginx/   Reverse proxy: /admin + /api → backend, * → frontend
 > └── docker-compose.yml
@@ -35,7 +35,7 @@
 
 **Order of execution:**
 
-1. **Prompt 1** — Backend: Add Filament 3 admin panel + content models + public API
+1. **Prompt 1** — Backend: Add Filament 5 admin panel + content models + public API
 2. **Prompt 2** — Backend: Contact form endpoint with email + Slack notification
 3. **Prompt 3** — Frontend: Wire cosmic theme to Alliances PRO content + connect to API
 4. **Prompt 4** — Frontend: SEO, sitemap, structured data, Open Graph
@@ -52,7 +52,7 @@ Paste this whole block into a fresh Claude Code session inside the `~/Projects/c
 Working directory: ~/Projects/cosmic
 
 GOAL
-Build out the Filament 3 admin panel and the public marketing JSON API in the
+Build out the Filament 5 admin panel and the public marketing JSON API in the
 Laravel 13 backend at ./backend so a non-technical admin can edit every piece
 of marketing content rendered on alliances.pro (Next.js site at ./frontend).
 Expose a versioned, public, cached JSON API that the Next.js site reads at
@@ -61,7 +61,7 @@ build/SSG time and at runtime where needed.
 PROJECT STRUCTURE (already exists)
   cosmic/
     backend/             ← Laravel 13 lives here (you'll build inside this)
-    frontend/            ← Next.js 15 (untouched in this prompt)
+    frontend/            ← Next.js 16.2 (untouched in this prompt)
     infra/nginx/         ← /admin + /api → backend, * → frontend
     docker-compose.yml
 
@@ -80,10 +80,10 @@ BACKEND RULES
 
 STEP 1 — Install dependencies (Filament + content stack)
 docker-compose exec backend composer require \
-  filament/filament:^3.2 \
+  filament/filament:^5.0 \
   spatie/laravel-medialibrary:^11 \
   spatie/laravel-sluggable:^3 \
-  bezhansalleh/filament-shield:^3
+  bezhansalleh/filament-shield:^5
 docker-compose exec backend php artisan filament:install --panels
 # When asked, name the panel "admin", path "/admin"
 docker-compose exec backend php artisan vendor:publish --tag=medialibrary-migrations
@@ -455,7 +455,7 @@ contact form to POST to /api/v1/marketing/leads.
 FRONTEND RULES
 - All npm commands MUST run inside docker. From the cosmic repo root, exec
   into the frontend container: `docker-compose exec frontend npm install ...`
-- The frontend code lives at ./frontend (Next.js 15 + Tailwind 4 + shadcn/ui).
+- The frontend code lives at ./frontend (Next.js 16.2 + Tailwind 4 + shadcn/ui).
   Follow the Next.js boilerplate structure from
   https://github.com/ixartz/Next-js-Boilerplate
 - The cosmic theme IS the design system — don't import other UI kits.
@@ -938,7 +938,7 @@ in `~/Projects/crm` is touched.
 ├── infra/
 │   └── nginx/default.conf       Routes /admin + /api → backend, * → frontend
 │
-├── backend/                     Laravel 13 + Filament 3 (admin + API)
+├── backend/                     Laravel 13 + Filament 5 (admin + API)
 │   ├── Dockerfile
 │   ├── .env.example
 │   ├── README.md                Bootstrap + common commands
@@ -967,7 +967,7 @@ in `~/Projects/crm` is touched.
 │   │   └── web.php                          (Filament owns /admin)
 │   └── tests/Feature/Marketing/             Pest tests
 │
-└── frontend/                    Next.js 15 marketing site (cosmic theme)
+└── frontend/                    Next.js 16.2 marketing site (cosmic theme)
     ├── Dockerfile
     ├── README.md
     ├── package.json + tsconfig.json + next.config.ts

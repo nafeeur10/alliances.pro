@@ -1,5 +1,5 @@
 ## Alliances PRO marketing site (alliances.pro)
-## Self-contained: frontend (Next.js) + backend (Laravel 13 + Filament 3)
+## Self-contained: frontend (Next.js) + backend (Laravel 13 + Filament 5)
 ## Independent of the Sales CRM project — separate database, separate stack.
 ##
 ## Bring it all up:    docker-compose up -d
@@ -13,7 +13,7 @@ name: alliances-marketing
 
 services:
   # ---------------------------------------------------------------------------
-  # Backend — Laravel 13 + Filament 3 admin panel + public marketing API
+  # Backend — Laravel 13 + Filament 5 admin panel + public marketing API
   # ---------------------------------------------------------------------------
   backend:
     build:
@@ -47,7 +47,7 @@ services:
       - alliances_marketing
 
   # ---------------------------------------------------------------------------
-  # Frontend — Next.js 15 marketing site (cosmic theme)
+  # Frontend — Next.js 16.2 marketing site (cosmic theme)
   # ---------------------------------------------------------------------------
   frontend:
     build:

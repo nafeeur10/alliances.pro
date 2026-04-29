@@ -1,6 +1,6 @@
 # Alliances PRO Marketing — Frontend
 
-Next.js 15 marketing site (cosmic theme) for [alliances.pro](https://alliances.pro).
+Next.js 16.2 marketing site (cosmic theme) for [alliances.pro](https://alliances.pro).
 
 Consumes the Laravel marketing API in `../backend` for all content. No marketing
 copy is hardcoded — everything is editable through the Filament admin panel.
@@ -11,11 +11,20 @@ copy is hardcoded — everything is editable through the Filament admin panel.
 cd ~/Projects/cosmic
 docker-compose up -d frontend
 
-# Install npm packages (first time only)
-docker-compose exec frontend npm ci
+# Upgrade to Next.js 16.2 (the cosmic theme shipped with 15.2.8) and install
+# all dependencies. Run this once.
+docker-compose exec frontend npm install next@^16.2 react@latest react-dom@latest
+docker-compose exec frontend npm install
 ```
 
 Open <http://localhost/> (nginx proxies to the Next.js dev server).
+
+> **Heads-up about the Next 15 → 16 upgrade:** Next.js 16 has breaking changes
+> (App Router defaults, image optimization, async dynamic APIs). Run
+> `npx @next/codemod@latest upgrade latest` inside the container after the
+> install above and review the diff before committing.
+> See <https://nextjs.org/docs/app/guides/upgrading/version-16> for the full
+> migration guide.
 
 ## Common commands
 

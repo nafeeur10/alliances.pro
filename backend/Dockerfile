@@ -1,4 +1,4 @@
-# Alliances PRO marketing backend — Laravel 13 + Filament 3
+# Alliances PRO marketing backend — Laravel 13 + Filament 5
 #
 # Run: docker-compose up -d backend
 # Bootstrap (first time): see backend/README.md

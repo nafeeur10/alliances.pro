@@ -1,6 +1,6 @@
 # Alliances PRO Marketing — Backend
 
-Laravel 13 + Filament 3 admin panel for the alliances.pro marketing site.
+Laravel 13 + Filament 5 admin panel for the alliances.pro marketing site.
 
 This is **not** the Sales CRM backend — that lives in `~/Projects/crm` and stays
 untouched. This backend is dedicated to the marketing site only:
@@ -37,12 +37,12 @@ docker-compose run --rm --no-deps backend php artisan key:generate
 
 # 4. Install all composer packages we need
 docker-compose run --rm --no-deps backend composer require \
-    filament/filament:^3.2 \
+    filament/filament:^5.0 \
     spatie/laravel-medialibrary:^11 \
     spatie/laravel-sluggable:^3 \
     spatie/laravel-activitylog:^4 \
     spatie/laravel-permission:^6 \
-    bezhansalleh/filament-shield:^3 \
+    bezhansalleh/filament-shield:^5 \
     laravel/sanctum:^4 \
     laravel/horizon:^5 \
     laravel/telescope:^5 \
