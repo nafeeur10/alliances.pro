@@ -109,7 +109,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3307:3306"   # Host port 3307 to avoid colliding with the CRM's MySQL
+      - "3308:3306"   # Host port 3308 (3306=ecomsaas-mysql, 3307=crm-mysql)
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootsecret"]
       interval: 5s
@@ -136,14 +136,14 @@ services:
       - alliances_marketing
 
   # ---------------------------------------------------------------------------
-  # Mailpit — local mail catcher; UI at http://localhost:8025
+  # Mailpit — local mail catcher; UI at http://localhost:8026
   # ---------------------------------------------------------------------------
   mailpit:
     image: axllent/mailpit:latest
     container_name: alliances_marketing_mailpit
     restart: unless-stopped
     ports:
-      - "8025:8025"
+      - "8026:8025"   # 8025 taken by ecomsaas-mailpit
     networks:
       - alliances_marketing
 

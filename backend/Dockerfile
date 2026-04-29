@@ -3,7 +3,7 @@
 # Run: docker-compose up -d backend
 # Bootstrap (first time): see backend/README.md
 
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 # ---- System deps ----------------------------------------------------------
 RUN apk add --no-cache \
