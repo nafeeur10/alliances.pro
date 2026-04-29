@@ -66,7 +66,10 @@ services:
       NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ""
       # Server-side fetches go through nginx on the docker network.
       INTERNAL_API_URL: http://nginx/api/v1/marketing
-    command: ["npm", "run", "dev"]
+    # Run production build + start. dev mode currently has a Tailwind v4 +
+    # webpack pipeline issue that fails to parse globals.css. Switch back to
+    # `npm run dev` once that's fixed.
+    command: ["sh", "-c", "npm run build && npm run start"]
     networks:
       - alliances_marketing
 
