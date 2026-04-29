@@ -4,9 +4,34 @@
 >
 > **Source content:** All copy comes from `MARKETING_STRATEGY.md` in this same folder. The prompts reference it.
 >
-> **Repos involved:**
-> - Marketing frontend → `~/Projects/cosmic` (Next.js 15 + Tailwind 4 + shadcn/ui — already scaffolded as the cosmic theme)
-> - Backend / admin / API → `~/Projects/crm` (Laravel 12 + Filament 3 will be added)
+> **Single self-contained repo:** Everything for the alliances.pro marketing
+> site lives under `~/Projects/cosmic`. The Sales CRM at `~/Projects/crm` is
+> never touched by these prompts.
+>
+> ```
+> ~/Projects/cosmic/
+> ├── frontend/    Next.js 15 + Tailwind 4 + shadcn/ui (cosmic theme)
+> ├── backend/     Laravel 13 + Filament 3 (admin + public marketing API)
+> ├── infra/
+> │   └── nginx/   Reverse proxy: /admin + /api → backend, * → frontend
+> └── docker-compose.yml
+> ```
+>
+> Both apps share one MySQL + Redis + nginx stack defined in
+> `cosmic/docker-compose.yml`. They're independent of the Sales CRM's docker
+> stack — different containers, different database, different ports.
+>
+> **Bootstrap (must be done once before Prompt 1):**
+> ```
+> cd ~/Projects/cosmic
+> docker-compose up -d mysql redis mailpit
+> docker-compose run --rm --no-deps backend \
+>     composer create-project laravel/laravel . "^13.0" --prefer-dist
+> cp backend/.env.example backend/.env
+> docker-compose run --rm --no-deps backend php artisan key:generate
+> docker-compose up -d
+> ```
+> Full bootstrap details are in `backend/README.md`.
 
 **Order of execution:**
 
@@ -21,29 +46,39 @@
 
 ## Prompt 1 — Filament admin panel + content models + public API
 
-Paste this whole block into a fresh Claude Code session inside the `~/Projects/crm` repo.
+Paste this whole block into a fresh Claude Code session inside the `~/Projects/cosmic` repo. Run the bootstrap commands in `backend/README.md` first if you haven't already (Laravel 13 must already be installed in `cosmic/backend/`).
 
 ````
-Working directory: ~/Projects/crm
+Working directory: ~/Projects/cosmic
 
 GOAL
-Add a Filament 3 admin panel to the existing Laravel 12 backend so a non-technical
-admin can edit every piece of marketing content rendered on alliances.pro
-(separate Next.js site at ~/Projects/cosmic). Expose a versioned, public, cached
-JSON API the marketing site reads at build/SSG time and at runtime where needed.
+Build out the Filament 3 admin panel and the public marketing JSON API in the
+Laravel 13 backend at ./backend so a non-technical admin can edit every piece
+of marketing content rendered on alliances.pro (Next.js site at ./frontend).
+Expose a versioned, public, cached JSON API that the Next.js site reads at
+build/SSG time and at runtime where needed.
 
-IMPORTANT BACKEND RULES (from CLAUDE.md)
-- All composer/artisan commands MUST run inside docker, e.g.
+PROJECT STRUCTURE (already exists)
+  cosmic/
+    backend/             ← Laravel 13 lives here (you'll build inside this)
+    frontend/            ← Next.js 15 (untouched in this prompt)
+    infra/nginx/         ← /admin + /api → backend, * → frontend
+    docker-compose.yml
+
+BACKEND RULES
+- All composer / artisan commands MUST run inside docker, e.g.
     docker-compose exec backend composer require ...
     docker-compose exec backend php artisan migrate
 - Do not hand-create files Laravel would scaffold — always use artisan generators.
-- Follow Laravel 12 best practices: form requests, resources, policies, jobs.
-- Existing tenancy uses workspace_id + global scope (BelongsToTenant). Marketing
-  content is GLOBAL — it must NOT be tenant-scoped. Bypass the global scope on
-  every marketing model with: `protected static $useGlobalScope = false;` or by
-  not using the BelongsToTenant trait at all.
+- Follow Laravel 13 best practices: form requests, resources, policies, jobs,
+  observers, single-action controllers, typed properties, readonly classes
+  where appropriate.
+- This backend is dedicated to the marketing site only. There is NO multi-tenant
+  workspace_id concern here — every model is global / public-content.
+- Database: alliances_marketing on the marketing-stack mysql container (not the
+  CRM database).
 
-STEP 1 — Install dependencies
+STEP 1 — Install dependencies (Filament + content stack)
 docker-compose exec backend composer require \
   filament/filament:^3.2 \
   spatie/laravel-medialibrary:^11 \
@@ -56,7 +91,8 @@ docker-compose exec backend php artisan vendor:publish --tag=filament-shield-con
 
 STEP 2 — Models, migrations, factories, seeders
 Create these models. Use artisan: `php artisan make:model Foo -mfs` (model +
-migration + factory + seeder). NONE of these models use BelongsToTenant.
+migration + factory + seeder). All models live in app/Models/Marketing/* and
+table names should be prefixed `marketing_*` (e.g. marketing_pages).
 
   app/Models/Marketing/Page.php
     Fields: id, slug (unique), title, meta_title, meta_description, og_image,
@@ -88,13 +124,15 @@ migration + factory + seeder). NONE of these models use BelongsToTenant.
             (default USD), description, cta_label, cta_url, is_featured,
             is_published, order, features (JSON array of strings),
             limits (JSON), comparison_note (e.g. "$X less than HubSpot"),
-            product_plan_slug (FK-by-slug to existing `plans` table — links
-            display copy to the actual billing plan in PlanSeeder.php)
-    NOTE: This is the MARKETING display model. The actual billing model is
-    app/Models/Plan.php (seeded by database/seeders/PlanSeeder.php with
-    Pro $19/$190 and Business $39/$390 + trial_days=14 + LemonSqueezy
-    variant IDs). Keep them in sync but separate — billing changes through
-    Plan, copy/positioning changes through PricingPlan.
+            external_signup_url (where the CTA points — typically the Sales CRM
+            signup page or LemonSqueezy checkout URL)
+    NOTE: This is the MARKETING display model only. The real billing model
+    lives in the Sales CRM project (~/Projects/crm/backend/app/Models/Plan.php,
+    seeded with Pro $19/$190 and Business $39/$390 + 14-day trial + LemonSqueezy
+    variant IDs). Editors must keep this PricingPlan visually in sync with the
+    real Plan, but billing/checkout is handled in the CRM project. The CTA
+    URL on each plan should redirect to https://app.alliances.pro/signup?plan=
+    {slug} (or whichever signup URL the CRM exposes).
 
   app/Models/Marketing/Faq.php
     Fields: id, question, answer (rich text), category (string — nullable),
@@ -153,13 +191,14 @@ appropriate tables. Specifically:
   - 2 PricingPlan rows from section 10.10:
       Pro       — $19/mo or $190/yr — limits: 10 projects, 500 orgs, 1,000
                   leads, 10 members, unlimited tasks. is_featured=false.
+                  external_signup_url: https://app.alliances.pro/signup?plan=pro
       Business  — $39/mo or $390/yr — unlimited everything. is_featured=true.
-    Both: trial_days=14, currency=USD. Match the existing
-    backend/database/seeders/PlanSeeder.php exactly so the marketing
-    PricingPlan model stays in lockstep with the product Plan model.
-    NOTE: marketing_pricing_plans is a SEPARATE table from the product
-    `plans` table — it exists so admins can edit display copy / order /
-    comparison_note without touching billing config. Don't merge them.
+                  external_signup_url: https://app.alliances.pro/signup?plan=business
+    Both: 14-day trial mentioned in description, currency=USD.
+    These mirror what's in ~/Projects/crm/backend/database/seeders/PlanSeeder.php
+    for the actual billing system, but THIS table is for marketing display only —
+    it lets non-technical admins edit pricing copy, comparison notes, and order
+    without touching billing config. Don't merge them.
   - 10 Faq rows from section 10.13.
   - SiteSetting rows for: site_name, site_tagline, support_email,
     sales_email, press_email, twitter_url, linkedin_url, github_url,
@@ -288,11 +327,11 @@ At the end of this prompt, all of these must be true:
 ## Prompt 2 — Contact form: backend endpoint + email + Slack notification
 
 ````
-Working directory: ~/Projects/crm
+Working directory: ~/Projects/cosmic
 
 GOAL
-Wire up the marketing site's contact form to a real Laravel endpoint that
-validates input, persists to the marketing_leads table, sends an email to the
+Wire up the marketing site's contact form to a real Laravel 13 endpoint in
+./backend that validates input, persists to the marketing_leads table, sends an email to the
 team, optionally posts to a Slack webhook, and returns a clean JSON response
 the Next.js form can react to. This is a multi-purpose endpoint serving:
   - Contact form
@@ -300,8 +339,10 @@ the Next.js form can react to. This is a multi-purpose endpoint serving:
   - Newsletter signup
   - Education CRM waitlist
 
-ALL COMMANDS RUN INSIDE DOCKER (per CLAUDE.md):
+ALL COMMANDS RUN INSIDE DOCKER:
   docker-compose exec backend php artisan ...
+  (You're in ~/Projects/cosmic — this hits the marketing backend container,
+  not the Sales CRM's backend container.)
 
 STEP 1 — Form Request
 docker-compose exec backend php artisan make:request Marketing/StoreLeadRequest
@@ -411,17 +452,17 @@ fetched from the Laravel marketing API (built in Prompts 1 & 2). Statically
 generate every page at build time so the site is fast + SEO-friendly. Wire the
 contact form to POST to /api/v1/marketing/leads.
 
-FRONTEND RULES (from CLAUDE.md)
-- All npm commands MUST run inside docker. From the cosmic project, install
-  through: `docker-compose exec frontend npm install ...`. If cosmic doesn't
-  have its own docker setup yet, treat this as a one-off and document the
-  dockerization at the end.
-- Follow the Next.js boilerplate structure from
+FRONTEND RULES
+- All npm commands MUST run inside docker. From the cosmic repo root, exec
+  into the frontend container: `docker-compose exec frontend npm install ...`
+- The frontend code lives at ./frontend (Next.js 15 + Tailwind 4 + shadcn/ui).
+  Follow the Next.js boilerplate structure from
   https://github.com/ixartz/Next-js-Boilerplate
 - The cosmic theme IS the design system — don't import other UI kits.
+- All work in this prompt happens inside ./frontend. Don't touch ./backend.
 
 STEP 1 — Environment + dependencies
-Add to .env.local:
+Add to frontend/.env.local:
   NEXT_PUBLIC_API_BASE=http://localhost/api/v1/marketing
   NEXT_PUBLIC_SITE_URL=https://alliances.pro
   NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...   # leave empty for dev
@@ -457,7 +498,9 @@ helper getStaticProps replacement for App Router using fetch + revalidate.
 
 STEP 3 — Refactor cosmic sections to consume API data
 The cosmic theme already has these section components under
-components/layout/sections/. Refactor each to receive props from the API:
+frontend/components/layout/sections/. Refactor each to receive props from
+the API. The legacy hardcoded data in frontend/@data/* should be removed
+once each section is wired to the API.
 
   hero.tsx           ← payload from PageSection where type='hero'
   benefits.tsx       ← payload from PageSection where type='benefits'
@@ -687,11 +730,12 @@ DELIVERABLES CHECK
 ## Prompt 5 — Industry pages, comparison pages, blog scaffolding
 
 ````
-Working directory: ~/Projects/cosmic + ~/Projects/crm (backend templates)
+Working directory: ~/Projects/cosmic
 
 GOAL
 Build out the deep SEO content surface: industry landing pages (one per ICP),
-comparison pages (vs each major competitor), and the blog skeleton.
+comparison pages (vs each major competitor), and the blog skeleton. Frontend
+work in ./frontend, plus a small Filament dashboard addition in ./backend.
 
 STEP 1 — Industry page template
 File: app/industries/[slug]/page.tsx
@@ -762,8 +806,8 @@ Add a simple `RelatedLinks` component used on:
 
 This boosts internal PageRank flow significantly for SEO.
 
-STEP 6 — Filament admin convenience
-Back in ~/Projects/crm, add a Filament Page (custom, not a Resource) called
+STEP 6 — Filament admin convenience (in ./backend)
+In the cosmic backend, add a Filament Page (custom, not a Resource) called
 "Marketing Dashboard" that shows:
   - Lead count (last 7d / 30d) by source
   - Most viewed pages (placeholder for now — wire to Plausible later)
@@ -880,61 +924,93 @@ DELIVERABLES CHECK
 
 ## Quick reference — file map
 
-After running all six prompts, you'll have:
+After running all six prompts, the cosmic repo will look like this. Nothing
+in `~/Projects/crm` is touched.
 
 ```
-~/Projects/crm/                (Laravel backend + Filament admin)
-├── app/
-│   ├── Models/Marketing/       Page, Feature, Industry, PricingPlan, Faq,
-│   │                            Testimonial, Comparison, Integration, Lead,
-│   │                            SiteSetting, BlogPost, PageSection
-│   ├── Http/Controllers/Api/Marketing/    Public read API + Lead capture
-│   ├── Http/Resources/Marketing/          API resources
-│   ├── Http/Requests/Marketing/           StoreLeadRequest
-│   ├── Filament/Resources/Marketing/      All admin CRUDs
-│   ├── Filament/Pages/MarketingDashboard.php
-│   ├── Jobs/Marketing/ProcessNewMarketingLead.php
-│   ├── Mail/Marketing/                    NewMarketingLead, NewsletterWelcome,
-│   │                                       WaitlistConfirmation
-│   └── Observers/Marketing/MarketingCacheObserver.php
-├── database/seeders/MarketingContentSeeder.php
-└── tests/Feature/Marketing/                Pest tests
-
-~/Projects/cosmic/             (Next.js marketing site)
-├── app/
-│   ├── page.tsx                            Home
-│   ├── pricing/page.tsx
-│   ├── features/[slug]/page.tsx
-│   ├── industries/[slug]/page.tsx
-│   ├── compare/[slug]/page.tsx
-│   ├── alternatives/[slug]/page.tsx
-│   ├── blog/page.tsx + [slug]/page.tsx
-│   ├── about/page.tsx
-│   ├── security/page.tsx
-│   ├── contact/page.tsx
-│   ├── legal/{privacy,terms,dpa,cookies}/page.tsx
-│   └── api/og/route.tsx
-├── components/
-│   ├── layout/sections/         (cosmic — refactored to consume API)
-│   ├── seo/                     JSON-LD components
-│   └── breadcrumbs.tsx
-├── lib/
-│   ├── api.ts                   typed API client
-│   ├── schemas/                 zod schemas
-│   ├── seo.ts                   buildMetadata helper
-│   └── experiments.ts           A/B test harness
-└── next-sitemap.config.js
+~/Projects/cosmic/
+├── docker-compose.yml           Orchestrates everything
+├── .env.example
+├── README.md
+├── MARKETING_STRATEGY.md        Source of truth for content + positioning
+├── MARKETING_BUILD_PROMPTS.md   This file
+│
+├── infra/
+│   └── nginx/default.conf       Routes /admin + /api → backend, * → frontend
+│
+├── backend/                     Laravel 13 + Filament 3 (admin + API)
+│   ├── Dockerfile
+│   ├── .env.example
+│   ├── README.md                Bootstrap + common commands
+│   ├── app/
+│   │   ├── Models/Marketing/    Page, PageSection, Feature, Industry,
+│   │   │                         PricingPlan, Faq, Testimonial, Comparison,
+│   │   │                         Integration, Lead, SiteSetting, BlogPost
+│   │   ├── Http/
+│   │   │   ├── Controllers/Api/Marketing/   Public read API + Lead capture
+│   │   │   ├── Requests/Marketing/          StoreLeadRequest
+│   │   │   └── Resources/Marketing/         API resources
+│   │   ├── Filament/
+│   │   │   ├── Resources/Marketing/         All admin CRUDs
+│   │   │   ├── Pages/MarketingDashboard.php
+│   │   │   └── Widgets/RecentLeadsWidget.php
+│   │   ├── Jobs/Marketing/ProcessNewMarketingLead.php
+│   │   ├── Mail/Marketing/                  NewMarketingLead, NewsletterWelcome,
+│   │   │                                     WaitlistConfirmation
+│   │   ├── Observers/Marketing/MarketingCacheObserver.php
+│   │   └── Providers/MarketingServiceProvider.php
+│   ├── database/
+│   │   ├── migrations/                      marketing_* tables
+│   │   └── seeders/MarketingContentSeeder.php
+│   ├── routes/
+│   │   ├── api.php                          /api/v1/marketing/*
+│   │   └── web.php                          (Filament owns /admin)
+│   └── tests/Feature/Marketing/             Pest tests
+│
+└── frontend/                    Next.js 15 marketing site (cosmic theme)
+    ├── Dockerfile
+    ├── README.md
+    ├── package.json + tsconfig.json + next.config.ts
+    ├── app/
+    │   ├── page.tsx                         Home
+    │   ├── pricing/page.tsx
+    │   ├── features/[slug]/page.tsx
+    │   ├── industries/[slug]/page.tsx
+    │   ├── compare/[slug]/page.tsx
+    │   ├── alternatives/[slug]/page.tsx
+    │   ├── blog/page.tsx + [slug]/page.tsx
+    │   ├── about/page.tsx
+    │   ├── security/page.tsx
+    │   ├── contact/page.tsx
+    │   ├── legal/{privacy,terms,dpa,cookies}/page.tsx
+    │   └── api/og/route.tsx
+    ├── components/
+    │   ├── layout/sections/     (cosmic — refactored to consume API)
+    │   ├── seo/                 JSON-LD components
+    │   ├── ui/                  shadcn-style primitives
+    │   └── breadcrumbs.tsx
+    ├── lib/
+    │   ├── api.ts               Typed API client (fetches from backend)
+    │   ├── schemas/             Zod schemas
+    │   ├── seo.ts               Metadata helper
+    │   └── experiments.ts       A/B test harness
+    └── next-sitemap.config.js
 ```
 
 ---
 
 ## Tips for running these prompts
 
-1. **Run prompts in order.** Prompt 3 needs Prompts 1+2 done first.
-2. **Commit after each prompt.** Use a branch per prompt: `feature/marketing-prompt-1`, etc.
-3. **If a prompt is too big for one session,** split at the STEP boundaries and run consecutively in the same session.
-4. **Always keep CLAUDE.md rules.** Every Composer/artisan/npm command goes through docker.
-5. **Reference the strategy doc.** When the agent asks "what should the hero say?", point it at `MARKETING_STRATEGY.md` section 10.2.
+1. **Bootstrap first.** Before Prompt 1, follow `backend/README.md` to install
+   Laravel 13 into `cosmic/backend/` (it's empty until then).
+2. **Run prompts in order.** Prompt 3 needs Prompts 1+2 done first.
+3. **Commit after each prompt.** Use a branch per prompt: `feature/marketing-prompt-1`, etc.
+4. **If a prompt is too big for one session,** split at the STEP boundaries
+   and run consecutively in the same session.
+5. **All composer / artisan / npm commands go through Docker.** Never run
+   them on the host.
+6. **Reference the strategy doc.** When the agent asks "what should the hero
+   say?", point it at `MARKETING_STRATEGY.md` section 10.2.
 
 ---
 
