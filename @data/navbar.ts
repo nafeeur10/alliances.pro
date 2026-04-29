@@ -30,18 +30,18 @@ export const routeList: RouteProps[] = [
 
 export const productList: ProductProps[] = [
   {
-    title: "LaunchPad",
-    icon: "Frame",
-    description: "Launch high-impact pages effortlessly.",
+    title: "Client Hub",
+    icon: "Users",
+    description: "Centralized platform for all client interactions.",
   },
   {
-    title: "Orbit Analytics",
+    title: "Project Manager",
+    icon: "FolderKanban",
+    description: "Track and deliver projects on time, every time.",
+  },
+  {
+    title: "Analytics Suite",
     icon: "ChartScatter",
-    description: "Powerful insights for smarter decisions.",
-  },
-  {
-    title: "Nova Integrator",
-    icon: "Blocks",
-    description: "Seamless connections with your favorite tools.",
+    description: "Powerful insights to grow your service business.",
   },
 ];

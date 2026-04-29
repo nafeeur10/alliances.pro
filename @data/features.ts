@@ -6,39 +6,39 @@ interface FeaturesProps {
 
 export const featureList: FeaturesProps[] = [
   {
-    icon: "TabletSmartphone",
-    title: "AI-Powered Optimization",
+    icon: "Contact",
+    title: "Contact Management",
     description:
-      "Our intelligent algorithms automatically enhance your website's performance, speed, and user experience.",
+      "Organize client contacts, track communication history, and store important details all in one centralized database.",
   },
   {
-    icon: "BadgeCheck",
-    title: "Real-Time Analytics",
+    icon: "FolderKanban",
+    title: "Project Tracking",
     description:
-      "Monitor your website's performance metrics and optimization improvements with comprehensive dashboards.",
+      "Manage service projects from start to finish with visual pipelines, task assignments, and progress tracking.",
   },
   {
-    icon: "Goal",
-    title: "SEO Enhancement",
+    icon: "FileText",
+    title: "Invoicing & Billing",
     description:
-      "Boost your search engine rankings with AI-driven content and metadata optimization suggestions.",
+      "Generate professional invoices, track payments, and manage billing cycles with automated reminders for overdue payments.",
   },
   {
-    icon: "PictureInPicture",
-    title: "Advanced Security",
+    icon: "MessagesSquare",
+    title: "Client Communication Hub",
     description:
-      "Protect your website with intelligent threat detection and automated security enhancements.",
+      "Centralize all client communications including emails, messages, and notes with automated follow-up reminders.",
   },
   {
-    icon: "MousePointerClick",
-    title: "Smart Integrations",
+    icon: "Plug",
+    title: "Seamless Integrations",
     description:
-      "Connect seamlessly with your existing tools and platforms through our extensive API ecosystem.",
+      "Connect with your favorite tools including email, calendars, payment processors, and accounting software.",
   },
   {
-    icon: "Lock",
-    title: "24/7 AI Monitoring",
+    icon: "Shield",
+    title: "Enterprise Security",
     description:
-      "Our AI constantly monitors your website, making real-time adjustments to maintain peak performance.",
+      "Bank-level encryption, role-based access control, and compliance with industry standards to keep your data secure.",
   },
 ];

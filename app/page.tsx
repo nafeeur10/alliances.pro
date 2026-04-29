@@ -9,33 +9,34 @@ import { NewsletterSection } from "@/components/layout/sections/newsletter";
 import { PricingSection } from "@/components/layout/sections/pricing";
 import { ServicesSection } from "@/components/layout/sections/services";
 import { SponsorsSection } from "@/components/layout/sections/sponsors";
+import { TrustSection } from "@/components/layout/sections/trust";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
 
 export const metadata = {
-  title: `Cosmic - Landing Page SaaS Template (shadcn/ui)`,
+  title: `Alliances PRO - Service Based CRM SaaS Platform`,
   description:
-    "Cosmic is a high converting SAAS landing page template built with Next.js 15, TailwindCSS 4, React 19 and shadcn/ui.",
+    "Alliances PRO is the ultimate service-based CRM platform designed to streamline client relationships, automate workflows, and grow your service business.",
   openGraph: {
     type: "website",
-    url: "https://shadcnuikit.com/template/cosmic-landing-page-template",
-    title: "Cosmic - Landing Page Template (Shadcn)",
-    description: "Shadcn landing page template for developers",
+    url: "https://alliances.pro",
+    title: "Alliances PRO - Service Based CRM Platform",
+    description: "Transform your service business with our intelligent CRM solution",
     images: [
       {
         url: "/seo.jpg",
         width: 1200,
         height: 630,
-        alt: "Cosmic - Landing Page Template"
+        alt: "Alliances PRO - Service Based CRM"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://shadcnuikit.com/template/cosmic-landing-page-template",
-    title: "Cosmic - Landing Page SaaS Template (shadcn/ui)",
+    site: "https://alliances.pro",
+    title: "Alliances PRO - Service Based CRM SaaS Platform",
     description:
-      "Cosmic is a high converting SAAS landing page template built with Next.js 15, TailwindCSS 4, React 19 and shadcn/ui.",
+      "Alliances PRO is the ultimate service-based CRM platform designed to streamline client relationships, automate workflows, and grow your service business.",
     images: ["/seo.jpg"]
   }
 };
@@ -48,6 +49,7 @@ export default function Home() {
       <BenefitsSection />
       <FeaturesSection />
       <ServicesSection />
+      <TrustSection />
       <TestimonialSection />
       <TeamSection />
       <PricingSection />

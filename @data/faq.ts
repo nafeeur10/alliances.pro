@@ -6,39 +6,39 @@ interface FAQProps {
 
 export const FAQList: FAQProps[] = [
   {
-    question: "How does the free trial work?",
+    question: "What types of service businesses is Alliances PRO best suited for?",
     answer:
-      "Our free trial gives you access to all features for a limited time. No credit card is required, and you can cancel anytime.",
+      "Alliances PRO is perfect for any service-based business including consultants, agencies, freelancers, coaches, contractors, and professional service providers who need to manage client relationships and projects.",
     value: "item-1",
   },
   {
-    question: "Can I change my plan later?",
+    question: "Can I import my existing client data?",
     answer:
-      "Absolutely! You can upgrade, downgrade, or modify your plan at any time through your account settings.",
+      "Yes! You can easily import client data from CSV files, spreadsheets, or directly from other CRM platforms. Our team can also assist with data migration for Enterprise plans.",
     value: "item-2",
   },
   {
-    question: "Is customer support available 24/7?",
+    question: "Does Alliances PRO integrate with my existing tools?",
     answer:
-      "Yes, our support team is available around the clock to assist you with any questions or issues.",
+      "Absolutely! We integrate with popular tools including Gmail, Outlook, Google Calendar, QuickBooks, Stripe, Zoom, and many more. Check our integrations page for the full list.",
     value: "item-3",
   },
   {
-    question: "How secure is my data?",
+    question: "How secure is my client data?",
     answer:
-      "We prioritize your data privacy with robust security protocols, including end-to-end encryption and GDPR compliance.",
+      "Security is our top priority. We use bank-level encryption, regular security audits, SOC 2 compliance, and offer role-based access controls to ensure your data is always protected.",
     value: "item-4",
   },
   {
-    question: "Do you offer custom plans for businesses?",
+    question: "Can I customize workflows for my specific business needs?",
     answer:
-      "Yes, we offer flexible, custom plans designed to meet the unique needs of businesses of all sizes. Contact us for more details.",
+      "Yes! Alliances PRO offers customizable workflows, automated triggers, and flexible pipelines that you can tailor to match your unique service delivery process.",
     value: "item-5",
   },
   {
-    question: "What payment methods do you accept?",
+    question: "What happens if I need to upgrade or downgrade my plan?",
     answer:
-      "We accept major credit cards, PayPal, and bank transfers for easy and convenient payment options.",
+      "You can change your plan at any time. Upgrades take effect immediately, and downgrades will apply at the start of your next billing cycle. Your data remains safe during transitions.",
     value: "item-6",
   },
 ];

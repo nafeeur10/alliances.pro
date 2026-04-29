@@ -11,39 +11,39 @@ interface ServiceProps {
 
 export const serviceList: ServiceProps[] = [
   {
-    title: "Consultation Services",
+    title: "Client Onboarding",
     description:
-      "Expert guidance tailored to identify opportunities and strategize effectively.",
+      "Streamlined onboarding workflows to get new clients set up quickly with automated welcome emails and document collection.",
     pro: 0,
   },
   {
-    title: "Custom Domain Integration",
+    title: "Service Delivery Management",
     description:
-      "Seamless integration of your unique domain for a professional online presence.",
+      "Track service delivery milestones, manage deliverables, and ensure consistent quality across all client projects.",
     pro: 0,
   },
   {
-    title: "Social Media Integrations",
+    title: "Custom Reporting",
     description:
-      "Connect with popular platforms to enhance your online engagement and reach.",
+      "Generate detailed reports on client activity, revenue, service performance, and team productivity.",
     pro: 0,
   },
   {
-    title: "Email Marketing Integrations",
+    title: "Advanced Analytics & Insights",
     description:
-      "Effortlessly connect email marketing tools to streamline your campaigns.",
+      "AI-powered insights and predictive analytics to identify trends, optimize pricing, and forecast revenue.",
     pro: 1,
   },
   {
-    title: "SEO Optimization",
+    title: "White Label Solutions",
     description:
-      "Improve your search engine visibility with tailored optimization strategies.",
+      "Fully customizable branded client portals and communication tools to match your company's identity.",
     pro: 1,
   },
   {
-    title: "Ongoing Support",
+    title: "Priority Support & Training",
     description:
-      "24/7 customer support to ensure smooth operations and address any issues.",
+      "Dedicated account manager, priority support, and personalized training sessions for your team.",
     pro: 1,
   },
 ];

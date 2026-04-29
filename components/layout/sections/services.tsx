@@ -9,9 +9,8 @@ export const ServicesSection = () => {
     <SectionContainer id="solutions">
       <SectionHeader
         subTitle="Services"
-        title="Grow Your Business"
-        description="From marketing and sales to operations and strategy, we have the
-          expertise to help you achieve your goals."
+        title="Comprehensive Service Solutions"
+        description="From client onboarding to advanced analytics, we provide everything you need to deliver exceptional service and scale your business."
       />
       <div className="mx-auto grid w-full max-w-(--breakpoint-lg) gap-6 sm:grid-cols-2 lg:grid-cols-2">
         {serviceList.map(({ title, description, pro }) => (

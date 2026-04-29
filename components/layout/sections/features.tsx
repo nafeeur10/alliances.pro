@@ -17,7 +17,7 @@ export const FeaturesSection = () => {
       <SectionHeader
         subTitle="Features"
         title="Everything You Need to Succeed"
-        description="Our comprehensive platform provides all the tools you need to optimize your website, boost performance, and enhance user experience."
+        description="Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business."
       />
       <CardsHover
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"

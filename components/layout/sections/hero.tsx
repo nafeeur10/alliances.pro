@@ -15,13 +15,13 @@ export const HeroSection = () => {
               <span className="text-primary mr-2">
                 <Badge className="bg-background text-foreground hover:bg-background">New</Badge>
               </span>
-              <span> AI-Powered Optimization </span>
+              <span> Client Management Reinvented </span>
             </Badge>
             <div className="mx-auto max-w-(--breakpoint-md) text-center text-4xl font-bold md:text-6xl">
-              <h1>Optimize Your Website with AI Support</h1>
+              <h1>Manage Your Service Business with Alliances PRO</h1>
             </div>
             <p className="text-muted-foreground mx-auto max-w-(--breakpoint-sm) text-xl">
-              {`Meet our AI-powered SaaS solution to lighten your workload, increase efficiency and make more accurate decisions.`}
+              {`The all-in-one CRM platform built for service providers. Manage clients, automate workflows, track projects, and grow your business seamlessly.`}
             </p>
             <div className="mt-8 flex flex-col justify-center gap-4 md:flex-row!">
               <Button className="h-12 px-10 text-base">

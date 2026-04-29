@@ -13,11 +13,8 @@ export const BenefitsSection = () => {
           <SectionHeader
             className="sticky max-w-full text-center lg:top-[22rem] lg:text-start"
             subTitle="Benefits"
-            title="What Do We Bring to You?"
-            description="All the innovative solutions you need to grow your business are
-              here! We add value to your business with our features that
-              simplify your workflow, increase efficiency and strengthen your
-              decisions."
+            title="Why Choose Alliances PRO?"
+            description="Everything you need to streamline client relationships and grow your service business. Our platform helps you manage clients effortlessly, automate repetitive tasks, and deliver exceptional service every time."
           />
         </div>
 

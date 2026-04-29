@@ -6,27 +6,27 @@ interface BenefitsProps {
 
 export const benefitList: BenefitsProps[] = [
   {
-    icon: "Blocks",
-    title: "AI-Powered Automation",
+    icon: "Users",
+    title: "Centralized Client Management",
     description:
-      "Save time and increase your efficiency by automating your routine business processes."
+      "Keep all client information, communication history, and project details in one unified platform for easy access and management."
+  },
+  {
+    icon: "Workflow",
+    title: "Automated Workflows",
+    description:
+      "Streamline repetitive tasks with intelligent automation. From follow-ups to invoicing, let Alliances PRO handle the routine work."
+  },
+  {
+    icon: "CalendarClock",
+    title: "Smart Scheduling & Appointments",
+    description:
+      "Effortlessly manage appointments, bookings, and service schedules with integrated calendar tools and automated reminders."
   },
   {
     icon: "ChartLine",
-    title: "Real Time Data Analytics",
+    title: "Performance Analytics",
     description:
-      "We help you make more informed and strategic decisions by instantly analyzing your data."
-  },
-  {
-    icon: "Wallet",
-    title: "Personalized Experience",
-    description:
-      "It offers flexible solutions with its adaptable structure according to the specific needs of your business."
-  },
-  {
-    icon: "Sparkle",
-    title: "Scalable Structure",
-    description:
-      "Move forward into the future with confidence, with an infrastructure that can expand as your business grows."
+      "Track business metrics, client satisfaction, revenue trends, and service performance with comprehensive real-time dashboards."
   }
 ];
