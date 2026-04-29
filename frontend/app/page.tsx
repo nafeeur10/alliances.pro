@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { BenefitsSection } from "@/components/layout/sections/benefits";
 import { CommunitySection } from "@/components/layout/sections/community";
 import { ContactSection } from "@/components/layout/sections/contact";
@@ -13,33 +15,17 @@ import { TrustSection } from "@/components/layout/sections/trust";
 import { TeamSection } from "@/components/layout/sections/team";
 import { TestimonialSection } from "@/components/layout/sections/testimonial";
 
-export const metadata = {
-  title: `Alliances PRO - Service Based CRM SaaS Platform`,
+import { FAQList } from "@/@data/faq";
+import { FAQPageSchema } from "@/components/seo/json-ld";
+import { buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Alliances PRO — The CRM Platform for Service Businesses",
   description:
-    "Alliances PRO is the ultimate service-based CRM platform designed to streamline client relationships, automate workflows, and grow your service business.",
-  openGraph: {
-    type: "website",
-    url: "https://alliances.pro",
-    title: "Alliances PRO - Service Based CRM Platform",
-    description: "Transform your service business with our intelligent CRM solution",
-    images: [
-      {
-        url: "/seo.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Alliances PRO - Service Based CRM"
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "https://alliances.pro",
-    title: "Alliances PRO - Service Based CRM SaaS Platform",
-    description:
-      "Alliances PRO is the ultimate service-based CRM platform designed to streamline client relationships, automate workflows, and grow your service business.",
-    images: ["/seo.jpg"]
-  }
-};
+    "One CRM, every vertical. Flat $19/mo for 10 users or $39/mo unlimited — never per-seat. 14-day free trial, no credit card. Sales CRM live, Education CRM in beta.",
+  path: "/",
+  type: "website"
+});
 
 export default function Home() {
   return (
@@ -58,6 +44,7 @@ export default function Home() {
       <FAQSection />
       <NewsletterSection />
       <FooterSection />
+      <FAQPageSchema items={FAQList.map(({ question, answer }) => ({ question, answer }))} />
     </>
   );
 }
