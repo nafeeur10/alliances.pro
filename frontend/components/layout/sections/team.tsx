@@ -44,7 +44,7 @@ export function TeamSection() {
                 width={300}
                 height={300}
                 className="aspect-square w-full object-cover saturate-0 transition-all duration-200 ease-linear group-hover/hoverimg:scale-[1.05] group-hover/hoverimg:saturate-100"
-                alt="cosmic template"
+                alt={`${firstName} ${lastName} — ${positions.join(", ")}`}
                 unoptimized
               />
             </figure>
@@ -62,6 +62,8 @@ export function TeamSection() {
                   key={index}
                   href={url}
                   target="_blank"
+                  rel="noopener"
+                  aria-label={`${firstName} ${lastName} on ${name}`}
                   className="transition-all hover:opacity-80">
                   {socialIcon(name)}
                 </Link>

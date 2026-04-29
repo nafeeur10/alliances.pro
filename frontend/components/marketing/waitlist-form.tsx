@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 interface WaitlistFormProps {
@@ -70,6 +71,7 @@ export function WaitlistForm({ waitlistFor, heading, subheading, className }: Wa
               }
               setState({ kind: "success" });
               form.reset();
+              trackEvent("waitlist_joined", { waitlist_for: waitlistFor });
             } catch {
               setState({
                 kind: "error",

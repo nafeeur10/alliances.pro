@@ -3,6 +3,7 @@ import { ArrowRight, Check, Minus } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SectionShell } from "@/components/marketing/section-shell";
+import { ComparisonViewTracker } from "@/components/marketing/comparison-view-tracker";
 import { RelatedLinks } from "@/components/marketing/related-links";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -233,6 +234,7 @@ export function ComparisonTemplate({
       <FAQPageSchema
         items={faqs.slice(0, 6).map(({ question, answer }) => ({ question, answer }))}
       />
+      <ComparisonViewTracker competitor={comparison.slug} variant={variant} />
     </main>
   );
 }

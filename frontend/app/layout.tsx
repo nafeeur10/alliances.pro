@@ -1,5 +1,6 @@
 import React from "react";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { cn } from "@/lib/utils";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
@@ -8,6 +9,9 @@ import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/json-ld";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+const PLAUSIBLE_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ?? "https://plausible.io";
 
 const inter = Inter({ subsets: ["latin"] });
 const bricolageGrotesque = Bricolage_Grotesque({
@@ -77,6 +81,20 @@ export default function RootLayout({
         </ThemeProvider>
         <OrganizationSchema />
         <WebSiteSchema />
+        {PLAUSIBLE_DOMAIN ? (
+          <>
+            <Script
+              src={`${PLAUSIBLE_HOST}/js/script.outbound-links.js`}
+              strategy="afterInteractive"
+              data-domain={PLAUSIBLE_DOMAIN}
+            />
+            {/* Expose window.plausible() for custom events even before the
+                script's own queue is initialised. */}
+            <Script id="plausible-shim" strategy="afterInteractive">
+              {`window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );

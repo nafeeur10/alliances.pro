@@ -30,7 +30,10 @@ export const BenefitsSection = () => {
                     name={icon}
                     className="text-primary bg-primary/20 ring-primary/10 mb-6 size-10 rounded-full p-2 ring-8"
                   />
-                  <span className="text-muted-foreground/15 group-hover/number:text-muted-foreground/30 text-5xl font-bold transition-all delay-75">
+                  <span
+                    aria-hidden
+                    className="text-muted-foreground/15 group-hover/number:text-muted-foreground/30 text-5xl font-bold transition-all delay-75"
+                  >
                     0{index + 1}
                   </span>
                 </div>

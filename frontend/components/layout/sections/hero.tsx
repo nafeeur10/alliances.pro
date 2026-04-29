@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { CheckIcon, ChevronRight } from "lucide-react";
+import { CheckIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { BackgroundBeamsWithCollision } from "@/components/ui/extras/background-beams-with-collision";
+import { HeroHeadline } from "@/components/marketing/hero-headline";
+import { HeroCtas } from "@/components/marketing/hero-ctas";
 
 export const HeroSection = () => {
   return (
@@ -18,20 +19,13 @@ export const HeroSection = () => {
               <span> Client Management Reinvented </span>
             </Badge>
             <div className="mx-auto max-w-(--breakpoint-md) text-center text-4xl font-bold md:text-6xl">
-              <h1>Manage Your Service Business with Alliances PRO</h1>
+              <HeroHeadline />
             </div>
             <p className="text-muted-foreground mx-auto max-w-(--breakpoint-sm) text-xl">
-              {`The all-in-one CRM platform built for service providers. Manage clients, automate workflows, track projects, and grow your business seamlessly.`}
+              One login. One inbox. One bill. Sales CRM today, Education CRM tomorrow,
+              more verticals as you scale. No bloated tooling, no surprise pricing.
             </p>
-            <div className="mt-8 flex flex-col justify-center gap-4 md:flex-row!">
-              <Button className="h-12 px-10 text-base">
-                Start Free Trial
-                <ChevronRight />
-              </Button>
-              <Button variant="outline" className="h-12 px-10 text-base">
-                Book a Demo
-              </Button>
-            </div>
+            <HeroCtas />
             <div className="text-muted-foreground mt-6 flex flex-col items-center justify-center gap-4 text-sm md:flex-row!">
               <div className="flex items-center gap-1">
                 <CheckIcon className="text-primary size-4" />

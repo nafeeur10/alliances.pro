@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PricingCtaSection } from "@/components/layout/sections/cta";
 import SectionContainer from "@/components/layout/section-container";
+import { trackEvent } from "@/lib/analytics";
 import SectionHeader from "@/components/layout/section-header";
 import { AnimatedBackground } from "@/components/ui/extras/animated-background";
 import { SlidingNumber } from "@/components/ui/extras/sliding-number";
@@ -151,7 +152,18 @@ export const PricingSection = () => {
                     </li>
                   ))}
                 </ul>
-                <Button variant={plan.popular ? "default" : "outline"}>{plan.cta}</Button>
+                <Button
+                  variant={plan.popular ? "default" : "outline"}
+                  onClick={() =>
+                    trackEvent("pricing_plan_clicked", {
+                      plan: plan.name,
+                      period: selectedPeriod.value,
+                      popular: plan.popular ?? false
+                    })
+                  }
+                >
+                  {plan.cta}
+                </Button>
               </CardContent>
             </Card>
           ))}
