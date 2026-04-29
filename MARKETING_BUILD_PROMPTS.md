@@ -167,6 +167,39 @@ table names should be prefixed `marketing_*` (e.g. marketing_pages).
     Used for: site-wide content (logo URL, social handles, footer copy,
     company address, support email, etc.)
 
+  app/Models/Marketing/BrandTheme.php
+    SINGLE-ROW table (use a singleton pattern via BrandTheme::current()).
+    All color fields stored as hex strings ("#RRGGBB"), validated.
+    Fields:
+      id, primary_color, primary_foreground_color,
+      accent_color, accent_foreground_color,
+      background_color, foreground_color,
+      dark_background_color, dark_foreground_color,
+      muted_color, border_color, ring_color,
+      destructive_color, success_color,
+      gradient_from, gradient_to,
+      enable_dark_mode (bool), updated_at
+    Defaults (must match BRAND_GUIDE.md §8 table):
+      primary_color              = #1B3F88   (Brand Blue)
+      primary_foreground_color   = #FFFFFF
+      accent_color               = #3DD9B5   (Brand Teal)
+      accent_foreground_color    = #1B3F88
+      background_color           = #FFFFFF
+      foreground_color           = #0F172A
+      dark_background_color      = #0A0A0A
+      dark_foreground_color      = #FFFFFF
+      muted_color                = #F1F5F9
+      border_color               = #CBD5E1
+      ring_color                 = #3DD9B5
+      destructive_color          = #EF4444
+      success_color              = #10B981
+      gradient_from              = #1B3F88
+      gradient_to                = #3DD9B5
+      enable_dark_mode           = true
+    Add a static method BrandTheme::current() that returns the single row,
+    creating it with defaults on first call. Cache it in Redis under the
+    'marketing' tag (busted by the observer in Step 6).
+
   app/Models/Marketing/BlogPost.php
     Fields: id, slug, title, excerpt, body (rich text — markdown allowed),
             cover_image, author_name, category, tags (JSON), reading_minutes,
@@ -203,6 +236,8 @@ appropriate tables. Specifically:
   - SiteSetting rows for: site_name, site_tagline, support_email,
     sales_email, press_email, twitter_url, linkedin_url, github_url,
     youtube_url, footer_copyright, address.
+  - One BrandTheme row populated with the default Alliances PRO palette
+    from BRAND_GUIDE.md §8.
   - 6 Comparison rows (hubspot, pipedrive, zoho-crm, salesforce, close,
     monday-crm) — leave body empty for now, just slug+name+headline so admin
     can edit.
@@ -223,6 +258,10 @@ docker-compose exec backend php artisan make:filament-resource Marketing/Lead --
 docker-compose exec backend php artisan make:filament-resource Marketing/BlogPost --generate
 docker-compose exec backend php artisan make:filament-resource Marketing/SiteSetting --generate
 
+# Brand theme is a singleton — use a custom Filament Page (not a Resource)
+docker-compose exec backend php artisan make:filament-page BrandThemeEditor \
+    --resource=false --type=custom
+
 Then refine each form by hand to use:
   - Forms\Components\TextInput (with maxLength on title, slug, etc.)
   - Forms\Components\Textarea or RichEditor for long content
@@ -235,8 +274,38 @@ Then refine each form by hand to use:
 For PageSection, use `Forms\Components\Builder` with one Block per section
 type (Hero, Benefits, Features, etc.) so admins can compose pages visually.
 
+For the BrandThemeEditor page (app/Filament/Pages/BrandThemeEditor.php):
+  - Title: "Brand Theme"
+  - Navigation group: "Settings"
+  - Navigation icon: heroicon-o-swatch
+  - Use Filament's built-in Forms\Components\ColorPicker for every *_color
+    field (it renders a swatch + hex input + native picker).
+  - Form layout: 2-column Grid. Group fields into Sections:
+      "Brand colors"     → primary_color, primary_foreground_color,
+                           accent_color, accent_foreground_color
+      "Surfaces — light" → background_color, foreground_color, muted_color,
+                           border_color
+      "Surfaces — dark"  → dark_background_color, dark_foreground_color,
+                           enable_dark_mode (toggle)
+      "Status colors"    → destructive_color, success_color, ring_color
+      "Signature gradient" → gradient_from, gradient_to
+  - Add a live "Preview" panel using a Filament View component that renders:
+      * A primary button (current --primary on white)
+      * An accent button (current --accent)
+      * A card with body text on background
+      * The signature gradient bar
+    The preview re-renders on form change via wire:model.live (no save needed).
+  - On save:
+      * Validate every hex string with regex /^#([A-Fa-f0-9]{6})$/
+      * Compute contrast ratio between primary_color +
+        primary_foreground_color (use a small helper). If < 4.5, show a
+        warning notification but still allow save.
+      * Bust the marketing cache tag so the frontend picks up changes
+        within the next request.
+
 Group all resources under "Marketing" navigation group:
   protected static ?string $navigationGroup = 'Marketing';
+(BrandThemeEditor lives under "Settings" instead.)
 
 Add a Filament dashboard widget called "Recent Marketing Leads" that shows
 the last 10 Lead rows from the contact form.
@@ -271,6 +340,10 @@ Endpoints:
   GET /api/v1/marketing/blog                      → paginated, published
   GET /api/v1/marketing/blog/{slug}               → single
   GET /api/v1/marketing/settings                  → all SiteSettings as map
+  GET /api/v1/marketing/theme                     → BrandTheme::current() as
+                                                    a flat hex map. Cached
+                                                    aggressively (1 hour) since
+                                                    this hits every page render.
   GET /api/v1/marketing/sitemap                   → list of all published
                                                     URLs for sitemap.xml gen
 
@@ -314,9 +387,15 @@ At the end of this prompt, all of these must be true:
   [ ] /admin renders the Filament panel and a super-admin can log in
   [ ] All 12 Marketing resources visible under "Marketing" nav group
   [ ] Seeded data renders correctly in the admin UI
+  [ ] /admin → Settings → Brand Theme renders the color editor with the
+      live preview panel
+  [ ] Saving a color change in Brand Theme busts the cache and the next
+      GET /api/v1/marketing/theme returns the new colors
   [ ] curl http://localhost/api/v1/marketing/pages/home returns the homepage
        JSON with all sections populated
   [ ] curl http://localhost/api/v1/marketing/faqs returns 10 FAQs
+  [ ] curl http://localhost/api/v1/marketing/theme returns the BrandTheme
+      with all hex values
   [ ] All Pest tests pass
   [ ] Editing a Page in /admin invalidates the cache for the next request
   [ ] CORS allows http://localhost:3000 (the cosmic dev server)
@@ -488,6 +567,7 @@ Create a typed fetch client:
   - listBlog({page, perPage})
   - getBlogPost(slug)
   - getSiteSettings()
+  - getBrandTheme()           → typed BrandTheme object (hex strings)
   - createLead(payload)
 
 Define Zod schemas for each response shape under lib/schemas/. Validate
@@ -495,6 +575,53 @@ responses through Zod and throw typed errors.
 
 For SSG, fetch with `{ next: { revalidate: 300 } }` (5 min ISR). Add a
 helper getStaticProps replacement for App Router using fetch + revalidate.
+For getBrandTheme, use a longer revalidate (3600s = 1 hour) — it changes
+infrequently and hits every page render.
+
+STEP 2.5 — Inject brand theme in root layout
+The brand theme is admin-editable (BrandTheme model + Filament page in the
+backend). The frontend reads it once per request and injects CSS variables
+in the root layout's <head> so every page picks up admin changes within the
+1-hour cache TTL (or instantly via on-demand revalidation).
+
+In app/layout.tsx (Server Component):
+  1. import { getBrandTheme } from '@/lib/api'
+  2. const theme = await getBrandTheme()
+  3. Convert each hex value to OKLCH using a small helper (lib/color.ts
+     with chroma-js, OR keep them as hex — both work in Tailwind 4).
+  4. Render an inline <style> tag inside <head> that overrides the CSS
+     variable defaults from globals.css:
+
+     <style dangerouslySetInnerHTML={{ __html: `
+       :root {
+         --primary: ${theme.primary_color};
+         --primary-foreground: ${theme.primary_foreground_color};
+         --accent: ${theme.accent_color};
+         --accent-foreground: ${theme.accent_foreground_color};
+         --background: ${theme.background_color};
+         --foreground: ${theme.foreground_color};
+         --muted: ${theme.muted_color};
+         --border: ${theme.border_color};
+         --ring: ${theme.ring_color};
+         --destructive: ${theme.destructive_color};
+         --success: ${theme.success_color};
+         --brand-gradient-from: ${theme.gradient_from};
+         --brand-gradient-to: ${theme.gradient_to};
+       }
+       .dark {
+         --background: ${theme.dark_background_color};
+         --foreground: ${theme.dark_foreground_color};
+       }
+     ` }} />
+
+  5. Wrap with <ThemeProvider> from next-themes (already in cosmic) so
+     dark mode toggles still work.
+  6. If getBrandTheme() throws, fall back to the defaults baked into
+     globals.css (don't crash the page).
+
+Store the helper as components/seo/InjectedThemeStyles.tsx so it's reusable.
+
+Reference: BRAND_GUIDE.md §8 documents every variable that admins can edit.
 
 STEP 3 — Refactor cosmic sections to consume API data
 The cosmic theme already has these section components under
@@ -630,6 +757,10 @@ appears in /admin → Marketing → Leads (in the crm backend).
 DELIVERABLES CHECK
   [ ] Homepage renders entirely from API data
   [ ] All routes from Step 4 exist and pre-render at build time
+  [ ] Brand theme is fetched in the root layout and CSS variables are
+      injected — confirm by changing primary_color in /admin and seeing
+      the change on the next request (after 1-hour cache OR on-demand
+      revalidation)
   [ ] Contact form submits successfully and shows clear success/error states
   [ ] Newsletter form works
   [ ] Education waitlist form works
@@ -945,7 +1076,8 @@ in `~/Projects/crm` is touched.
 │   ├── app/
 │   │   ├── Models/Marketing/    Page, PageSection, Feature, Industry,
 │   │   │                         PricingPlan, Faq, Testimonial, Comparison,
-│   │   │                         Integration, Lead, SiteSetting, BlogPost
+│   │   │                         Integration, Lead, SiteSetting, BlogPost,
+│   │   │                         BrandTheme
 │   │   ├── Http/
 │   │   │   ├── Controllers/Api/Marketing/   Public read API + Lead capture
 │   │   │   ├── Requests/Marketing/          StoreLeadRequest
@@ -953,6 +1085,7 @@ in `~/Projects/crm` is touched.
 │   │   ├── Filament/
 │   │   │   ├── Resources/Marketing/         All admin CRUDs
 │   │   │   ├── Pages/MarketingDashboard.php
+│   │   │   ├── Pages/BrandThemeEditor.php   ← color picker + live preview
 │   │   │   └── Widgets/RecentLeadsWidget.php
 │   │   ├── Jobs/Marketing/ProcessNewMarketingLead.php
 │   │   ├── Mail/Marketing/                  NewMarketingLead, NewsletterWelcome,
@@ -987,6 +1120,7 @@ in `~/Projects/crm` is touched.
     ├── components/
     │   ├── layout/sections/     (cosmic — refactored to consume API)
     │   ├── seo/                 JSON-LD components
+    │   │   └── InjectedThemeStyles.tsx   ← admin-editable CSS vars
     │   ├── ui/                  shadcn-style primitives
     │   └── breadcrumbs.tsx
     ├── lib/

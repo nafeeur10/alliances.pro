@@ -15,7 +15,8 @@ panel (Laravel 13) for editing every section of the site without touching code.
 │   └── nginx/          Routes /admin + /api → backend, * → frontend
 ├── docker-compose.yml  Orchestrates everything
 ├── MARKETING_STRATEGY.md       Positioning, competitor analysis, page copy
-└── MARKETING_BUILD_PROMPTS.md  Step-by-step prompts to build it
+├── MARKETING_BUILD_PROMPTS.md  Step-by-step prompts to build it
+└── BRAND_GUIDE.md              Brand colors, typography, admin theme editor
 ```
 
 ## Quick start
