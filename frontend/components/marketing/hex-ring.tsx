@@ -293,13 +293,7 @@ function Node({ stage, arrowMarker }: { stage: PositionedStage; arrowMarker: str
 
   return (
     <g className="hex-stage" data-stage={stage.id}>
-      <ellipse
-        cx={cx}
-        cy={cy + h + d + 8}
-        rx={w * 0.95}
-        ry={h * 0.4}
-        className="hex-shadow"
-      />
+      <ellipse cx={cx} cy={cy + h + d + 8} rx={w * 0.95} ry={h * 0.4} className="hex-shadow" />
       <polygon
         points={pts(TE, TS, BS, BE)}
         fill={stage.right}
@@ -370,9 +364,7 @@ export default function HexRing({
   });
 
   // Sequential connections N-1 → N (no closing edge — adds visual flow direction)
-  const edges: Array<[number, number]> = positionedStages
-    .slice(0, -1)
-    .map((_, i) => [i, i + 1]);
+  const edges: Array<[number, number]> = positionedStages.slice(0, -1).map((_, i) => [i, i + 1]);
 
   // GSAP animations (client-only, cleaned up on unmount)
   useEffect(() => {
