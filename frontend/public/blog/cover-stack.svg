@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B3F88"/>
+      <stop offset="1" stop-color="#3DD9B5"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g1)"/>
+  <g fill="rgba(255,255,255,0.18)">
+    <rect x="120" y="120" width="200" height="50" rx="10"/>
+    <rect x="120" y="190" width="280" height="50" rx="10"/>
+    <rect x="120" y="260" width="160" height="50" rx="10"/>
+  </g>
+  <g fill="rgba(255,255,255,0.95)" font-family="system-ui,sans-serif" font-weight="800">
+    <text x="400" y="380" text-anchor="middle" font-size="28">CRM Stack</text>
+  </g>
+</svg>

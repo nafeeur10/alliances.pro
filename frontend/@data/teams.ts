@@ -13,63 +13,62 @@ interface SocialNetworkProps {
 
 export const teamList: TeamProps[] = [
   {
-    imageUrl:
-      "https://pbs.twimg.com/profile_images/1310888203134447618/pl7LN59m_400x400.jpg",
+    imageUrl: "https://pbs.twimg.com/profile_images/1310888203134447618/pl7LN59m_400x400.jpg",
     firstName: "Nafeeur",
     lastName: "Rahman",
     positions: ["Founder & CEO"],
     socialNetworks: [
       {
         name: "X",
-        url: "https://x.com/Nafeeur_Rahman",
+        url: "https://x.com/Nafeeur_Rahman"
       },
       {
         name: "LinkedIn",
-        url: "https://linkedin.com/in/nafeeur10",
-      },
-    ],
+        url: "https://linkedin.com/in/nafeeur10"
+      }
+    ]
   },
   {
     imageUrl:
-      "https://media.licdn.com/dms/image/v2/C4D03AQFyPoHzeiwpCQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517476970081?e=1770854400&v=beta&t=3DfYKSqQLrTSSZIKZncdxfpFH1ARQ1LWzhuQDMY7X3o",
+      "https://media.licdn.com/dms/image/v2/C4D03AQFyPoHzeiwpCQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517476970117?e=2147483647&v=beta&t=3Gb9DUMu7Y9xKWWFbhaFHLOtzPI3AM8bvX09mIuJx24",
     firstName: "Mushfiqur",
     lastName: "Rahman",
     positions: ["Product Manager", "Content Strategist"],
     socialNetworks: [
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/muhammadmushfiq/",
+        url: "https://www.linkedin.com/in/muhammadmushfiq/"
       },
       {
         name: "X",
-        url: "https://x.com/MailToMushfiq",
-      },
-    ],
+        url: "https://x.com/MailToMushfiq"
+      }
+    ]
   },
   {
     imageUrl:
-      "https://media.licdn.com/dms/image/v2/D5603AQGfEkf-9_RVyQ/profile-displayphoto-scale_400_400/B56Zku5JyiIAAg-/0/1757428359304?e=1770854400&v=beta&t=KbDjg8j5ycLntKWrT_CEoZk06yrqBK-Gi5J5Pdmu93g",
+      "https://media.licdn.com/dms/image/v2/D5603AQGfEkf-9_RVyQ/profile-displayphoto-crop_800_800/B56Zku5JyiIAAI-/0/1757428359081?e=1779321600&v=beta&t=8xYMiGPqKmlwyW-_hurwhG0-dMCgHTsOiGjmTOO4lyY",
     firstName: "Md Ohidul",
     lastName: "Islam",
-    positions: ["Backend Developer"],
+    positions: ["Product Designer", "SaaS & Enterprise UX"],
     socialNetworks: [
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/ohidulonline/",
+        url: "https://www.linkedin.com/in/ohidulonline/"
       }
-    ],
+    ]
   },
   {
     imageUrl:
-      "https://media.licdn.com/dms/image/v2/D5603AQE_oT3ySgzyYQ/profile-displayphoto-scale_400_400/B56Zg8retNHMAo-/0/1753364689110?e=1770854400&v=beta&t=lfQmtOJdXmAPb1F1oPBVCfDS6HTFPxWm1a-phTrFH88",
+      "https://media.licdn.com/dms/image/v2/D5603AQE_oT3ySgzyYQ/profile-displayphoto-crop_800_800/B56Zg8retNHMAQ-/0/1753364688991?e=1779321600&v=beta&t=7DA3CqwNlMPYIyMqFPZJoNrxpRKeBVifQv20Qbb82sU",
     firstName: "A H M Mosiur",
     lastName: "Rahaman",
-    positions: ["Fullstack Developer", "UX Researcher"],
+    positions: ["Full Stack Engineer", "Microservice"],
     socialNetworks: [
       {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/a-h-m-mosiur-rahaman-98a103107/",
-      },
-    ],
-  },
+        url: "https://www.linkedin.com/in/a-h-m-mosiur-rahaman-98a103107/"
+      }
+    ]
+  }
 ];

@@ -5,6 +5,7 @@ namespace App\Models\Marketing;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class PageSection extends Model
 {
@@ -34,5 +35,19 @@ class PageSection extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
+    }
+
+    protected static function booted(): void
+    {
+        static::saved(fn () => self::flushMarketingCache());
+        static::deleted(fn () => self::flushMarketingCache());
+    }
+
+    protected static function flushMarketingCache(): void
+    {
+        $store = Cache::getStore();
+        if (method_exists($store, 'tags')) {
+            Cache::tags(['marketing'])->flush();
+        }
     }
 }

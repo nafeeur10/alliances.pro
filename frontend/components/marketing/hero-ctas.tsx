@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/analytics";
@@ -9,12 +8,16 @@ import { reportConversion } from "@/lib/experiments";
 
 interface HeroCtasProps {
   signupUrl?: string;
+  signupLabel?: string;
   demoUrl?: string;
+  demoLabel?: string;
 }
 
 export function HeroCtas({
   signupUrl = "https://app.alliances.pro/signup",
-  demoUrl = "/contact?intent=demo"
+  signupLabel = "Start Free Trial",
+  demoUrl = "/contact?intent=demo",
+  demoLabel = "Book a Demo"
 }: HeroCtasProps) {
   return (
     <div className="mt-8 flex flex-col justify-center gap-4 md:flex-row!">
@@ -26,8 +29,7 @@ export function HeroCtas({
             reportConversion("hero_headline_variant", "signup_clicked");
           }}
         >
-          Start Free Trial
-          <ChevronRight />
+          {signupLabel}
         </Link>
       </Button>
       <Button asChild variant="outline" className="h-12 px-10 text-base">
@@ -38,7 +40,7 @@ export function HeroCtas({
             reportConversion("hero_headline_variant", "demo_requested");
           }}
         >
-          Book a Demo
+          {demoLabel}
         </Link>
       </Button>
     </div>

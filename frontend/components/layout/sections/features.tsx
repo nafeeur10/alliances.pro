@@ -1,40 +1,36 @@
-"use client";
+import { featureList as fallbackFeatures } from "@/@data/features";
+import { listFeatures } from "@/lib/api";
+import { getHomeSections, pickString, readPayload } from "@/lib/cms";
 
-import React from "react";
+import { FeaturesSectionClient, type FeatureItem } from "./features-client";
 
-import { featureList } from "@/@data/features";
-import { CardTitle } from "@/components/ui/card";
-import Icon from "@/components/icon";
-import { CardHover, CardsHover } from "@/components/ui/extras/cards-hover";
-import SectionContainer from "@/components/layout/section-container";
-import SectionHeader from "@/components/layout/section-header";
+export const FeaturesSection = async () => {
+  const [apiFeatures, { sections }] = await Promise.all([listFeatures(), getHomeSections()]);
+  const header = readPayload<Record<string, unknown>>(sections, "features");
 
-export const FeaturesSection = () => {
-  const [value, setValue] = React.useState<string | null>(null);
+  const items: FeatureItem[] =
+    apiFeatures && apiFeatures.length > 0
+      ? apiFeatures.map((f) => ({
+          icon: f.icon ?? "Sparkles",
+          title: f.name,
+          description: f.tagline ?? f.body ?? ""
+        }))
+      : fallbackFeatures.map((f) => ({
+          icon: f.icon,
+          title: f.title,
+          description: f.description
+        }));
 
   return (
-    <SectionContainer id="features">
-      <SectionHeader
-        subTitle="Features"
-        title="Everything You Need to Succeed"
-        description="Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business."
-      />
-      <CardsHover
-        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-        value={value}
-        onValueChange={setValue}>
-        {featureList.map((card) => (
-          <CardHover key={card.icon} value={card.icon} className="flex items-start gap-6">
-            <div className="space-y-4">
-              <CardTitle className="text-lg">{card.title}</CardTitle>
-              <p className="text-muted-foreground font-normal">{card.description}</p>
-            </div>
-            <div className="bg-primary/20 ring-primary/10 rounded-full p-2 ring-8">
-              <Icon name={card.icon} className="text-primary size-6" />
-            </div>
-          </CardHover>
-        ))}
-      </CardsHover>
-    </SectionContainer>
+    <FeaturesSectionClient
+      items={items}
+      subTitle={pickString(header, "eyebrow", "Features")}
+      title={pickString(header, "headline", "Everything You Need to Succeed")}
+      description={pickString(
+        header,
+        "sub",
+        "Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business."
+      )}
+    />
   );
 };

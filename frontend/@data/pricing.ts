@@ -1,6 +1,6 @@
 export enum PopularPlan {
   NO = 0,
-  YES = 1,
+  YES = 1
 }
 
 interface PlanProps {
@@ -25,8 +25,8 @@ export const plans: PlanProps[] = [
       "Basic contact management",
       "Project tracking",
       "Email support",
-      "Mobile app access",
-    ],
+      "Mobile app access"
+    ]
   },
   {
     title: "Professional",
@@ -41,8 +41,8 @@ export const plans: PlanProps[] = [
       "Invoicing & billing",
       "Custom reporting",
       "Priority support",
-      "API access",
-    ],
+      "API access"
+    ]
   },
   {
     title: "Enterprise",
@@ -57,7 +57,7 @@ export const plans: PlanProps[] = [
       "Advanced analytics & AI insights",
       "Dedicated account manager",
       "Custom integrations",
-      "SLA guarantee",
-    ],
-  },
+      "SLA guarantee"
+    ]
+  }
 ];

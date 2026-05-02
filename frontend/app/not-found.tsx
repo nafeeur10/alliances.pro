@@ -16,18 +16,18 @@ export const metadata: Metadata = buildMetadata({
 export default function NotFound() {
   return (
     <main className="min-h-screen">
-      <SectionShell as="section" className="pb-32 pt-32">
+      <SectionShell as="section" className="pt-32 pb-32">
         <div className="mx-auto mb-8 max-w-3xl">
           <Breadcrumbs items={[{ name: "Not found", url: "/404" }]} />
         </div>
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-primary text-sm font-semibold uppercase tracking-wider">404</p>
+          <p className="text-primary text-sm font-semibold tracking-wider uppercase">404</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
             We couldn&rsquo;t find that page.
           </h1>
           <p className="text-muted-foreground mt-4 text-lg">
-            The link might be broken, or the page might have moved. Here are a few good
-            places to start instead.
+            The link might be broken, or the page might have moved. Here are a few good places to
+            start instead.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Button asChild size="lg">

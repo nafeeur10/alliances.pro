@@ -18,7 +18,14 @@ class PageResource extends JsonResource
             'og_image' => $this->og_image,
             'is_published' => (bool) $this->is_published,
             'published_at' => optional($this->published_at)->toIso8601String(),
-            'sections' => PageSectionResource::collection($this->whenLoaded('sections')),
+            'sections' => $this->whenLoaded(
+                'sections',
+                fn () => $this->sections
+                    ->map(fn ($section) => (new PageSectionResource($section))->resolve($request))
+                    ->values()
+                    ->all(),
+                [],
+            ),
         ];
     }
 }

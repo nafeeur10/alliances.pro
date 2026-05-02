@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3D7BD9"/>
+      <stop offset="1" stop-color="#47BEB2"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#g2)"/>
+  <g stroke="rgba(255,255,255,0.85)" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M80 230 C 220 90, 360 370, 500 230 S 720 90, 760 230"/>
+  </g>
+  <g fill="rgba(255,255,255,0.95)" font-family="system-ui,sans-serif" font-weight="800">
+    <text x="400" y="380" text-anchor="middle" font-size="28">Cadence</text>
+  </g>
+</svg>

@@ -34,4 +34,18 @@ class SiteSetting extends Model
             default => $this->value,
         };
     }
+
+    protected static function booted(): void
+    {
+        static::saved(fn () => self::flushMarketingCache());
+        static::deleted(fn () => self::flushMarketingCache());
+    }
+
+    protected static function flushMarketingCache(): void
+    {
+        $store = Cache::getStore();
+        if (method_exists($store, 'tags')) {
+            Cache::tags(['marketing'])->flush();
+        }
+    }
 }

@@ -49,12 +49,17 @@ class MarketingContentSeeder extends Seeder
                 'key' => 'hero',
                 'type' => 'hero',
                 'payload' => [
-                    'eyebrow' => 'Multi-vertical CRM platform · Trusted by Shopify agencies, sales teams & freelancers',
+                    'eyebrow' => 'New · Client Management Reinvented',
                     'headline' => 'The CRM platform built for service businesses that grow sideways.',
                     'subheadline' => 'One login. One inbox. One bill. Sales CRM today, Education CRM tomorrow, more verticals as you scale. No bloated tooling, no surprise pricing.',
-                    'primary_cta' => ['label' => 'Start 14-day free trial — no credit card', 'url' => 'https://app.alliances.pro/signup'],
-                    'secondary_cta' => ['label' => 'Watch 2-min product tour', 'url' => '#tour'],
-                    'trust_strip' => 'Used by 1,200+ teams across 30 countries',
+                    'image_url' => '/hero.png',
+                    'primary_cta' => ['label' => 'Start Free Trial', 'url' => 'https://app.alliances.pro/signup'],
+                    'secondary_cta' => ['label' => 'Book a Demo', 'url' => '/contact?intent=demo'],
+                    'trust_checks' => [
+                        ['label' => 'No credit card'],
+                        ['label' => '14-day trial'],
+                        ['label' => 'Cancel anytime'],
+                    ],
                 ],
             ],
             [
@@ -62,35 +67,44 @@ class MarketingContentSeeder extends Seeder
                 'type' => 'sponsors',
                 'payload' => [
                     'headline' => 'Trusted by service teams who outgrew spreadsheets, not budgets.',
-                    'logos' => ['Shopify Partners', 'Indie Hackers', 'Beta agencies'],
+                    'logos' => [
+                        ['name' => 'Amazon', 'icon' => 'Crown', 'image_url' => null],
+                        ['name' => 'Linkedin', 'icon' => 'Vegan', 'image_url' => null],
+                        ['name' => 'Google', 'icon' => 'Ghost', 'image_url' => null],
+                        ['name' => 'Apple', 'icon' => 'Puzzle', 'image_url' => null],
+                        ['name' => 'Android', 'icon' => 'Squirrel', 'image_url' => null],
+                        ['name' => 'Acmee', 'icon' => 'Cookie', 'image_url' => null],
+                        ['name' => 'Shadcn', 'icon' => 'Drama', 'image_url' => null],
+                    ],
                 ],
             ],
             [
                 'key' => 'benefits',
                 'type' => 'benefits',
                 'payload' => [
-                    'eyebrow' => 'Why Alliances PRO',
-                    'headline' => 'Stop paying for five tools to manage one client.',
+                    'eyebrow' => 'Benefits',
+                    'headline' => 'Why Choose Alliances PRO?',
+                    'description' => 'Everything you need to streamline client relationships and grow your service business. Our platform helps you manage clients effortlessly, automate repetitive tasks, and deliver exceptional service every time.',
                     'items' => [
                         [
-                            'headline' => "Sales today. Education tomorrow. Whatever's next, next.",
-                            'body' => 'Most CRMs lock you into one industry shape. Alliances PRO is a platform — switch verticals from a workspace dropdown. Your data, your team, one bill.',
-                            'icon' => 'layers',
+                            'headline' => 'Centralized Client Management',
+                            'body' => 'Keep all client information, communication history, and project details in one unified platform for easy access and management.',
+                            'icon' => 'Users',
                         ],
                         [
-                            'headline' => 'Follow the customer past the deal close.',
-                            'body' => "Capture leads, run pipelines, log calls, send campaigns, track project delivery — all in the same workspace. The handoff between sales and delivery isn't a tool switch.",
-                            'icon' => 'workflow',
+                            'headline' => 'Automated Workflows',
+                            'body' => 'Streamline repetitive tasks with intelligent automation. From follow-ups to invoicing, let Alliances PRO handle the routine work.',
+                            'icon' => 'Workflow',
                         ],
                         [
-                            'headline' => 'The price you see is the price you pay.',
-                            'body' => 'No "starts at" sleight of hand. No per-seat surprises. No mandatory onboarding fees. $19/mo for up to 10 users. $39/mo for unlimited.',
-                            'icon' => 'scale',
+                            'headline' => 'Smart Scheduling & Appointments',
+                            'body' => 'Effortlessly manage appointments, bookings, and service schedules with integrated calendar tools and automated reminders.',
+                            'icon' => 'CalendarClock',
                         ],
                         [
-                            'headline' => 'Vertical-aware data, not endless custom fields.',
-                            'body' => 'Shopify-aware lead capture for agencies. Program + applicant tracking for education. Real fields for real workflows.',
-                            'icon' => 'target',
+                            'headline' => 'Performance Analytics',
+                            'body' => 'Track business metrics, client satisfaction, revenue trends, and service performance with comprehensive real-time dashboards.',
+                            'icon' => 'ChartLine',
                         ],
                     ],
                 ],
@@ -99,26 +113,37 @@ class MarketingContentSeeder extends Seeder
                 'key' => 'features',
                 'type' => 'features',
                 'payload' => [
-                    'eyebrow' => 'Everything in one workspace',
-                    'headline' => "All the CRM you'll need. None of the add-ons you don't.",
+                    'eyebrow' => 'Features',
+                    'headline' => 'Everything You Need to Succeed',
+                    'sub' => 'Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business.',
                 ],
             ],
             [
                 'key' => 'services',
                 'type' => 'services',
                 'payload' => [
-                    'headline' => 'A CRM tuned to your business — not the average of all businesses.',
+                    'eyebrow' => 'Services',
+                    'headline' => 'Comprehensive Service Solutions',
+                    'sub' => 'From client onboarding to advanced analytics, we provide everything you need to deliver exceptional service and scale your business.',
+                    'items' => [
+                        ['title' => 'Client Onboarding', 'description' => 'Streamlined onboarding workflows to get new clients set up quickly with automated welcome emails and document collection.', 'pro' => false],
+                        ['title' => 'Service Delivery Management', 'description' => 'Track service delivery milestones, manage deliverables, and ensure consistent quality across all client projects.', 'pro' => false],
+                        ['title' => 'Custom Reporting', 'description' => 'Generate detailed reports on client activity, revenue, service performance, and team productivity.', 'pro' => false],
+                        ['title' => 'API Access', 'description' => 'Connect your CRM to bespoke tools and internal dashboards via our REST API.', 'pro' => true],
+                    ],
                 ],
             ],
             [
                 'key' => 'trust',
                 'type' => 'trust',
                 'payload' => [
-                    'headline' => 'Your data. Your team. Your control.',
-                    'columns' => [
-                        ['title' => 'Workspace isolation', 'body' => "Row-level data separation. Members in workspace A can't see workspace B — ever."],
-                        ['title' => 'Granular roles', 'body' => 'Define exactly who sees what. Built on Spatie permissions, configurable per workspace.'],
-                        ['title' => 'Yours to leave with', 'body' => "CSV export on every object. We don't hold your data hostage. Ever."],
+                    'eyebrow' => 'Why Trust Us',
+                    'headline' => 'Built Different. Built to Last.',
+                    'sub' => 'Most CRMs look great in demos. Alliances PRO is engineered to hold up in production — with the security, reliability, and architecture your business actually needs.',
+                    'items' => [
+                        ['icon' => 'ShieldCheck', 'badge' => 'Workspace isolation', 'problem' => 'Shared tenant, leaky data', 'solution' => "Row-level data separation. Members in workspace A can't see workspace B — ever."],
+                        ['icon' => 'KeyRound', 'badge' => 'Granular roles', 'problem' => 'Admin or nothing', 'solution' => 'Define exactly who sees what. Built on Spatie permissions, configurable per workspace.'],
+                        ['icon' => 'Download', 'badge' => 'Yours to leave with', 'problem' => 'Data lock-in', 'solution' => "CSV export on every object. We don't hold your data hostage. Ever."],
                     ],
                 ],
             ],
@@ -126,28 +151,53 @@ class MarketingContentSeeder extends Seeder
                 'key' => 'testimonial',
                 'type' => 'testimonial',
                 'payload' => [
-                    'headline' => 'Operators trust us with their pipelines.',
+                    'eyebrow' => 'Testimonials',
+                    'headline' => 'Loved by Teams Worldwide',
+                    'sub' => "Don't just take our word for it. See what our customers have to say about their experience.",
                 ],
             ],
             [
                 'key' => 'team',
                 'type' => 'team',
-                'payload' => ['headline' => 'Built by operators, for operators.'],
+                'payload' => [
+                    'eyebrow' => 'Team',
+                    'headline' => 'The Company Dream Team',
+                    'sub' => 'Built by operators, for operators.',
+                    'members' => [],
+                ],
             ],
             [
                 'key' => 'pricing',
                 'type' => 'pricing',
                 'payload' => [
-                    'eyebrow' => 'Honest pricing — flat per workspace, never per seat',
-                    'headline' => 'Two plans. No surprises. Cancel anytime.',
-                    'sub' => 'Every plan includes leads, deals, pipelines, tasks, calls, email campaigns, and multi-workspace. Start with a 14-day free trial — no credit card required. Annual billing = 2 months free.',
-                    'enterprise_cta' => 'Need SSO, audit logs, dedicated support, or a custom SLA? Talk to us about Enterprise →',
-                    'enterprise_email' => 'sales@alliances.pro',
-                    'trust_microcopy' => [
-                        'Cancel anytime, no questions',
-                        'Export every record to CSV — your data is yours',
-                        'No mandatory onboarding fee. Ever.',
-                        'Free migration help on Business plan',
+                    'eyebrow' => 'Pricing',
+                    'headline' => 'Simple pricing that scales with your pipeline.',
+                    'sub' => 'Start with a 14-day free trial — no credit card required. Switch or cancel anytime.',
+                    'compare_eyebrow' => 'Compare plans',
+                    'compare_title' => 'All the details, side by side.',
+                    'faq_eyebrow' => 'FAQ',
+                    'faq_title' => 'Questions, answered.',
+                    'compare_rows' => [
+                        ['feature' => 'Contacts & Call Logs', 'values' => [
+                            ['plan' => 'Pro', 'value' => 'yes'],
+                            ['plan' => 'Business', 'value' => 'yes'],
+                        ]],
+                        ['feature' => 'Email automation', 'values' => [
+                            ['plan' => 'Pro', 'value' => 'no'],
+                            ['plan' => 'Business', 'value' => 'yes'],
+                        ]],
+                        ['feature' => 'Follow-up automation', 'values' => [
+                            ['plan' => 'Pro', 'value' => 'no'],
+                            ['plan' => 'Business', 'value' => 'yes'],
+                        ]],
+                        ['feature' => 'Support', 'values' => [
+                            ['plan' => 'Pro', 'value' => 'Email'],
+                            ['plan' => 'Business', 'value' => 'Priority (12h) + WhatsApp'],
+                        ]],
+                        ['feature' => 'Free trial', 'values' => [
+                            ['plan' => 'Pro', 'value' => '14 days'],
+                            ['plan' => 'Business', 'value' => '14 days'],
+                        ]],
                     ],
                 ],
             ],
@@ -155,44 +205,43 @@ class MarketingContentSeeder extends Seeder
                 'key' => 'community',
                 'type' => 'community',
                 'payload' => [
-                    'headline' => 'Built today. Built bigger tomorrow.',
-                    'cards' => [
-                        [
-                            'title' => 'Education CRM (Beta)',
-                            'body' => 'Admissions, programs, applicants, enrollments, communications. Same Alliances PRO workspace, education-shaped data.',
-                            'cta' => ['label' => 'Join the Education CRM waitlist', 'url' => '/industries/education'],
-                        ],
-                        [
-                            'title' => 'Roadmap',
-                            'body' => 'Real Estate, Healthcare, Legal verticals on the roadmap. Vote for what comes next.',
-                            'cta' => ['label' => 'Vote on the roadmap', 'url' => '/roadmap'],
-                        ],
-                    ],
+                    'headline_lead' => 'Ready to join this',
+                    'headline_highlight' => 'Community?',
+                    'body' => 'Join our vibrant Discord community! Connect, share, and grow with like-minded enthusiasts.',
+                    'cta' => ['label' => 'Click to dive in!', 'url' => 'https://discord.com/'],
                 ],
             ],
             [
                 'key' => 'contact',
                 'type' => 'contact',
                 'payload' => [
-                    'headline' => 'Talk to a real human.',
-                    'channels' => [
-                        ['label' => 'Sales', 'email' => 'sales@alliances.pro', 'sla' => 'Response within 4 business hours'],
-                        ['label' => 'Support', 'email' => 'support@alliances.pro', 'sla' => 'Response within 24h (free) / 4h (Pro)'],
-                        ['label' => 'Press', 'email' => 'press@alliances.pro', 'sla' => null],
-                    ],
+                    'eyebrow' => 'Contact',
+                    'headline' => 'Get Connect With Us',
+                    'sub' => "Stay in touch with us for updates, support, and valuable insights. We're here to help you every step of the way!",
+                    'location' => '123 Maple Lane, Springfield, IL 62704',
+                    'phone' => '+1 (555) 987-6543',
+                    'email' => 'contact@alliances.pro',
+                    'hours' => 'Monday to Friday, 9 AM - 5 PM',
                 ],
             ],
             [
                 'key' => 'faq',
                 'type' => 'faq',
-                'payload' => ['headline' => 'Real questions, real answers.'],
+                'payload' => [
+                    'eyebrow' => 'FAQS',
+                    'headline' => 'Common Questions',
+                    'sub' => 'Real questions, real answers.',
+                ],
             ],
             [
                 'key' => 'newsletter',
                 'type' => 'newsletter',
                 'payload' => [
-                    'headline' => 'Get the CRM playbook in your inbox.',
+                    'title_lead' => 'Get the CRM playbook in your',
+                    'title_highlight' => 'inbox.',
                     'sub' => 'Monthly: one practical playbook (pipelines, campaigns, agency ops), one product update, zero fluff.',
+                    'placeholder' => 'you@example.com',
+                    'cta_label' => 'Subscribe',
                 ],
             ],
         ];
@@ -291,31 +340,26 @@ class MarketingContentSeeder extends Seeder
                 'monthly_price_cents' => 1900,
                 'yearly_price_cents' => 19000,
                 'currency' => 'USD',
-                'description' => 'Growing teams up to 10 people. 14-day free trial — no credit card required.',
-                'cta_label' => 'Start 14-day trial',
+                'description' => 'For solo operators and small teams getting organized.',
+                'cta_label' => 'Start Pro trial',
                 'cta_url' => 'https://app.alliances.pro/signup?plan=pro',
                 'is_featured' => false,
                 'is_published' => true,
                 'order' => 1,
                 'features' => [
+                    'Track up to 1,000 leads',
+                    '10 projects, 500 organizations',
                     'Up to 10 team members',
-                    'Up to 10 projects',
-                    'Up to 500 organizations / clients',
-                    'Up to 1,000 leads',
-                    'Unlimited tasks',
-                    'Deal pipelines (Kanban)',
-                    'Email campaigns + lists',
-                    'Call logs + recordings',
-                    'Multi-workspace',
-                    'Per-workspace SMTP',
-                    'Custom roles & permissions',
+                    'Contacts & call logs included',
+                    'Email support',
+                    '14-day free trial',
                 ],
                 'limits' => [
-                    'team_members' => 10,
-                    'projects' => 10,
-                    'organizations' => 500,
                     'leads' => 1000,
                     'tasks' => 'unlimited',
+                    'projects' => 10,
+                    'organizations' => 500,
+                    'team_members' => 10,
                 ],
                 'comparison_note' => '$19/mo flat for 10 users. Pipedrive Essential for 10 users would be $140/mo.',
                 'external_signup_url' => 'https://app.alliances.pro/signup?plan=pro',
@@ -329,33 +373,26 @@ class MarketingContentSeeder extends Seeder
                 'monthly_price_cents' => 3900,
                 'yearly_price_cents' => 39000,
                 'currency' => 'USD',
-                'description' => 'Established teams that want zero limits. 14-day free trial — no credit card required.',
-                'cta_label' => 'Start 14-day trial',
+                'description' => 'For growing teams that need automation and unlimited scale.',
+                'cta_label' => 'Start Business trial',
                 'cta_url' => 'https://app.alliances.pro/signup?plan=business',
                 'is_featured' => true,
                 'is_published' => true,
                 'order' => 2,
                 'features' => [
-                    'Unlimited team members',
-                    'Unlimited projects',
-                    'Unlimited organizations',
-                    'Unlimited leads',
-                    'Unlimited tasks',
-                    'Deal pipelines (Kanban)',
-                    'Email campaigns + lists',
-                    'Call logs + recordings',
-                    'Multi-workspace',
-                    'Per-workspace SMTP',
-                    'Custom roles & permissions',
-                    'API access',
-                    'Priority support',
+                    'Unlimited leads, deals, orgs',
+                    'Unlimited projects & members',
+                    'Email automation',
+                    'Automated follow-up sequences',
+                    'Priority support (12h) + WhatsApp',
+                    'Everything in Pro',
                 ],
                 'limits' => [
-                    'team_members' => 'unlimited',
-                    'projects' => 'unlimited',
-                    'organizations' => 'unlimited',
                     'leads' => 'unlimited',
                     'tasks' => 'unlimited',
+                    'projects' => 'unlimited',
+                    'organizations' => 'unlimited',
+                    'team_members' => 'unlimited',
                 ],
                 'comparison_note' => '$39/mo for unlimited team. HubSpot Sales Pro for 10 users would be $1,000/mo.',
                 'external_signup_url' => 'https://app.alliances.pro/signup?plan=business',
@@ -387,18 +424,109 @@ class MarketingContentSeeder extends Seeder
 
     protected function seedSettings(): void
     {
+        $navLinks = json_encode([
+            ['href' => '/pricing', 'label' => 'Pricing'],
+            ['href' => '/about', 'label' => 'About Us'],
+            ['href' => '#contact', 'label' => 'Contact Us'],
+        ], JSON_UNESCAPED_SLASHES);
+
+        $navResources = json_encode([
+            [
+                'label' => 'Get help',
+                'items' => [
+                    ['title' => 'Help Center', 'icon' => 'LifeBuoy', 'description' => 'Browse guides, FAQs and how-tos.', 'href' => '/help'],
+                    ['title' => 'Docs', 'icon' => 'BookOpen', 'description' => 'Developer & integration documentation.', 'href' => '/docs'],
+                    ['title' => 'Changelog', 'icon' => 'GitCommitHorizontal', 'description' => "What we've shipped, version by version.", 'href' => '/changelog'],
+                ],
+            ],
+            [
+                'label' => 'Stay updated',
+                'items' => [
+                    ['title' => 'Announcements', 'icon' => 'Megaphone', 'description' => 'Product news and important updates.', 'href' => '/announcements'],
+                    ['title' => 'Blog', 'icon' => 'Newspaper', 'description' => 'Playbooks, deep dives and field notes.', 'href' => '/blog'],
+                    ['title' => 'Career', 'icon' => 'Briefcase', 'description' => 'Open roles at Alliances PRO.', 'href' => '/careers'],
+                ],
+            ],
+        ], JSON_UNESCAPED_SLASHES);
+
         $settings = [
             ['site_name', 'Alliances PRO', 'general', 'text'],
             ['site_tagline', 'The CRM platform built for service businesses that grow sideways.', 'general', 'text'],
+
+            // Brand / logo
+            ['logo_text', 'Alliances PRO', 'brand', 'text'],
+            ['logo_icon', 'SunDim', 'brand', 'text'],
+            ['logo_image_url', '', 'brand', 'image'],
+
+            // Navigation
+            ['nav_links', $navLinks, 'nav', 'json'],
+            ['nav_resources', $navResources, 'nav', 'json'],
+
+            // Header CTAs
+            ['cta_login_label', 'Log in', 'cta', 'text'],
+            ['cta_login_url', 'https://app.alliances.pro/login', 'cta', 'url'],
+            ['cta_signup_label', 'Get Started', 'cta', 'text'],
+            ['cta_signup_url', 'https://app.alliances.pro/signup', 'cta', 'url'],
+
+            // Contact
             ['support_email', 'support@alliances.pro', 'contact', 'text'],
             ['sales_email', 'sales@alliances.pro', 'contact', 'text'],
             ['press_email', 'press@alliances.pro', 'contact', 'text'],
+
+            // Social
             ['twitter_url', 'https://twitter.com/alliancespro', 'social', 'url'],
             ['linkedin_url', 'https://linkedin.com/company/alliancespro', 'social', 'url'],
             ['github_url', 'https://github.com/alliancespro', 'social', 'url'],
             ['youtube_url', 'https://youtube.com/@alliancespro', 'social', 'url'],
+
+            // Footer
             ['footer_copyright', '© Alliances PRO ' . date('Y') . '. All rights reserved.', 'footer', 'text'],
             ['address', 'Alliances PRO Inc.', 'footer', 'text'],
+            [
+                'footer_blurb',
+                'Meet our AI-powered CRM solution to lighten your workload, increase efficiency and make more accurate decisions.',
+                'footer',
+                'longtext',
+            ],
+            [
+                'footer_columns',
+                json_encode([
+                    [
+                        'heading' => 'Product',
+                        'links' => [
+                            ['label' => 'Features', 'url' => '#features'],
+                            ['label' => 'Pricing', 'url' => '#pricing'],
+                            ['label' => 'FAQ', 'url' => '#faq'],
+                        ],
+                    ],
+                    [
+                        'heading' => 'Company',
+                        'links' => [
+                            ['label' => 'Team', 'url' => '#team'],
+                            ['label' => 'Contact', 'url' => '#contact'],
+                            ['label' => 'Blog', 'url' => '/blog'],
+                        ],
+                    ],
+                    [
+                        'heading' => 'Legal',
+                        'links' => [
+                            ['label' => 'Privacy', 'url' => '/privacy'],
+                            ['label' => 'Terms', 'url' => '/terms'],
+                        ],
+                    ],
+                    [
+                        'heading' => 'Resources',
+                        'links' => [
+                            ['label' => 'Docs', 'url' => '/docs'],
+                            ['label' => 'Changelog', 'url' => '/changelog'],
+                        ],
+                    ],
+                ], JSON_UNESCAPED_SLASHES),
+                'footer',
+                'json',
+            ],
+            ['facebook_url', 'https://facebook.com/alliancespro', 'social', 'url'],
+            ['dribbble_url', 'https://dribbble.com/alliancespro', 'social', 'url'],
         ];
         foreach ($settings as [$key, $value, $group, $type]) {
             SiteSetting::updateOrCreate(

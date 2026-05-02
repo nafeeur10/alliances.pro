@@ -20,15 +20,14 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
   return (
     <main className="min-h-screen">
       <section className="container mx-auto px-4 py-32 text-center sm:px-6">
-        <p className="text-primary text-sm font-semibold uppercase tracking-wider">
+        <p className="text-primary text-sm font-semibold tracking-wider uppercase">
           Something went wrong
         </p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
           We hit a snag rendering this page.
         </h1>
         <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-lg">
-          Our team has been notified. Try again, or head back home — most things
-          still work fine.
+          Our team has been notified. Try again, or head back home — most things still work fine.
         </p>
         {error.digest && (
           <p className="text-muted-foreground mt-6 text-xs">
