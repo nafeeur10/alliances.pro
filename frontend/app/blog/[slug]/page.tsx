@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Calendar, Clock } from "lucide-react";
 
 import { FooterSection } from "@/components/layout/sections/footer";
 import { BlogPostCard } from "@/components/marketing/blog-post-card";
@@ -114,34 +115,38 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </div>
               {date ? (
                 <>
-                  <span
-                    className="text-muted-foreground/50 hidden sm:inline"
-                    aria-hidden
-                  >
+                  <span className="text-muted-foreground/50 hidden sm:inline" aria-hidden>
                     ·
                   </span>
-                  <div className="text-left leading-tight">
-                    <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
-                      Published
+                  <div className="flex items-center gap-3 text-left">
+                    <div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full">
+                      <Calendar className="size-5" aria-hidden />
                     </div>
-                    <div className="text-foreground text-sm font-semibold">{date}</div>
+                    <div className="leading-tight">
+                      <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
+                        Published
+                      </div>
+                      <div className="text-foreground text-sm font-semibold">{date}</div>
+                    </div>
                   </div>
                 </>
               ) : null}
               {post.reading_minutes > 0 ? (
                 <>
-                  <span
-                    className="text-muted-foreground/50 hidden sm:inline"
-                    aria-hidden
-                  >
+                  <span className="text-muted-foreground/50 hidden sm:inline" aria-hidden>
                     ·
                   </span>
-                  <div className="text-left leading-tight">
-                    <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
-                      Time to read
+                  <div className="flex items-center gap-3 text-left">
+                    <div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full">
+                      <Clock className="size-5" aria-hidden />
                     </div>
-                    <div className="text-foreground text-sm font-semibold">
-                      {post.reading_minutes} min read
+                    <div className="leading-tight">
+                      <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
+                        Time to read
+                      </div>
+                      <div className="text-foreground text-sm font-semibold">
+                        {post.reading_minutes} min read
+                      </div>
                     </div>
                   </div>
                 </>
