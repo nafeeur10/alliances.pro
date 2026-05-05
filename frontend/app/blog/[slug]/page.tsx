@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     ·
                   </span>
                   <div className="flex items-center gap-3 text-left">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-sm">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-emerald-200/70 bg-white text-emerald-500 shadow-sm dark:border-emerald-500/30 dark:bg-white">
                       <Calendar className="size-5" aria-hidden strokeWidth={2.25} />
                     </div>
                     <div className="leading-tight">
@@ -137,7 +137,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     ·
                   </span>
                   <div className="flex items-center gap-3 text-left">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-500 text-white shadow-sm">
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-sky-200/70 bg-white text-sky-500 shadow-sm dark:border-sky-500/30 dark:bg-white">
                       <Clock className="size-5" aria-hidden strokeWidth={2.25} />
                     </div>
                     <div className="leading-tight">
