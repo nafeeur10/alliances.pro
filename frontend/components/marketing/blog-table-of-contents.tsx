@@ -46,7 +46,7 @@ export function BlogTableOfContents({ body, className }: Props) {
     <aside
       aria-label="Table of Contents"
       className={cn(
-        "relative mx-auto my-10 max-w-3xl rounded-2xl border border-amber-200/70 bg-amber-50/80 px-7 py-7 sm:my-12 dark:border-amber-500/25 dark:bg-amber-500/5",
+        "relative mx-auto my-10 max-w-3xl rounded-2xl border border-amber-200/70 bg-transparent px-7 py-7 sm:my-12 dark:border-amber-500/25",
         className
       )}
     >
@@ -69,7 +69,7 @@ export function BlogTableOfContents({ body, className }: Props) {
       <span
         role="img"
         aria-label="traffic light"
-        className="absolute -top-[22px] -left-[23px] flex size-12 items-center justify-center rounded-full border border-amber-200/70 bg-amber-50 text-2xl leading-none dark:border-amber-500/25 dark:bg-amber-500/10"
+        className="absolute -top-[22px] -left-[23px] flex size-12 items-center justify-center rounded-full border border-amber-200/70 bg-transparent text-3xl leading-none dark:border-amber-500/25"
       >
         🚦
       </span>

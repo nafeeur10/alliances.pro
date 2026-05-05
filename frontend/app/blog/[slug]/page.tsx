@@ -101,8 +101,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-4">
               <div className="flex items-center gap-3 text-left">
-                <Avatar className="size-10">
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
+                <Avatar className="size-10 border border-violet-200/70 dark:border-violet-500/30">
+                  <AvatarFallback className="bg-gradient-to-br from-violet-500 to-fuchsia-500 text-sm font-semibold text-white">
                     {authorInitials(author)}
                   </AvatarFallback>
                 </Avatar>
@@ -119,8 +119,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     ·
                   </span>
                   <div className="flex items-center gap-3 text-left">
-                    <div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full">
-                      <Calendar className="size-5" aria-hidden />
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-sm">
+                      <Calendar className="size-5" aria-hidden strokeWidth={2.25} />
                     </div>
                     <div className="leading-tight">
                       <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
@@ -137,8 +137,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     ·
                   </span>
                   <div className="flex items-center gap-3 text-left">
-                    <div className="bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full">
-                      <Clock className="size-5" aria-hidden />
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-blue-500 text-white shadow-sm">
+                      <Clock className="size-5" aria-hidden strokeWidth={2.25} />
                     </div>
                     <div className="leading-tight">
                       <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
@@ -169,8 +169,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {/* Author card */}
               <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
                 <div className="flex items-center gap-3">
-                  <Avatar className="size-12">
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                  <Avatar className="size-12 border border-violet-200/70 dark:border-violet-500/30">
+                    <AvatarFallback className="bg-gradient-to-br from-violet-500 to-fuchsia-500 font-semibold text-white">
                       {authorInitials(author)}
                     </AvatarFallback>
                   </Avatar>
