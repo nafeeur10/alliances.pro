@@ -35,7 +35,7 @@ export const FeaturesSectionClient = ({
   const [value, setValue] = React.useState<string | null>(null);
 
   return (
-    <SectionContainer id="features">
+    <SectionContainer id="features" className="bg-muted/30 pt-20 sm:pt-32">
       <div className="mx-auto max-w-2xl text-center">
         <Badge
           variant="outline"
@@ -53,7 +53,7 @@ export const FeaturesSectionClient = ({
         <HexRing />
       </div>
       <CardsHover
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
         value={value}
         onValueChange={setValue}
       >

@@ -144,7 +144,7 @@ export default async function BlogIndexPage() {
   return (
     <main className="min-h-screen">
       <SectionShell as="section" className="pt-32 pb-12">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">The Alliances Blog</h1>
           <p className="text-muted-foreground mt-4 text-lg">
             Case studies, marketing tips, product updates, and CRM analysis for service businesses.

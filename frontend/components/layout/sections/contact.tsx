@@ -14,7 +14,7 @@ export const ContactSection = () => {
   const phoneDigits = phone.replace(/\D/g, "");
 
   return (
-    <SectionContainer id="contact">
+    <SectionContainer id="contact" className="bg-muted/30 pt-20 sm:pt-32">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
         <Badge
           variant="outline"

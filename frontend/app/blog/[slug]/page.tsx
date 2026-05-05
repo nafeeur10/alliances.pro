@@ -7,6 +7,7 @@ import { FooterSection } from "@/components/layout/sections/footer";
 import { BlogPostCard } from "@/components/marketing/blog-post-card";
 import { BlogTableOfContents } from "@/components/marketing/blog-table-of-contents";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
+import { ShareButtons } from "@/components/marketing/share-buttons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { ArticleSchema } from "@/components/seo/json-ld";
 import { getBlogPost, listBlogPosts } from "@/lib/api";
 import { authorInitials } from "@/lib/blog";
-import { buildMetadata } from "@/lib/seo";
+import { absoluteUrl, buildMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -163,6 +164,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <div>
               <BlogTableOfContents body={post.body} className="mt-0 mb-10" />
               <MarkdownArticle>{post.body}</MarkdownArticle>
+              <ShareButtons url={absoluteUrl(`/blog/${post.slug}`)} title={post.title} />
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start lg:[&>*+*]:mt-6">
@@ -180,8 +182,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   </div>
                 </div>
                 <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-                  We build Alliances PRO — a flat-rate CRM for small agencies and service teams.
-                  Our writing covers pipeline, retention, and the operational reality of running a
+                  We build Alliances PRO — a flat-rate CRM for small agencies and service teams. Our
+                  writing covers pipeline, retention, and the operational reality of running a
                   service business — minus the vendor speak.
                 </p>
               </div>

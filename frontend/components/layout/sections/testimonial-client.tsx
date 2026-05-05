@@ -36,7 +36,7 @@ export const TestimonialSectionClient = ({
   description = "Don't just take our word for it. See what our customers have to say about their experience."
 }: Props) => {
   return (
-    <SectionContainer id="testimonials">
+    <SectionContainer id="testimonials" className="bg-primary/5 pt-20 sm:pt-32">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
         <Badge
           variant="outline"
