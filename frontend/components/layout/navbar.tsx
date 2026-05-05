@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 
@@ -66,6 +67,8 @@ const HOVER_OPEN = "data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-zinc
 export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: NavbarProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -74,8 +77,15 @@ export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: Na
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const firstRoute = routes[0];
-  const restRoutes = routes.slice(1);
+  // On non-home pages the "#blog" anchor would dead-link, so route it to the
+  // full blog index instead. Other anchors (#benefits, #features) stay as-is
+  // since the user asked for this only for Blogs.
+  const resolvedRoutes = routes.map((r) =>
+    r.href === "#blog" && !isHome ? { ...r, href: "/blog" } : r
+  );
+
+  const firstRoute = resolvedRoutes[0];
+  const restRoutes = resolvedRoutes.slice(1);
 
   return (
     <header
