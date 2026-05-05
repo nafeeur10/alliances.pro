@@ -42,7 +42,7 @@ interface Props {
 
 export function BlogTableOfContents({ body, className }: Props) {
   const headings = extractH2s(body);
-  if (headings.length < 2) return null;
+  if (headings.length === 0) return null;
 
   return (
     <aside
@@ -62,10 +62,7 @@ export function BlogTableOfContents({ body, className }: Props) {
               className="mt-[0.65rem] inline-block size-1.5 shrink-0 rounded-full bg-amber-600 dark:bg-amber-400"
               aria-hidden
             />
-            <a
-              href={`#${h.id}`}
-              className="hover:text-primary underline-offset-4 hover:underline"
-            >
+            <a href={`#${h.id}`} className="hover:text-primary underline-offset-4 hover:underline">
               {h.text}
             </a>
           </li>

@@ -9,6 +9,7 @@ import { MarkdownArticle } from "@/components/marketing/markdown-article";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { ArticleSchema } from "@/components/seo/json-ld";
 import { getBlogPost, listBlogPosts } from "@/lib/api";
 import { authorInitials } from "@/lib/blog";
@@ -130,18 +131,71 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* ---------- Body ---------- */}
       <section className="pb-20">
         <div className="container">
-          <div className="mx-auto max-w-3xl">
-            <BlogTableOfContents body={post.body} />
-            <MarkdownArticle>{post.body}</MarkdownArticle>
+          <div className="mx-auto grid max-w-(--breakpoint-xl) gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <div>
+              <BlogTableOfContents body={post.body} className="mt-0 mb-10" />
+              <MarkdownArticle>{post.body}</MarkdownArticle>
+            </div>
 
-            <div className="mt-16 flex justify-center">
+            <aside className="lg:sticky lg:top-24 lg:self-start lg:[&>*+*]:mt-6">
+              {/* Author card */}
+              <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <Avatar className="size-12">
+                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                      {authorInitials(author)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="leading-tight">
+                    <div className="text-foreground font-semibold">{author}</div>
+                    <div className="text-muted-foreground text-xs">Author</div>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                  Practical writing on CRM, pipelines, and service-business operations from the
+                  Alliances PRO team.
+                </p>
+              </div>
+
+              {/* Inline newsletter */}
+              <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
+                <Badge
+                  variant="outline"
+                  className="bg-background/60 mb-3 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase"
+                >
+                  <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+                  The Playbook
+                </Badge>
+                <h3 className="text-foreground text-lg font-semibold tracking-tight">
+                  Get the CRM playbook in your inbox
+                </h3>
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  Monthly: one practical playbook, one product update, zero fluff.
+                </p>
+                <form className="mt-4 flex flex-col gap-2" action="/api/newsletter" method="post">
+                  <Input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    className="bg-background"
+                    aria-label="email"
+                  />
+                  <Button type="submit" className="w-full">
+                    Subscribe
+                  </Button>
+                </form>
+                <p className="text-muted-foreground mt-3 text-xs">No spam. Unsubscribe anytime.</p>
+              </div>
+
+              {/* Back to all posts */}
               <Link
                 href="/blog"
                 className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
               >
                 ← All articles
               </Link>
-            </div>
+            </aside>
           </div>
         </div>
       </section>

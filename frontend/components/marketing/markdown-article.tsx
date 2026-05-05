@@ -32,7 +32,7 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground scroll-mt-28 mt-12 mb-5 text-3xl font-bold tracking-tight",
+        "text-foreground mt-12 mb-5 scroll-mt-28 text-3xl font-bold tracking-tight",
         className
       )}
     >
@@ -44,7 +44,7 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground scroll-mt-28 mt-12 mb-4 text-2xl font-bold tracking-tight",
+        "text-foreground mt-12 mb-4 scroll-mt-28 text-2xl font-bold tracking-tight",
         className
       )}
     >
@@ -56,7 +56,7 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground scroll-mt-28 mt-10 mb-3 text-xl font-semibold tracking-tight",
+        "text-foreground mt-10 mb-3 scroll-mt-28 text-xl font-semibold tracking-tight",
         className
       )}
     >
