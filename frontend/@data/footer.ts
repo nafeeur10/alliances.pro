@@ -75,8 +75,8 @@ export const footerColumns: FooterLinkColumn[] = [
   {
     heading: "Others",
     links: [
-      { label: "Terms of Service", url: "#" },
-      { label: "Privacy Policy", url: "#" },
+      { label: "Terms of Service", url: "/terms" },
+      { label: "Privacy Policy", url: "/privacy" },
       { label: "Careers", url: "/careers" }
     ]
   }
