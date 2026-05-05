@@ -65,9 +65,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   const indexData = await listBlogPosts(1, 12);
   const allOthers = (indexData?.items ?? []).filter((p) => p.slug !== post.slug);
-  const sameCategory = post.category
-    ? allOthers.filter((p) => p.category === post.category)
-    : [];
+  const sameCategory = post.category ? allOthers.filter((p) => p.category === post.category) : [];
   const related = [...sameCategory, ...allOthers.filter((p) => !sameCategory.includes(p))].slice(
     0,
     3
@@ -100,27 +98,52 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {post.title}
             </h1>
 
-            <div className="text-muted-foreground mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
-              <Avatar className="size-8">
-                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-                  {authorInitials(author)}
-                </AvatarFallback>
-              </Avatar>
-              <span className="text-foreground font-medium">{author}</span>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-4">
+              <div className="flex items-center gap-3 text-left">
+                <Avatar className="size-10">
+                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
+                    {authorInitials(author)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="leading-tight">
+                  <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
+                    Author
+                  </div>
+                  <div className="text-foreground text-sm font-semibold">{author}</div>
+                </div>
+              </div>
               {date ? (
                 <>
-                  <span className="text-muted-foreground/60" aria-hidden>
+                  <span
+                    className="text-muted-foreground/50 hidden sm:inline"
+                    aria-hidden
+                  >
                     ·
                   </span>
-                  <span>{date}</span>
+                  <div className="text-left leading-tight">
+                    <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
+                      Published
+                    </div>
+                    <div className="text-foreground text-sm font-semibold">{date}</div>
+                  </div>
                 </>
               ) : null}
               {post.reading_minutes > 0 ? (
                 <>
-                  <span className="text-muted-foreground/60" aria-hidden>
+                  <span
+                    className="text-muted-foreground/50 hidden sm:inline"
+                    aria-hidden
+                  >
                     ·
                   </span>
-                  <span>{post.reading_minutes} min read</span>
+                  <div className="text-left leading-tight">
+                    <div className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
+                      Time to read
+                    </div>
+                    <div className="text-foreground text-sm font-semibold">
+                      {post.reading_minutes} min read
+                    </div>
+                  </div>
                 </>
               ) : null}
             </div>
@@ -220,7 +243,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </h2>
                 <Link
                   href="/blog"
-                  className="text-primary text-sm font-medium hover:underline underline-offset-4"
+                  className="text-primary text-sm font-medium underline-offset-4 hover:underline"
                 >
                   All articles →
                 </Link>
