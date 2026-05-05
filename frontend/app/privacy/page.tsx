@@ -73,11 +73,7 @@ We may update this Policy from time to time. Material changes will be announced 
 
 ## 10. Contact
 
-Questions or requests? Email hello@alliances.pro.
-
----
-
-*This is a starter template, not legal advice. Replace with a lawyer-reviewed policy before broad public use.*`;
+Questions or requests? Email hello@alliances.pro.`;
 
 export default function PrivacyPage() {
   return (

@@ -61,11 +61,7 @@ We may update these Terms from time to time. Material changes will be announced 
 
 ## 12. Contact
 
-Questions about these Terms? Email hello@alliances.pro.
-
----
-
-*This is a starter template, not legal advice. Replace with lawyer-reviewed terms before broad public use.*`;
+Questions about these Terms? Email hello@alliances.pro.`;
 
 export default function TermsPage() {
   return (
