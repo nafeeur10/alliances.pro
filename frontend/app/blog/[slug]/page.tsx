@@ -280,6 +280,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         image={post.cover_image ?? `/api/og?title=${encodeURIComponent(post.title)}`}
         authorName={author}
         datePublished={post.published_at ?? new Date().toISOString()}
+        readingMinutes={post.reading_minutes > 0 ? post.reading_minutes : undefined}
+        wordCount={post.body ? post.body.trim().split(/\s+/).length : undefined}
       />
     </main>
   );

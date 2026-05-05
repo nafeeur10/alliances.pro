@@ -187,6 +187,10 @@ export interface ArticleSchemaInput {
   authorName: string;
   datePublished: string;
   dateModified?: string;
+  /** Optional reading time in minutes. Emitted as ISO 8601 duration. */
+  readingMinutes?: number;
+  /** Optional word count. */
+  wordCount?: number;
 }
 
 export function ArticleSchema(input: ArticleSchemaInput) {
@@ -202,7 +206,11 @@ export function ArticleSchema(input: ArticleSchemaInput) {
         author: { "@type": "Person", name: input.authorName },
         publisher: { "@id": absoluteUrl("/#organization") },
         datePublished: input.datePublished,
-        dateModified: input.dateModified ?? input.datePublished
+        dateModified: input.dateModified ?? input.datePublished,
+        ...(input.readingMinutes && input.readingMinutes > 0
+          ? { timeRequired: `PT${Math.round(input.readingMinutes)}M` }
+          : {}),
+        ...(input.wordCount && input.wordCount > 0 ? { wordCount: input.wordCount } : {})
       }}
     />
   );
