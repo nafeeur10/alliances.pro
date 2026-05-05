@@ -6,22 +6,21 @@
  * props. Never call from the browser.
  */
 
-import { getPage, getSettings, type MarketingPage, type PageSection } from "@/lib/api";
+import { getSettings, type MarketingPage, type PageSection } from "@/lib/api";
 
 export type SectionMap = Record<string, PageSection>;
 
+/**
+ * Page sections used to be a Filament-backed CMS for the home/about/pricing
+ * headlines. We retired that resource in favor of static defaults living next
+ * to each call site. This helper is preserved so the dozen `getHomeSections`
+ * call sites keep compiling and silently fall through to their fallbacks.
+ */
 export async function getHomeSections(): Promise<{
   page: MarketingPage | null;
   sections: SectionMap;
 }> {
-  const page = await getPage("home");
-  const sections: SectionMap = {};
-  if (page?.sections) {
-    for (const section of page.sections) {
-      sections[section.key] = section;
-    }
-  }
-  return { page, sections };
+  return { page: null, sections: {} };
 }
 
 export interface PublicSettings {

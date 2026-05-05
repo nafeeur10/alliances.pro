@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\Marketing\ListBlogPageData;
 use App\Http\Controllers\Api\Marketing\ListBlogPosts;
 use App\Http\Controllers\Api\Marketing\ListPricingPlans;
 use App\Http\Controllers\Api\Marketing\ShowBlogPost;
-use App\Http\Controllers\Api\Marketing\ShowPage;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/marketing')
@@ -17,8 +16,6 @@ Route::prefix('v1/marketing')
         Route::post('leads', LeadController::class)
             ->middleware('throttle:marketing-leads')
             ->name('leads.store');
-
-        Route::get('pages/{slug}', ShowPage::class)->name('pages.show');
 
         Route::get('pricing-plans', ListPricingPlans::class)->name('pricing-plans.index');
 

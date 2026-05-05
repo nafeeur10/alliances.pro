@@ -4,7 +4,6 @@ namespace App\Filament\Pages;
 
 use App\Models\Marketing\BlogPost;
 use App\Models\Marketing\Lead;
-use App\Models\Marketing\Page as MarketingPage;
 use App\Models\Marketing\PricingPlan;
 use BackedEnum;
 use Filament\Pages\Page;
@@ -58,7 +57,6 @@ class MarketingDashboard extends Page
         ];
 
         $unpublishedCounts = [
-            'Pages' => MarketingPage::query()->where('is_published', false)->count(),
             'Pricing plans' => PricingPlan::query()->where('is_published', false)->count(),
             'Blog posts' => BlogPost::query()->where('is_published', false)->count(),
         ];
@@ -69,9 +67,9 @@ class MarketingDashboard extends Page
             ->get(['id', 'name', 'email', 'source', 'created_at']);
 
         $quickLinks = [
-            ['label' => 'Pages', 'icon' => 'rectangle-stack', 'url' => url('/admin/marketing/pages')],
             ['label' => 'Pricing plans', 'icon' => 'currency-dollar', 'url' => url('/admin/marketing/pricing-plans')],
             ['label' => 'Blog posts', 'icon' => 'newspaper', 'url' => url('/admin/marketing/blog-posts')],
+            ['label' => 'Leads', 'icon' => 'users', 'url' => url('/admin/marketing/leads')],
             ['label' => 'Site settings', 'icon' => 'cog', 'url' => url('/admin/marketing/site-settings')],
         ];
 
