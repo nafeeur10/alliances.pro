@@ -36,9 +36,20 @@ export const FooterSection = () => {
             </div>
 
             <div className="relative grid grid-cols-2 gap-x-12 gap-y-8 md:grid-cols-4 xl:grid-cols-6">
-              <div className="col-span-full space-y-4 xl:col-span-2">
+              <div className="col-span-full flex flex-col gap-4 xl:col-span-2">
                 <Logo {...footerLogo} />
                 <p className="text-muted-foreground">{footerBlurb}</p>
+                <p className="text-muted-foreground mt-auto text-sm">
+                  A product of{" "}
+                  <a
+                    href="https://dequelab.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-foreground hover:text-primary font-medium underline-offset-4 transition-colors hover:underline"
+                  >
+                    Deque Lab
+                  </a>
+                </p>
               </div>
 
               {footerColumns.map((col) => (
