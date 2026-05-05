@@ -5,8 +5,6 @@ import { useState } from "react";
 import { Check, Loader2 } from "lucide-react";
 
 import { footerNewsletter } from "@/@data/footer";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -32,8 +30,8 @@ export function FooterNewsletterForm() {
 
   if (status === "success") {
     return (
-      <div className="flex w-full max-w-sm items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-700 dark:text-emerald-300">
-        <Check className="size-4 shrink-0" aria-hidden />
+      <div className="bg-background/95 flex w-full items-center gap-2 rounded-full border border-emerald-500/40 px-5 py-3 text-sm text-emerald-700 shadow-md backdrop-blur dark:text-emerald-300">
+        <Check className="size-5 shrink-0" aria-hidden strokeWidth={2.5} />
         <span>Thanks — check your inbox to confirm.</span>
       </div>
     );
@@ -42,20 +40,24 @@ export function FooterNewsletterForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex w-full max-w-sm gap-2"
       aria-label="Subscribe to our newsletter"
+      className="bg-background focus-within:border-primary/60 focus-within:ring-primary/20 flex w-full items-center rounded-full border shadow-md transition-shadow focus-within:ring-4"
     >
-      <Input
+      <input
         type="email"
         required
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         aria-label="Email address"
         placeholder={footerNewsletter.placeholder}
-        className="bg-background/60 h-9"
         disabled={status === "submitting"}
+        className="text-foreground placeholder:text-muted-foreground h-14 flex-1 rounded-full bg-transparent pr-3 pl-6 text-sm outline-none disabled:opacity-60"
       />
-      <Button type="submit" size="sm" className="h-9 shrink-0" disabled={status === "submitting"}>
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="bg-primary text-primary-foreground hover:bg-primary/90 my-1.5 mr-1.5 inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium shadow-sm transition-colors disabled:opacity-70"
+      >
         {status === "submitting" ? (
           <>
             <Loader2 className="size-4 animate-spin" aria-hidden />
@@ -64,7 +66,7 @@ export function FooterNewsletterForm() {
         ) : (
           footerNewsletter.ctaLabel
         )}
-      </Button>
+      </button>
     </form>
   );
 }
