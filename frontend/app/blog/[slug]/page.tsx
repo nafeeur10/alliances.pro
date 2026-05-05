@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Calendar, Clock } from "lucide-react";
 
 import { FooterSection } from "@/components/layout/sections/footer";
+import { BlogPostCard } from "@/components/marketing/blog-post-card";
 import { BlogTableOfContents } from "@/components/marketing/blog-table-of-contents";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -63,6 +63,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const date = formatDate(post.published_at);
   const author = post.author_name ?? "Alliances PRO Team";
 
+  const indexData = await listBlogPosts(1, 12);
+  const allOthers = (indexData?.items ?? []).filter((p) => p.slug !== post.slug);
+  const sameCategory = post.category
+    ? allOthers.filter((p) => p.category === post.category)
+    : [];
+  const related = [...sameCategory, ...allOthers.filter((p) => !sameCategory.includes(p))].slice(
+    0,
+    3
+  );
+
   return (
     <main className="min-h-screen">
       {/* ---------- Hero ---------- */}
@@ -90,39 +100,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {post.title}
             </h1>
 
-            {post.excerpt ? (
-              <p className="text-muted-foreground mx-auto mt-5 max-w-2xl text-lg leading-relaxed">
-                {post.excerpt}
-              </p>
-            ) : null}
-
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <div className="flex items-center gap-3">
-                <Avatar className="size-10">
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
-                    {authorInitials(author)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="text-left leading-tight">
-                  <div className="text-foreground text-sm font-semibold">{author}</div>
-                  <div className="text-muted-foreground text-xs">Alliances PRO</div>
-                </div>
-              </div>
-              <span className="bg-border h-6 w-px" aria-hidden />
-              <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs">
-                {date ? (
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="size-3.5" />
-                    {date}
+            <div className="text-muted-foreground mt-7 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm">
+              <Avatar className="size-8">
+                <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+                  {authorInitials(author)}
+                </AvatarFallback>
+              </Avatar>
+              <span className="text-foreground font-medium">{author}</span>
+              {date ? (
+                <>
+                  <span className="text-muted-foreground/60" aria-hidden>
+                    ·
                   </span>
-                ) : null}
-                {post.reading_minutes > 0 ? (
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="size-3.5" />
-                    {post.reading_minutes} min read
+                  <span>{date}</span>
+                </>
+              ) : null}
+              {post.reading_minutes > 0 ? (
+                <>
+                  <span className="text-muted-foreground/60" aria-hidden>
+                    ·
                   </span>
-                ) : null}
-              </div>
+                  <span>{post.reading_minutes} min read</span>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -151,14 +151,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <div className="text-muted-foreground text-xs">Author</div>
                   </div>
                 </div>
-                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-                  Practical writing on CRM, pipelines, and service-business operations from the
-                  Alliances PRO team.
+              </div>
+
+              {/* CTA — Ready to put it into practice */}
+              <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
+                <h3 className="text-foreground text-lg font-bold tracking-tight">
+                  Ready to put it into practice?
+                </h3>
+                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                  Flat $39/mo, unlimited seats. 14-day free trial — no credit card.
                 </p>
+                <Button asChild size="sm" className="mt-4 w-full">
+                  <Link href="https://app.alliances.pro/signup">Start 14-day free trial</Link>
+                </Button>
               </div>
 
               {/* Inline newsletter */}
-              <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
+              <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
                 <Badge
                   variant="outline"
                   className="bg-background/60 mb-3 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase"
@@ -200,30 +209,31 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
       </section>
 
-      {/* ---------- CTA banner ---------- */}
-      <section className="pb-20">
-        <div className="container">
-          <div className="bg-primary/5 border-primary/20 mx-auto flex max-w-(--breakpoint-xl) flex-col items-center gap-5 rounded-3xl border p-10 text-center sm:p-14">
-            <h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">
-              Ready to put it into practice?
-            </h2>
-            <p className="text-muted-foreground max-w-xl">
-              Flat $39/mo, unlimited seats. 14-day free trial — no credit card.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg">
-                <Link href="https://app.alliances.pro/signup">Start 14-day free trial</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/blog" className="inline-flex items-center gap-1.5">
-                  More posts
-                  <ArrowUpRight className="size-4" />
+      {/* ---------- Related posts ---------- */}
+      {related.length > 0 ? (
+        <section className="pb-20">
+          <div className="container">
+            <div className="mx-auto max-w-(--breakpoint-xl)">
+              <div className="mb-8 flex items-end justify-between gap-4">
+                <h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">
+                  Related posts
+                </h2>
+                <Link
+                  href="/blog"
+                  className="text-primary text-sm font-medium hover:underline underline-offset-4"
+                >
+                  All articles →
                 </Link>
-              </Button>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {related.map((p) => (
+                  <BlogPostCard key={p.slug} post={p} />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* ---------- Footer ---------- */}
       <FooterSection />
