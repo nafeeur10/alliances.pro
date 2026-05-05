@@ -157,8 +157,3 @@ export const listBlogPosts = (page = 1, perPage = 12) =>
 export const getBlogPageData = () => apiFetch<BlogPageData>("/blog/page-data", { tags: ["blog"] });
 export const getBlogPost = (slug: string) =>
   apiFetch<BlogPost>(`/blog/${encodeURIComponent(slug)}`, { tags: [`blog:${slug}`] });
-
-export interface SiteSettings {
-  [key: string]: { value: unknown; group: string; type: string };
-}
-export const getSettings = () => apiFetch<SiteSettings>("/settings", { tags: ["settings"] });

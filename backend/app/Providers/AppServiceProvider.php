@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Marketing\BlogPost;
 use App\Models\Marketing\PricingPlan;
-use App\Models\Marketing\SiteSetting;
 use App\Observers\Marketing\MarketingCacheObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -16,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
     /** @var list<class-string> */
     protected array $marketingObservedModels = [
         PricingPlan::class,
-        SiteSetting::class,
         BlogPost::class,
     ];
 

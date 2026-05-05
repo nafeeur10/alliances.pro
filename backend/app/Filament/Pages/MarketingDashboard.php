@@ -70,7 +70,6 @@ class MarketingDashboard extends Page
             ['label' => 'Pricing plans', 'icon' => 'currency-dollar', 'url' => url('/admin/marketing/pricing-plans')],
             ['label' => 'Blog posts', 'icon' => 'newspaper', 'url' => url('/admin/marketing/blog-posts')],
             ['label' => 'Leads', 'icon' => 'users', 'url' => url('/admin/marketing/leads')],
-            ['label' => 'Site settings', 'icon' => 'cog', 'url' => url('/admin/marketing/site-settings')],
         ];
 
         return [

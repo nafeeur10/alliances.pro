@@ -12,7 +12,6 @@ All endpoints are under `/api/v1/marketing` (CORS-allowed for the production mar
 | `/blog/page-data` | GET | `ListBlogPageData` | `BlogPost` (grouped by category) | — | Blog index sections (Latest / Case Studies / Marketing / Product / Analysis) |
 | `/blog/{slug}` | GET | `ShowBlogPost` | `BlogPost` | `BlogPostResource` | Blog detail page |
 | `/pricing-plans` | GET | `ListPricingPlans` | `PricingPlan` / `marketing_pricing_plans` | `PricingPlanResource` | Pricing cards on home + `/pricing` |
-| `/settings` | GET | `GetSettings` | `MarketingSetting` / `marketing_settings` | `MarketingSettingsResource` | Site-wide config (branding, social handles, SEO defaults) |
 | `/sitemap` | GET | `GetSitemap` | aggregated | — | Backend sitemap consumed by `app/sitemap.ts` |
 
 ## Public API (write)
@@ -34,13 +33,15 @@ The same endpoint backs **four** frontend flows distinguished only by `source`:
 |---|---|---|
 | `marketing_blog_posts` | `BlogPost` | Includes `is_featured`, `category`, `tags`, `cover_image`, `body` (markdown) |
 | `marketing_pricing_plans` | `PricingPlan` | Monthly + yearly cents; features as JSON array |
-| `marketing_settings` | `SiteSetting` | Single-row config |
 | `marketing_leads` | `Lead` | All inbound contact + newsletter + demo + waitlist rows |
 
-The `marketing_pages` and `marketing_page_sections` tables were retired on
-2026-05-05 (see migration `2026_05_05_120000_drop_marketing_pages_and_page_sections`).
-Page copy (eyebrow, headline, subheading) now lives next to each call site as
-hard-coded defaults inside the Next.js components.
+The `marketing_pages`, `marketing_page_sections`, and `marketing_settings`
+tables were retired on 2026-05-05 (migrations
+`drop_marketing_pages_and_page_sections` and `drop_marketing_settings`).
+Page copy (eyebrow, headline, subheading) and site-wide brand bits (logo,
+social handles, contact email, SEO defaults) now live in the Next.js
+frontend — `@data/footer.ts`, `@data/contact.ts`, `lib/seo.ts`, plus the
+hard-coded defaults next to each marketing page.
 
 (Plus tag/category join tables on blog posts.)
 

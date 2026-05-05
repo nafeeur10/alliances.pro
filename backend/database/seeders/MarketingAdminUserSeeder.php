@@ -16,10 +16,7 @@ class MarketingAdminUserSeeder extends Seeder
 
         $marketingEditor = Role::firstOrCreate(['name' => 'marketing_editor', 'guard_name' => 'web']);
 
-        $marketingEntities = [
-            'Page', 'PageSection', 'PricingPlan', 'Lead',
-            'SiteSetting', 'BlogPost',
-        ];
+        $marketingEntities = ['PricingPlan', 'Lead', 'BlogPost'];
         $verbs = ['ViewAny', 'View', 'Create', 'Update', 'Delete', 'DeleteAny', 'Restore', 'RestoreAny', 'ForceDelete', 'ForceDeleteAny', 'Replicate', 'Reorder'];
 
         $permissionNames = [];

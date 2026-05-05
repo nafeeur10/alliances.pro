@@ -6,7 +6,7 @@
  * props. Never call from the browser.
  */
 
-import { getSettings, type MarketingPage, type PageSection } from "@/lib/api";
+import type { MarketingPage, PageSection } from "@/lib/api";
 
 export type SectionMap = Record<string, PageSection>;
 
@@ -21,20 +21,6 @@ export async function getHomeSections(): Promise<{
   sections: SectionMap;
 }> {
   return { page: null, sections: {} };
-}
-
-export interface PublicSettings {
-  [key: string]: unknown;
-}
-
-export async function getPublicSettings(): Promise<PublicSettings> {
-  const raw = await getSettings();
-  if (!raw) return {};
-  const out: PublicSettings = {};
-  for (const [key, entry] of Object.entries(raw)) {
-    out[key] = entry?.value;
-  }
-  return out;
 }
 
 export function readPayload<T = Record<string, unknown>>(

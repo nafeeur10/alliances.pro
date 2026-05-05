@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Marketing\GetSettings;
 use App\Http\Controllers\Api\Marketing\LeadController;
 use App\Http\Controllers\Api\Marketing\GetSitemap;
 use App\Http\Controllers\Api\Marketing\ListBlogPageData;
@@ -23,6 +22,5 @@ Route::prefix('v1/marketing')
         Route::get('blog/page-data', ListBlogPageData::class)->name('blog.page-data');
         Route::get('blog/{slug}', ShowBlogPost::class)->name('blog.show');
 
-        Route::get('settings', GetSettings::class)->name('settings.index');
         Route::get('sitemap', GetSitemap::class)->name('sitemap.index');
     });
