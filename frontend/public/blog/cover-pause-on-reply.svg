@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Pause on reply">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g transform="translate(360 240)">
+    <rect width="880" height="420" rx="28" fill="#FFFFFF" opacity="0.97"/>
+    <g transform="translate(60 60)">
+      <rect width="320" height="86" rx="16" fill="#FFEDD5"/>
+      <rect x="20" y="20" width="100" height="14" rx="7" fill="#9A3412"/>
+      <rect x="20" y="46" width="220" height="14" rx="7" fill="#FB923C"/>
+      <rect x="20" y="68" width="180" height="10" rx="5" fill="#FED7AA"/>
+    </g>
+    <g transform="translate(60 170)">
+      <rect width="320" height="86" rx="16" fill="#FFEDD5"/>
+      <rect x="20" y="20" width="120" height="14" rx="7" fill="#9A3412"/>
+      <rect x="20" y="46" width="240" height="14" rx="7" fill="#FB923C"/>
+      <rect x="20" y="68" width="200" height="10" rx="5" fill="#FED7AA"/>
+    </g>
+    <g transform="translate(60 280)">
+      <rect width="320" height="86" rx="16" fill="#FECACA" opacity="0.7"/>
+      <rect x="20" y="20" width="120" height="14" rx="7" fill="#7F1D1D" opacity="0.45"/>
+      <rect x="20" y="46" width="240" height="14" rx="7" fill="#7F1D1D" opacity="0.32"/>
+      <rect x="20" y="68" width="200" height="10" rx="5" fill="#7F1D1D" opacity="0.22"/>
+    </g>
+    <g transform="translate(540 130)">
+      <circle r="120" fill="#F97316"/>
+      <rect x="-44" y="-50" width="28" height="100" rx="6" fill="#FFFFFF"/>
+      <rect x="16" y="-50" width="28" height="100" rx="6" fill="#FFFFFF"/>
+    </g>
+    <g transform="translate(540 320)">
+      <text text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="600" fill="#7C2D12">stop_on_reply = true</text>
+    </g>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">One cadence rule. Most "creepy CRM" gone.</text>
+</svg>

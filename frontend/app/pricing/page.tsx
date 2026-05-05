@@ -15,7 +15,7 @@ import {
   type ComparePlan,
   type CompareExtraRow
 } from "@/components/marketing/pricing-compare";
-import { listFaqs, listPricingPlans, type Faq, type PricingPlan } from "@/lib/api";
+import { listPricingPlans, type PricingPlan } from "@/lib/api";
 import { getHomeSections, pickArray, pickString, readPayload } from "@/lib/cms";
 import { buildMetadata } from "@/lib/seo";
 
@@ -168,19 +168,9 @@ function planToCompare(p: PricingPlanItem): ComparePlan {
   };
 }
 
-function pickPricingFaqs(grouped: Record<string, Faq[]> | null) {
-  if (!grouped) return null;
-  const pricing = grouped["Pricing"];
-  if (pricing && pricing.length > 0) return pricing;
-  // Fall back to flat list across all categories — first 6
-  const flat = Object.values(grouped).flat();
-  return flat.length > 0 ? flat.slice(0, 6) : null;
-}
-
 export default async function PricingPage() {
-  const [apiPlans, faqsGrouped, { sections }] = await Promise.all([
+  const [apiPlans, { sections }] = await Promise.all([
     listPricingPlans(),
-    listFaqs(),
     getHomeSections()
   ]);
   const header = readPayload<Record<string, unknown>>(sections, "pricing");
@@ -215,11 +205,8 @@ export default async function PricingPage() {
       ? rawExtraRows.map(normaliseCompareRow).filter((r): r is CompareExtraRow => r !== null)
       : FALLBACK_EXTRA_ROWS;
 
-  // Pricing FAQs
-  const pricingFaqs = pickPricingFaqs(faqsGrouped);
-  const faqItems = pricingFaqs
-    ? pricingFaqs.map((f) => ({ q: f.question, a: f.answer }))
-    : FALLBACK_FAQS;
+  // Pricing FAQs (static)
+  const faqItems = FALLBACK_FAQS;
 
   // Header copy
   const eyebrow = pickString(header, "eyebrow", "Pricing");

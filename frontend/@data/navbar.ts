@@ -33,7 +33,7 @@ interface NavLogo {
 export const navLogo: NavLogo = {
   text: "Alliances PRO",
   iconName: "SunDim",
-  imageUrl: "/alliancespro_logo.png"
+  imageUrl: "/logo.png"
 };
 
 // ---------- Top-level menu items ----------
@@ -41,7 +41,7 @@ export const routeList: RouteProps[] = [
   { href: "#benefits", label: "Benefits" },
   { href: "#features", label: "Features" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blogs" },
+  { href: "#blog", label: "Blogs" },
   { href: "/about", label: "About Us" }
 ];
 

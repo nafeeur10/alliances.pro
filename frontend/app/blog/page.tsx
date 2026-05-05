@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
-import { Breadcrumbs } from "@/components/breadcrumbs";
+import { FooterSection } from "@/components/layout/sections/footer";
+import { BlogCoverArt } from "@/components/marketing/blog-cover-art";
+import { BlogPostCard } from "@/components/marketing/blog-post-card";
 import { SectionShell } from "@/components/marketing/section-shell";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { listBlogPosts } from "@/lib/api";
+import { type BlogPostSummary, getBlogPageData } from "@/lib/api";
+import { authorInitials } from "@/lib/blog";
 import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
@@ -13,162 +17,159 @@ export const revalidate = 60;
 export const metadata: Metadata = buildMetadata({
   title: "Blog — Alliances PRO",
   description:
-    "Practical playbooks for service businesses: pipelines, campaigns, agency ops, and how to pick the right CRM stack.",
+    "Case studies, marketing tips, product updates, and CRM analysis for service businesses.",
   path: "/blog"
 });
 
-interface BlogPageProps {
-  searchParams?: Promise<{ page?: string; category?: string }>;
+function formatDate(iso: string | null): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
-export default async function BlogIndexPage({ searchParams }: BlogPageProps) {
-  const sp = (await searchParams) ?? {};
-  const currentPage = Math.max(1, Number.parseInt(sp.page ?? "1", 10) || 1);
-  const categoryFilter = sp.category?.trim() || null;
+function FeaturedHero({ post }: { post: BlogPostSummary }) {
+  const date = formatDate(post.published_at);
+  const readTime = post.reading_minutes ? `${post.reading_minutes} min read` : null;
+  const author = post.author_name ?? "Alliances PRO";
 
-  const index = await listBlogPosts(currentPage, 12);
-  const posts = index?.items ?? [];
-  const pagination = index?.pagination ?? {
-    current_page: 1,
-    per_page: 12,
-    total: 0,
-    last_page: 1
-  };
+  return (
+    <Link
+      href={`/blog/${post.slug}`}
+      className="bg-background/80 relative mx-auto flex w-full max-w-(--breakpoint-lg) flex-col overflow-hidden rounded-2xl border shadow-sm md:flex-row"
+    >
+      <figure className="relative shrink-0 overflow-hidden p-2.5 md:w-2/5">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
+          <BlogCoverArt post={post} />
+        </div>
+      </figure>
+      <div className="flex flex-1 flex-col gap-3 p-6">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="bg-primary text-primary-foreground inline-block rounded-full border border-transparent px-2.5 py-0.5 text-xs font-medium tracking-wide uppercase shadow-sm">
+            Featured
+          </span>
+          {post.category ? (
+            <Badge variant="secondary" className="text-xs font-medium">
+              {post.category}
+            </Badge>
+          ) : null}
+        </div>
+        <h4 className="text-foreground text-xl font-semibold tracking-tight sm:text-2xl">
+          {post.title}
+        </h4>
+        {post.excerpt ? (
+          <p className="text-muted-foreground line-clamp-6 text-sm leading-relaxed sm:text-base">
+            {post.excerpt}
+          </p>
+        ) : null}
 
-  const visiblePosts = categoryFilter
-    ? posts.filter(
-        (p) => (p.category ?? "Uncategorized").toLowerCase() === categoryFilter.toLowerCase()
-      )
-    : posts;
+        <div className="border-border/60 mt-auto flex items-center gap-3 border-t pt-4">
+          <Avatar className="size-9">
+            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+              {authorInitials(post.author_name)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 text-xs leading-tight">
+            <div className="text-foreground truncate text-sm font-medium">{author}</div>
+            {date || readTime ? (
+              <div className="text-muted-foreground truncate">
+                {date}
+                {date && readTime ? <span aria-hidden> · </span> : null}
+                {readTime}
+              </div>
+            ) : null}
+          </div>
+          <span className="bg-primary text-primary-foreground ml-auto inline-flex shrink-0 items-center gap-1 rounded-md px-3 py-1.5 text-xs font-medium shadow-sm">
+            Learn More
+            <ArrowUpRight className="size-3.5" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
 
-  // Aggregate categories from the current page (a separate /blog/categories
-  // endpoint would be cleaner — punt to a follow-up).
-  const categories = Array.from(new Set(posts.map((p) => p.category ?? "Uncategorized"))).sort();
+interface CategoryRowProps {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  posts: BlogPostSummary[];
+}
+
+function CategoryRow({ eyebrow, title, description, posts }: CategoryRowProps) {
+  if (posts.length === 0) return null;
+
+  return (
+    <section className="mt-20 first:mt-0">
+      <div className="mx-auto mb-8 max-w-(--breakpoint-xl)">
+        <Badge
+          variant="outline"
+          className="bg-background/60 mb-4 rounded-full px-4 py-1.5 text-xs font-medium tracking-wider uppercase backdrop-blur"
+        >
+          <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+          {eyebrow}
+        </Badge>
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">{title}</h2>
+        {description ? <p className="text-muted-foreground mt-2 text-base">{description}</p> : null}
+      </div>
+      <ul className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <li key={post.id}>
+            <BlogPostCard post={post} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+export default async function BlogIndexPage() {
+  const data = await getBlogPageData();
+
+  const featured = data?.featured ?? null;
+  const latest = data?.latest ?? [];
+  const caseStudy = data?.case_study ?? [];
+  const marketingTips = data?.marketing_tips ?? [];
+  const productUpdate = data?.product_update ?? [];
+  const crmAnalysis = data?.crm_analysis ?? [];
+
+  const empty =
+    !featured &&
+    latest.length === 0 &&
+    caseStudy.length === 0 &&
+    marketingTips.length === 0 &&
+    productUpdate.length === 0 &&
+    crmAnalysis.length === 0;
 
   return (
     <main className="min-h-screen">
       <SectionShell as="section" className="pt-32 pb-12">
-        <div className="mx-auto mb-8 max-w-5xl">
-          <Breadcrumbs items={[{ name: "Blog", url: "/blog" }]} />
-        </div>
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">The Alliances Blog</h1>
           <p className="text-muted-foreground mt-4 text-lg">
-            Pipelines, campaigns, agency ops, and how to pick the right CRM stack.
+            Case studies, marketing tips, product updates, and CRM analysis for service businesses.
           </p>
         </div>
       </SectionShell>
 
-      <SectionShell as="section" className="pt-0">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[240px_1fr]">
-          <aside className="space-y-2 lg:sticky lg:top-24 lg:self-start">
-            <h2 className="text-foreground mb-3 text-sm font-semibold tracking-wider uppercase">
-              Categories
-            </h2>
-            <ul className="space-y-1.5">
-              <li>
-                <Link
-                  href="/blog"
-                  className={`hover:text-foreground text-sm transition-colors ${
-                    !categoryFilter ? "text-foreground font-semibold" : "text-muted-foreground"
-                  }`}
-                >
-                  All posts
-                </Link>
-              </li>
-              {categories.map((cat) => (
-                <li key={cat}>
-                  <Link
-                    href={`/blog?category=${encodeURIComponent(cat)}`}
-                    className={`hover:text-foreground text-sm transition-colors ${
-                      categoryFilter?.toLowerCase() === cat.toLowerCase()
-                        ? "text-foreground font-semibold"
-                        : "text-muted-foreground"
-                    }`}
-                  >
-                    {cat}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </aside>
-
-          <div>
-            {visiblePosts.length === 0 ? (
-              <p className="text-muted-foreground py-12 text-center">
-                No posts to show yet — check back soon.
-              </p>
-            ) : (
-              <ul className="grid gap-6 md:grid-cols-2">
-                {visiblePosts.map((post) => (
-                  <li key={post.id}>
-                    <Link href={`/blog/${post.slug}`} className="block h-full">
-                      <Card className="hover:border-primary/40 h-full transition-colors">
-                        <CardHeader>
-                          <div className="flex flex-wrap items-center gap-2">
-                            {post.category && <Badge variant="outline">{post.category}</Badge>}
-                            <span className="text-muted-foreground text-xs">
-                              {post.reading_minutes ? `${post.reading_minutes} min read` : null}
-                            </span>
-                          </div>
-                          <CardTitle className="text-xl leading-snug">{post.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-muted-foreground line-clamp-3 text-sm">
-                            {post.excerpt}
-                          </p>
-                          {post.author_name && (
-                            <p className="text-muted-foreground mt-4 text-xs">
-                              By {post.author_name}
-                            </p>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            {pagination.last_page > 1 && (
-              <nav
-                aria-label="Pagination"
-                className="mt-10 flex items-center justify-between gap-3"
-              >
-                <Link
-                  aria-disabled={pagination.current_page <= 1}
-                  href={`/blog?page=${Math.max(1, pagination.current_page - 1)}${
-                    categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ""
-                  }`}
-                  className={`text-sm ${
-                    pagination.current_page <= 1
-                      ? "text-muted-foreground/50 pointer-events-none"
-                      : "text-primary"
-                  }`}
-                >
-                  ← Previous
-                </Link>
-                <span className="text-muted-foreground text-sm">
-                  Page {pagination.current_page} of {pagination.last_page}
-                </span>
-                <Link
-                  aria-disabled={pagination.current_page >= pagination.last_page}
-                  href={`/blog?page=${pagination.current_page + 1}${
-                    categoryFilter ? `&category=${encodeURIComponent(categoryFilter)}` : ""
-                  }`}
-                  className={`text-sm ${
-                    pagination.current_page >= pagination.last_page
-                      ? "text-muted-foreground/50 pointer-events-none"
-                      : "text-primary"
-                  }`}
-                >
-                  Next →
-                </Link>
-              </nav>
-            )}
-          </div>
-        </div>
+      <SectionShell as="section" className="pt-0 pb-24">
+        {empty ? (
+          <p className="text-muted-foreground py-12 text-center">
+            No posts to show yet — check back soon.
+          </p>
+        ) : (
+          <>
+            {featured ? <FeaturedHero post={featured} /> : null}
+            <CategoryRow eyebrow="Latest" title="Latest articles" posts={latest} />
+            <CategoryRow eyebrow="Case Studies" title="Case Studies" posts={caseStudy} />
+            <CategoryRow eyebrow="Marketing" title="Marketing Tips" posts={marketingTips} />
+            <CategoryRow eyebrow="Product" title="Product Updates" posts={productUpdate} />
+            <CategoryRow eyebrow="Analysis" title="CRM Analysis" posts={crmAnalysis} />
+          </>
+        )}
       </SectionShell>
+
+      <FooterSection />
     </main>
   );
 }

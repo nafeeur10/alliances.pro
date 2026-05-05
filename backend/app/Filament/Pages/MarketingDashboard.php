@@ -3,14 +3,9 @@
 namespace App\Filament\Pages;
 
 use App\Models\Marketing\BlogPost;
-use App\Models\Marketing\Comparison;
-use App\Models\Marketing\Faq;
-use App\Models\Marketing\Feature;
-use App\Models\Marketing\Industry;
 use App\Models\Marketing\Lead;
 use App\Models\Marketing\Page as MarketingPage;
 use App\Models\Marketing\PricingPlan;
-use App\Models\Marketing\Testimonial;
 use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
@@ -64,12 +59,7 @@ class MarketingDashboard extends Page
 
         $unpublishedCounts = [
             'Pages' => MarketingPage::query()->where('is_published', false)->count(),
-            'Features' => Feature::query()->where('is_published', false)->count(),
-            'Industries' => Industry::query()->where('is_published', false)->count(),
             'Pricing plans' => PricingPlan::query()->where('is_published', false)->count(),
-            'FAQs' => Faq::query()->where('is_published', false)->count(),
-            'Testimonials' => Testimonial::query()->where('is_published', false)->count(),
-            'Comparisons' => Comparison::query()->where('is_published', false)->count(),
             'Blog posts' => BlogPost::query()->where('is_published', false)->count(),
         ];
 
@@ -81,9 +71,7 @@ class MarketingDashboard extends Page
         $quickLinks = [
             ['label' => 'Pages', 'icon' => 'rectangle-stack', 'url' => url('/admin/marketing/pages')],
             ['label' => 'Pricing plans', 'icon' => 'currency-dollar', 'url' => url('/admin/marketing/pricing-plans')],
-            ['label' => 'FAQs', 'icon' => 'question-mark-circle', 'url' => url('/admin/marketing/faqs')],
             ['label' => 'Blog posts', 'icon' => 'newspaper', 'url' => url('/admin/marketing/blog-posts')],
-            ['label' => 'Comparisons', 'icon' => 'scale', 'url' => url('/admin/marketing/comparisons')],
             ['label' => 'Site settings', 'icon' => 'cog', 'url' => url('/admin/marketing/site-settings')],
         ];
 

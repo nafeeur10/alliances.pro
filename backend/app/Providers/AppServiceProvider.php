@@ -3,16 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Marketing\BlogPost;
-use App\Models\Marketing\Comparison;
-use App\Models\Marketing\Faq;
-use App\Models\Marketing\Feature;
-use App\Models\Marketing\Industry;
-use App\Models\Marketing\Integration;
 use App\Models\Marketing\Page;
 use App\Models\Marketing\PageSection;
 use App\Models\Marketing\PricingPlan;
 use App\Models\Marketing\SiteSetting;
-use App\Models\Marketing\Testimonial;
 use App\Observers\Marketing\MarketingCacheObserver;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -25,13 +19,7 @@ class AppServiceProvider extends ServiceProvider
     protected array $marketingObservedModels = [
         Page::class,
         PageSection::class,
-        Feature::class,
-        Industry::class,
         PricingPlan::class,
-        Faq::class,
-        Testimonial::class,
-        Comparison::class,
-        Integration::class,
         SiteSetting::class,
         BlogPost::class,
     ];

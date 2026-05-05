@@ -1,64 +1,112 @@
-import { Building2, Clock, Mail, Phone } from "lucide-react";
+import Image from "next/image";
 
+import { contactSection } from "@/@data/contact";
 import SectionContainer from "@/components/layout/section-container";
-import SectionHeader from "@/components/layout/section-header";
-import { getHomeSections, pickString, readPayload } from "@/lib/cms";
+import { Badge } from "@/components/ui/badge";
 
 import { ContactForm } from "./contact-form";
 
-export const ContactSection = async () => {
-  const { sections } = await getHomeSections();
-  const payload = readPayload<Record<string, unknown>>(sections, "contact");
+export const ContactSection = () => {
+  const { eyebrow, headline, description, location, phone, email, hoursPrimary, hoursSecondary } =
+    contactSection;
 
-  const location = pickString(payload, "location", "123 Maple Lane, Springfield, IL 62704");
-  const phone = pickString(payload, "phone", "+1 (555) 987-6543");
-  const email = pickString(payload, "email", "contact@ourcompany.com");
-  const hours = pickString(payload, "hours", "Tuesday to Saturday, 9 AM - 5 PM");
+  // Strip everything that isn't a digit so wa.me/tel: links are well-formed.
+  const phoneDigits = phone.replace(/\D/g, "");
 
   return (
     <SectionContainer id="contact">
-      <SectionHeader
-        subTitle={pickString(payload, "eyebrow", "Contact")}
-        title={pickString(payload, "headline", "Get Connect With Us")}
-        description={pickString(
-          payload,
-          "sub",
-          "Stay in touch with us for updates, support, and valuable insights. We're here to help you every step of the way!"
-        )}
-      />
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
+        <Badge
+          variant="outline"
+          className="bg-background/60 mb-5 rounded-full px-4 py-1.5 text-xs font-medium tracking-wider uppercase backdrop-blur"
+        >
+          <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+          {eyebrow}
+        </Badge>
+        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-5xl">{headline}</h2>
+        <p className="text-muted-foreground text-base md:text-lg">{description}</p>
+      </div>
       <section className="mx-auto grid max-w-screen-lg grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <div className="flex flex-col gap-6 *:rounded-lg *:border *:p-6">
-            <div className="bg-muted">
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-muted hover:border-primary/40 block transition-colors"
+            >
               <div className="mb-4 flex items-center gap-3">
-                <Building2 className="size-4" />
+                <Image
+                  src="/icons/location-pin.svg"
+                  alt=""
+                  aria-hidden
+                  width={28}
+                  height={28}
+                  unoptimized
+                  className="size-7"
+                />
                 <div className="font-bold">Location:</div>
               </div>
               <div className="text-muted-foreground">{location}</div>
-            </div>
+            </a>
 
-            <div className="bg-muted">
+            <a
+              href={`https://wa.me/${phoneDigits}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-muted hover:border-primary/40 block transition-colors"
+            >
               <div className="mb-4 flex items-center gap-3">
-                <Phone className="size-4" />
-                <div className="font-bold">Call us:</div>
+                <Image
+                  src="/icons/whatsapp.svg"
+                  alt=""
+                  aria-hidden
+                  width={28}
+                  height={28}
+                  unoptimized
+                  className="size-7"
+                />
+                <div className="font-bold">WhatsApp Message:</div>
               </div>
               <div className="text-muted-foreground">{phone}</div>
-            </div>
+            </a>
 
-            <div className="bg-muted">
+            <a
+              href={`mailto:${email}`}
+              className="bg-muted hover:border-primary/40 block transition-colors"
+            >
               <div className="mb-4 flex items-center gap-3">
-                <Mail className="size-4" />
+                <Image
+                  src="/icons/email.svg"
+                  alt=""
+                  aria-hidden
+                  width={28}
+                  height={28}
+                  unoptimized
+                  className="size-7"
+                />
                 <div className="font-bold">Email us:</div>
               </div>
               <div className="text-muted-foreground">{email}</div>
-            </div>
+            </a>
 
             <div className="bg-muted">
               <div className="mb-4 flex items-center gap-3">
-                <Clock className="size-4" />
-                <div className="font-bold">Business Hours:</div>
+                <Image
+                  src="/icons/support-headset.svg"
+                  alt=""
+                  aria-hidden
+                  width={28}
+                  height={28}
+                  unoptimized
+                  className="size-7"
+                />
+                <div className="font-bold">Support Availability:</div>
               </div>
-              <div className="text-muted-foreground">{hours}</div>
+              <div className="text-muted-foreground">
+                <div>{hoursPrimary}</div>
+                <div>{hoursSecondary}</div>
+              </div>
             </div>
           </div>
         </div>

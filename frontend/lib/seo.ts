@@ -6,7 +6,7 @@ export const SITE_URL =
 export const SITE_NAME = "Alliances PRO";
 
 export const SITE_DESCRIPTION =
-  "The CRM platform built for service businesses that grow sideways. Sales CRM today, Education CRM tomorrow — one login, one bill, never per-seat.";
+  "The CRM platform built for service businesses that grow sideways.";
 
 export const SOCIAL = {
   twitter: "@alliancespro",

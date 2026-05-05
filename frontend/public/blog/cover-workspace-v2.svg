@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Workspace v2 dashboard">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.18" stroke="#FFFFFF" stroke-width="2" fill="none">
+    <circle cx="1380" cy="180" r="120"/>
+    <circle cx="1380" cy="180" r="200"/>
+  </g>
+  <g transform="translate(380 220)">
+    <rect width="840" height="460" rx="28" fill="#FFFFFF" opacity="0.97"/>
+    <rect x="40" y="44" width="220" height="22" rx="11" fill="#312E81"/>
+    <rect x="40" y="84" width="380" height="14" rx="7" fill="#A5B4FC"/>
+    <rect x="40" y="140" width="240" height="120" rx="14" fill="#EEF2FF"/>
+    <rect x="300" y="140" width="240" height="120" rx="14" fill="#E0E7FF"/>
+    <rect x="560" y="140" width="240" height="120" rx="14" fill="#C7D2FE"/>
+    <rect x="40" y="280" width="760" height="14" rx="7" fill="#E0E7FF"/>
+    <rect x="40" y="310" width="600" height="14" rx="7" fill="#EEF2FF"/>
+    <rect x="40" y="360" width="120" height="38" rx="10" fill="#4F46E5"/>
+    <rect x="172" y="360" width="120" height="38" rx="10" fill="#EEF2FF"/>
+  </g>
+  <g transform="translate(1280 690)" fill="#FBBF24">
+    <path d="M40 0 L48 28 L78 28 L54 46 L62 76 L40 58 L18 76 L26 46 L2 28 L32 28 Z"/>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="44" font-weight="700" fill="#FFFFFF" opacity="0.95">Workspace v2</text>
+  <text x="80" y="862" font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="500" fill="#E0E7FF">Pipeline · Lead drawer · Activity timeline</text>
+</svg>

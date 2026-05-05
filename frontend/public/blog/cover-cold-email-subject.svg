@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Cold email subject line">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D97706"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g transform="translate(220 200)">
+    <rect width="1160" height="500" rx="24" fill="#FFFFFF" opacity="0.97"/>
+    <g transform="translate(40 40)" font-family="ui-sans-serif, system-ui, sans-serif">
+      <text font-size="20" font-weight="600" fill="#92400E">Inbox</text>
+      <line x1="0" y1="32" x2="1080" y2="32" stroke="#FED7AA" stroke-width="2"/>
+    </g>
+    <g transform="translate(40 100)" font-family="ui-sans-serif, system-ui, sans-serif">
+      <rect width="1080" height="80" rx="12" fill="#FFFBEB"/>
+      <text x="20" y="32" font-size="16" font-weight="600" fill="#9A3412">Tomorrow · 9:14 AM</text>
+      <text x="20" y="60" font-size="22" font-weight="700" fill="#1F2937">Saw your hiring page jumped from 14 to 28 roles — quick question</text>
+    </g>
+    <g transform="translate(40 200)" font-family="ui-sans-serif, system-ui, sans-serif">
+      <rect width="1080" height="80" rx="12" fill="#FEF3C7"/>
+      <text x="20" y="32" font-size="16" font-weight="600" fill="#9A3412">Yesterday · 2:48 PM</text>
+      <text x="20" y="60" font-size="22" font-weight="700" fill="#1F2937">Your Q3 case study mentions 6-week onboarding — coffee?</text>
+    </g>
+    <g transform="translate(40 300)" font-family="ui-sans-serif, system-ui, sans-serif">
+      <rect width="1080" height="80" rx="12" fill="#FEF3C7"/>
+      <text x="20" y="32" font-size="16" font-weight="600" fill="#9A3412">2 days ago</text>
+      <text x="20" y="60" font-size="22" font-weight="700" fill="#1F2937">Two of your AEs moved to Pendo last quarter — chat?</text>
+    </g>
+    <g transform="translate(40 400)" font-family="ui-sans-serif, system-ui, sans-serif">
+      <rect width="1080" height="60" rx="12" fill="#FEE2E2" opacity="0.7"/>
+      <text x="20" y="40" font-size="20" fill="#7F1D1D" opacity="0.6" text-decoration="line-through">"Quick chat about your team's growth?"</text>
+    </g>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">Specific observation. One-word ask.</text>
+</svg>

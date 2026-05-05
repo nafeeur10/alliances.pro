@@ -20,6 +20,7 @@ class BlogPostResource extends JsonResource
             'category' => $this->category,
             'tags' => $this->tags ?? [],
             'reading_minutes' => (int) $this->reading_minutes,
+            'is_featured' => (bool) $this->is_featured,
             'published_at' => optional($this->published_at)->toIso8601String(),
             'seo_title' => $this->seo_title,
             'seo_description' => $this->seo_description,

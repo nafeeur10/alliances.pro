@@ -87,32 +87,6 @@ export interface MarketingPage {
   sections: PageSection[];
 }
 
-export interface Feature {
-  id: number;
-  slug: string;
-  name: string;
-  tagline: string | null;
-  body: string | null;
-  icon: string | null;
-  order: number;
-  seo_title: string | null;
-  seo_description: string | null;
-}
-
-export interface Industry {
-  id: number;
-  slug: string;
-  name: string;
-  headline: string | null;
-  subheadline: string | null;
-  body: string | null;
-  icon: string | null;
-  cover_image: string | null;
-  order: number;
-  seo_title: string | null;
-  seo_description: string | null;
-}
-
 export interface PricingPlan {
   id: number;
   slug: string;
@@ -131,49 +105,6 @@ export interface PricingPlan {
   comparison_note: string | null;
 }
 
-export interface Faq {
-  id: number;
-  question: string;
-  answer: string;
-  category: string | null;
-  order: number;
-}
-
-export interface Testimonial {
-  id: number;
-  quote: string;
-  author: { name: string; role: string | null; company: string | null; avatar: string | null };
-  rating: number;
-  industry_tag: string | null;
-  order: number;
-}
-
-export interface ComparisonSummary {
-  id: number;
-  slug: string;
-  competitor_name: string;
-  headline: string | null;
-  seo_description: string | null;
-}
-
-export interface ComparisonRow {
-  feature: string;
-  alliances_value: string;
-  competitor_value: string;
-}
-
-export interface Comparison {
-  id: number;
-  slug: string;
-  competitor_name: string;
-  headline: string | null;
-  body: string | null;
-  winner_summary: string | null;
-  comparison_table: ComparisonRow[];
-  seo_title: string | null;
-  seo_description: string | null;
-}
-
 export interface BlogPostSummary {
   id: number;
   slug: string;
@@ -184,6 +115,7 @@ export interface BlogPostSummary {
   category: string | null;
   tags: string[];
   reading_minutes: number;
+  is_featured: boolean;
   published_at: string | null;
   seo_title: string | null;
   seo_description: string | null;
@@ -203,36 +135,26 @@ export interface BlogIndex {
   };
 }
 
+export interface BlogPageData {
+  featured: BlogPostSummary | null;
+  latest: BlogPostSummary[];
+  case_study: BlogPostSummary[];
+  marketing_tips: BlogPostSummary[];
+  product_update: BlogPostSummary[];
+  crm_analysis: BlogPostSummary[];
+}
+
 // ---- Endpoint helpers ------------------------------------------------------
 
 export const getPage = (slug: string) =>
   apiFetch<MarketingPage>(`/pages/${encodeURIComponent(slug)}`, { tags: [`page:${slug}`] });
 
-export const listFeatures = () => apiFetch<Feature[]>("/features", { tags: ["features"] });
-export const getFeature = (slug: string) =>
-  apiFetch<Feature>(`/features/${encodeURIComponent(slug)}`, { tags: [`feature:${slug}`] });
-
-export const listIndustries = () => apiFetch<Industry[]>("/industries", { tags: ["industries"] });
-export const getIndustry = (slug: string) =>
-  apiFetch<Industry>(`/industries/${encodeURIComponent(slug)}`, { tags: [`industry:${slug}`] });
-
 export const listPricingPlans = () =>
   apiFetch<PricingPlan[]>("/pricing-plans", { tags: ["pricing-plans"] });
 
-export const listFaqs = () => apiFetch<Record<string, Faq[]>>("/faqs", { tags: ["faqs"] });
-
-export const listTestimonials = () =>
-  apiFetch<Testimonial[]>("/testimonials", { tags: ["testimonials"] });
-
-export const listComparisons = () =>
-  apiFetch<ComparisonSummary[]>("/comparisons", { tags: ["comparisons"] });
-export const getComparison = (slug: string) =>
-  apiFetch<Comparison>(`/comparisons/${encodeURIComponent(slug)}`, {
-    tags: [`comparison:${slug}`]
-  });
-
 export const listBlogPosts = (page = 1, perPage = 12) =>
   apiFetch<BlogIndex>(`/blog?page=${page}&per_page=${perPage}`, { tags: ["blog"] });
+export const getBlogPageData = () => apiFetch<BlogPageData>("/blog/page-data", { tags: ["blog"] });
 export const getBlogPost = (slug: string) =>
   apiFetch<BlogPost>(`/blog/${encodeURIComponent(slug)}`, { tags: [`blog:${slug}`] });
 

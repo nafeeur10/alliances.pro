@@ -2,7 +2,7 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { cn } from "@/lib/utils";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Public_Sans } from "next/font/google";
 import "./globals.css";
 
 import { NavbarShell } from "@/components/layout/navbar-shell";
@@ -14,10 +14,10 @@ const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 const PLAUSIBLE_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ?? "https://plausible.io";
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-const inter = Inter({ subsets: ["latin"] });
-const bricolageGrotesque = Bricolage_Grotesque({
+const publicSans = Public_Sans({
   subsets: ["latin"],
-  variable: "--bricolage-grotesque"
+  variable: "--font-public-sans",
+  display: "swap"
 });
 
 export const metadata: Metadata = {
@@ -35,10 +35,6 @@ export const metadata: Metadata = {
     email: false,
     address: false,
     telephone: false
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png"
   },
   robots: {
     index: true,
@@ -62,13 +58,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("scroll-smooth", publicSans.className, publicSans.variable)}
+    >
       <body
-        className={cn(
-          "from-muted to-primary/5 min-h-screen bg-gradient-to-tl",
-          inter.className,
-          bricolageGrotesque.variable
-        )}
+        className={cn("from-muted to-primary/5 min-h-screen bg-gradient-to-tl")}
         suppressHydrationWarning
       >
         <ThemeProvider

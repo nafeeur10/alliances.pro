@@ -13,7 +13,7 @@ interface BlogPost {
 }
 
 export const blogSection = {
-  eyebrow: "From the blog",
+  eyebrow: "Blogs and Stories",
   headline: "Playbooks, deep dives, and field notes.",
   description:
     "Practical writing for service businesses — pipelines, follow-ups, agency ops, and how to pick the right CRM stack."

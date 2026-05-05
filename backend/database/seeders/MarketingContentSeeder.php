@@ -3,15 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Marketing\BlogPost;
-use App\Models\Marketing\Comparison;
-use App\Models\Marketing\Faq;
-use App\Models\Marketing\Feature;
-use App\Models\Marketing\Industry;
 use App\Models\Marketing\Page;
 use App\Models\Marketing\PageSection;
 use App\Models\Marketing\PricingPlan;
 use App\Models\Marketing\SiteSetting;
-use App\Models\Marketing\Testimonial;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 
@@ -20,13 +15,8 @@ class MarketingContentSeeder extends Seeder
     public function run(): void
     {
         $this->seedHomepage();
-        $this->seedFeatures();
-        $this->seedIndustries();
         $this->seedPricingPlans();
-        $this->seedFaqs();
         $this->seedSettings();
-        $this->seedComparisons();
-        $this->seedTestimonialPlaceholder();
         $this->seedBlogPosts();
     }
 
@@ -110,15 +100,6 @@ class MarketingContentSeeder extends Seeder
                 ],
             ],
             [
-                'key' => 'features',
-                'type' => 'features',
-                'payload' => [
-                    'eyebrow' => 'Features',
-                    'headline' => 'Everything You Need to Succeed',
-                    'sub' => 'Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business.',
-                ],
-            ],
-            [
                 'key' => 'services',
                 'type' => 'services',
                 'payload' => [
@@ -145,15 +126,6 @@ class MarketingContentSeeder extends Seeder
                         ['icon' => 'KeyRound', 'badge' => 'Granular roles', 'problem' => 'Admin or nothing', 'solution' => 'Define exactly who sees what. Built on Spatie permissions, configurable per workspace.'],
                         ['icon' => 'Download', 'badge' => 'Yours to leave with', 'problem' => 'Data lock-in', 'solution' => "CSV export on every object. We don't hold your data hostage. Ever."],
                     ],
-                ],
-            ],
-            [
-                'key' => 'testimonial',
-                'type' => 'testimonial',
-                'payload' => [
-                    'eyebrow' => 'Testimonials',
-                    'headline' => 'Loved by Teams Worldwide',
-                    'sub' => "Don't just take our word for it. See what our customers have to say about their experience.",
                 ],
             ],
             [
@@ -225,15 +197,6 @@ class MarketingContentSeeder extends Seeder
                 ],
             ],
             [
-                'key' => 'faq',
-                'type' => 'faq',
-                'payload' => [
-                    'eyebrow' => 'FAQS',
-                    'headline' => 'Common Questions',
-                    'sub' => 'Real questions, real answers.',
-                ],
-            ],
-            [
                 'key' => 'newsletter',
                 'type' => 'newsletter',
                 'payload' => [
@@ -255,78 +218,6 @@ class MarketingContentSeeder extends Seeder
                     'payload' => $row['payload'],
                     'is_visible' => true,
                 ],
-            );
-        }
-    }
-
-    protected function seedFeatures(): void
-    {
-        $features = [
-            ['name' => 'Lead management', 'icon' => 'inbox', 'tagline' => 'Capture from web, social, Shopify stores. Score, assign, follow up.'],
-            ['name' => 'Deal pipeline', 'icon' => 'kanban-square', 'tagline' => 'Drag-and-drop Kanban with custom stages, probabilities, expected close.'],
-            ['name' => 'Email campaigns', 'icon' => 'mail', 'tagline' => 'Templates, contact lists, send-tracking, bounce/open events — included.'],
-            ['name' => 'Call logs', 'icon' => 'phone', 'tagline' => 'Log every call, link to leads or deals, attach recordings, see the timeline.'],
-            ['name' => 'Tasks & projects', 'icon' => 'check-square', 'tagline' => 'Assign, prioritize, deadline. Bulk update. Personal + shared views.'],
-            ['name' => 'Multi-workspace', 'icon' => 'layers', 'tagline' => 'Separate workspaces per brand, client, or vertical. Per-workspace SMTP.'],
-        ];
-        foreach ($features as $idx => $row) {
-            $slug = str($row['name'])->slug()->toString();
-            Feature::updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'name' => $row['name'],
-                    'tagline' => $row['tagline'],
-                    'icon' => $row['icon'],
-                    'order' => $idx,
-                    'is_published' => true,
-                    'seo_title' => "{$row['name']} — Alliances PRO",
-                    'seo_description' => $row['tagline'],
-                ],
-            );
-        }
-    }
-
-    protected function seedIndustries(): void
-    {
-        $industries = [
-            [
-                'slug' => 'shopify-agencies', 'name' => 'Shopify agencies', 'icon' => 'shopping-bag',
-                'headline' => 'For Shopify agencies',
-                'subheadline' => 'Shopify-aware lead capture, agency project tracking, agency-friendly pricing.',
-                'body' => "Shopify-aware lead capture (store URL, GMV bracket, app stack). Track retainer + project revenue side-by-side. Built by founders who've actually run Shopify agencies.",
-                'is_published' => true,
-            ],
-            [
-                'slug' => 'sales-teams', 'name' => 'SMB sales teams', 'icon' => 'briefcase',
-                'headline' => 'For SMB sales teams',
-                'subheadline' => "The pipeline you'd build in Pipedrive, the campaigns you'd build in Mailchimp, all in one workspace.",
-                'body' => "The pipeline you'd build in Pipedrive, the campaigns you'd build in Mailchimp, the calls you'd log in Close — all in one workspace, one bill.",
-                'is_published' => true,
-            ],
-            [
-                'slug' => 'freelancers', 'name' => 'Freelancers & solopreneurs', 'icon' => 'user',
-                'headline' => 'For freelancers & solo operators',
-                'subheadline' => '$19/mo for everything you need. Same tool keeps working when you hire.',
-                'body' => '$19/mo for everything you need to run a one-person shop — leads, deals, calls, email, projects. Same tool keeps working when you hire your first three teammates (Pro includes 10 users).',
-                'is_published' => true,
-            ],
-            [
-                'slug' => 'education', 'name' => 'Education CRM', 'icon' => 'graduation-cap',
-                'headline' => 'Education CRM (Beta)',
-                'subheadline' => 'Admissions, programs, applicants, enrollments — coming soon.',
-                'body' => 'Same Alliances PRO platform, education-shaped data. Programs, applicants, enrollments, and admissions workflows. Currently in private beta — join the waitlist.',
-                // Published so the page renders the "coming soon" waitlist variant.
-                'is_published' => true,
-            ],
-        ];
-        foreach ($industries as $idx => $row) {
-            Industry::updateOrCreate(
-                ['slug' => $row['slug']],
-                array_merge($row, [
-                    'order' => $idx,
-                    'seo_title' => "{$row['name']} — Alliances PRO",
-                    'seo_description' => $row['subheadline'],
-                ]),
             );
         }
     }
@@ -398,28 +289,6 @@ class MarketingContentSeeder extends Seeder
                 'external_signup_url' => 'https://app.alliances.pro/signup?plan=business',
             ],
         );
-    }
-
-    protected function seedFaqs(): void
-    {
-        $faqs = [
-            ['Is there a free trial?', 'Yes — 14 days, no credit card required. Use Pro or Business in full during the trial.', 'Trial'],
-            ['What happens after the trial?', "You pick Pro (\$19/mo) or Business (\$39/mo). If you don't pick, your account pauses (data preserved) until you choose. We never auto-charge a card you didn't give us.", 'Trial'],
-            ['Do you charge per user?', '**No.** Pro is $19/mo flat for up to 10 users. Business is $39/mo for unlimited users. The price you see is the price you pay — no surprise per-seat math.', 'Pricing'],
-            ['How does pricing compare to HubSpot or Pipedrive?', 'For a 10-person team, Business at $39/mo replaces Pipedrive Essential ($140/mo), HubSpot Sales Starter (~$200/mo), or HubSpot Sales Pro (~$1,000/mo). Full breakdown at /compare/hubspot.', 'Pricing'],
-            ['Can I import data from HubSpot / Pipedrive / Zoho?', 'Yes — CSV import on every object. Free guided migration included with the Business plan; available as a one-time service ($199) on Pro.', 'Migration'],
-            ["What's the difference between Alliances PRO Sales and Education?", 'Same platform, different vertical-shaped data. Sales focuses on leads/deals/pipelines. Education adds programs, applicants, enrollments, and admissions workflows. Education CRM is currently in private beta — join the waitlist.', 'Product'],
-            ['Can I run multiple workspaces under one account?', 'Yes — both Pro and Business include multi-workspace. Switch instantly from a dropdown. Use it to separate brands, clients, or future verticals.', 'Product'],
-            ['What happens to my data if I cancel?', 'Export everything to CSV any time, no questions. We retain your data for 30 days post-cancellation in case you come back.', 'Data'],
-            ['Where is my data stored?', 'Encrypted at rest (MySQL) and in transit (TLS 1.3), backed up daily, hosted on DigitalOcean. Detailed answer at /security.', 'Security'],
-            ['Do you offer discounts for non-profits or education?', 'Yes — 50% off any tier for verified non-profits and educational institutions. Email sales@alliances.pro.', 'Pricing'],
-        ];
-        foreach ($faqs as $idx => [$q, $a, $cat]) {
-            Faq::updateOrCreate(
-                ['question' => $q],
-                ['answer' => $a, 'category' => $cat, 'order' => $idx, 'is_published' => true],
-            );
-        }
     }
 
     protected function seedSettings(): void
@@ -534,58 +403,6 @@ class MarketingContentSeeder extends Seeder
                 ['value' => $value, 'group' => $group, 'type' => $type],
             );
         }
-    }
-
-    protected function seedComparisons(): void
-    {
-        $comparisons = [
-            ['hubspot', 'HubSpot', 'Why Alliances PRO beats HubSpot at SMB scale.'],
-            ['pipedrive', 'Pipedrive', 'Same pipeline UX. Built-in marketing & calling. No per-seat math.'],
-            ['zoho-crm', 'Zoho CRM', 'Modern UX, transparent pricing, multi-vertical platform.'],
-            ['salesforce', 'Salesforce', 'For service businesses that need a CRM, not a 6-month implementation.'],
-            ['close', 'Close', 'Sales-ops power without the $49/seat math.'],
-            ['monday-crm', 'Monday CRM', 'Real CRM features, not work-management dressed as a CRM.'],
-        ];
-        foreach ($comparisons as [$slug, $name, $headline]) {
-            Comparison::updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'competitor_name' => $name,
-                    'headline' => $headline,
-                    // Published so /compare/{slug} routes render. Admins fill in the
-                    // body + winner_summary + comparison_table over time.
-                    'is_published' => true,
-                    'winner_summary' => "Alliances PRO costs less, runs flat per-workspace, and bundles email + calls + projects in one tool. Pick {$name} only if a specific {$name} workflow is already irreplaceable for your team.",
-                    'comparison_table' => [
-                        ['feature' => 'Pricing model', 'alliances_value' => 'Flat per workspace', 'competitor_value' => 'Per seat'],
-                        ['feature' => 'Bill for 10 users', 'alliances_value' => '$39/mo', 'competitor_value' => 'Varies — typically $140–$1,000+/mo'],
-                        ['feature' => 'Email campaigns included', 'alliances_value' => 'yes', 'competitor_value' => 'Add-on'],
-                        ['feature' => 'Call logs included', 'alliances_value' => 'yes', 'competitor_value' => 'Add-on'],
-                        ['feature' => 'Multi-vertical platform', 'alliances_value' => 'yes', 'competitor_value' => 'no'],
-                        ['feature' => '14-day trial, no card', 'alliances_value' => 'yes', 'competitor_value' => 'Varies'],
-                        ['feature' => 'CSV export everywhere', 'alliances_value' => 'yes', 'competitor_value' => 'Varies'],
-                    ],
-                    'seo_title' => "Alliances PRO vs {$name}",
-                    'seo_description' => $headline,
-                ],
-            );
-        }
-    }
-
-    protected function seedTestimonialPlaceholder(): void
-    {
-        Testimonial::updateOrCreate(
-            ['author_name' => 'Migration Customer'],
-            [
-                'quote' => "We migrated from HubSpot Pro and cut our SaaS bill from \$2,400/mo to \$39/mo — without losing a single workflow. Alliances PRO's pipeline is what HubSpot's *should* be.",
-                'author_role' => 'Founder',
-                'author_company' => 'Agency',
-                'rating' => 5,
-                'industry_tag' => 'shopify-agencies',
-                'is_published' => false,
-                'order' => 0,
-            ],
-        );
     }
 
     protected function seedBlogPosts(): void

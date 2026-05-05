@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Spreadsheet to pipeline">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E7490"/>
+      <stop offset="1" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g transform="translate(140 250)">
+    <rect width="500" height="400" rx="20" fill="#FFFFFF" opacity="0.96"/>
+    <g stroke="#A7F3D0" stroke-width="2" fill="none">
+      <path d="M0 80 L500 80"/>
+      <path d="M0 160 L500 160"/>
+      <path d="M0 240 L500 240"/>
+      <path d="M0 320 L500 320"/>
+      <path d="M125 0 L125 400"/>
+      <path d="M250 0 L250 400"/>
+      <path d="M375 0 L375 400"/>
+    </g>
+    <rect x="0" y="0" width="500" height="50" fill="#D1FAE5"/>
+    <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="600" fill="#064E3B">
+      <text x="20" y="32">Client</text>
+      <text x="145" y="32">Renew</text>
+      <text x="270" y="32">Owner</text>
+      <text x="395" y="32">Status</text>
+    </g>
+  </g>
+  <g transform="translate(700 410)" stroke="#FFFFFF" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 30 L120 30"/>
+    <path d="M90 0 L120 30 L90 60"/>
+  </g>
+  <g transform="translate(900 220)">
+    <rect width="560" height="460" rx="20" fill="#FFFFFF" opacity="0.96"/>
+    <text x="32" y="56" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="700" fill="#064E3B">Renewal pipeline</text>
+    <g transform="translate(20 84)">
+      <rect x="0" y="0" width="160" height="350" rx="12" fill="#ECFDF5"/>
+      <rect x="180" y="0" width="160" height="350" rx="12" fill="#D1FAE5"/>
+      <rect x="360" y="0" width="160" height="350" rx="12" fill="#A7F3D0"/>
+      <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="600" fill="#064E3B">
+        <text x="16" y="28">Upcoming</text>
+        <text x="196" y="28">In progress</text>
+        <text x="376" y="28">Closed</text>
+      </g>
+      <g fill="#FFFFFF">
+        <rect x="14" y="50" width="132" height="48" rx="8"/>
+        <rect x="14" y="110" width="132" height="48" rx="8"/>
+        <rect x="14" y="170" width="132" height="48" rx="8"/>
+        <rect x="194" y="50" width="132" height="48" rx="8"/>
+        <rect x="194" y="110" width="132" height="48" rx="8"/>
+        <rect x="374" y="50" width="132" height="48" rx="8"/>
+      </g>
+    </g>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">Sheets → pipeline · 14 days</text>
+</svg>

@@ -8,7 +8,11 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+
+use App\Filament\Resources\Marketing\BlogPosts\Schemas\BlogPostForm;
 
 class BlogPostsTable
 {
@@ -24,19 +28,26 @@ class BlogPostsTable
                 TextColumn::make('author_name')
                     ->searchable(),
                 TextColumn::make('category')
+                    ->badge()
                     ->searchable(),
                 TextColumn::make('reading_minutes')
                     ->numeric()
                     ->sortable(),
                 IconColumn::make('is_published')
                     ->boolean(),
+                IconColumn::make('is_featured')
+                    ->label('Featured')
+                    ->boolean()
+                    ->sortable(),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('seo_title')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('seo_description')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -47,7 +58,12 @@ class BlogPostsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TernaryFilter::make('is_featured')
+                    ->label('Featured'),
+                TernaryFilter::make('is_published')
+                    ->label('Published'),
+                SelectFilter::make('category')
+                    ->options(BlogPostForm::CATEGORIES),
             ])
             ->recordActions([
                 EditAction::make(),

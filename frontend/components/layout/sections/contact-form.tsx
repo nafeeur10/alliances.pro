@@ -106,6 +106,8 @@ export const ContactForm = ({ contactEmail }: Props) => {
                       <SelectItem value="Sales">Sales</SelectItem>
                       <SelectItem value="Support">Support</SelectItem>
                       <SelectItem value="Demo">Demo request</SelectItem>
+                      <SelectItem value="Feature request">Feature request</SelectItem>
+                      <SelectItem value="Bug report">Bug report</SelectItem>
                       <SelectItem value="Press">Press</SelectItem>
                       <SelectItem value="Other">Other</SelectItem>
                     </SelectContent>

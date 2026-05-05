@@ -99,11 +99,6 @@ class PageSectionForm
                             ->columnSpanFull(),
                     ]),
 
-                Section::make('Features (header only — content edited under "Features" resource)')
-                    ->visible(fn (Get $get) => $get('type') === 'features')
-                    ->columns(2)
-                    ->schema(self::headerFields()),
-
                 Section::make('Pricing — section + /pricing page copy')
                     ->visible(fn (Get $get) => $get('type') === 'pricing')
                     ->columns(2)
@@ -139,16 +134,6 @@ class PageSectionForm
                             ->defaultItems(0)
                             ->columnSpanFull(),
                     ]),
-
-                Section::make('Testimonials (header only — content edited under "Testimonials")')
-                    ->visible(fn (Get $get) => $get('type') === 'testimonial')
-                    ->columns(2)
-                    ->schema(self::headerFields()),
-
-                Section::make('FAQ (header only — content edited under "FAQs")')
-                    ->visible(fn (Get $get) => $get('type') === 'faq')
-                    ->columns(2)
-                    ->schema(self::headerFields()),
 
                 Section::make('Services')
                     ->visible(fn (Get $get) => $get('type') === 'services')
@@ -253,8 +238,8 @@ class PageSectionForm
 
                 Section::make('Generic content')
                     ->visible(fn (Get $get) => ! in_array($get('type'), [
-                        'hero', 'sponsors', 'benefits', 'features', 'pricing',
-                        'testimonial', 'faq', 'services', 'trust', 'team',
+                        'hero', 'sponsors', 'benefits', 'pricing',
+                        'services', 'trust', 'team',
                         'community', 'contact', 'newsletter',
                     ], true))
                     ->columns(2)
@@ -279,15 +264,12 @@ class PageSectionForm
             'hero' => 'Hero',
             'sponsors' => 'Sponsors / Logos',
             'benefits' => 'Benefits',
-            'features' => 'Features',
             'services' => 'Services',
             'trust' => 'Trust',
-            'testimonial' => 'Testimonial',
             'team' => 'Team',
             'pricing' => 'Pricing',
             'community' => 'Community',
             'contact' => 'Contact',
-            'faq' => 'FAQ',
             'newsletter' => 'Newsletter',
             'custom' => 'Custom',
         ];

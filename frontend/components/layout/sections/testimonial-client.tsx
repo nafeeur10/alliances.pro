@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/carousel";
 import { Star } from "lucide-react";
 import SectionContainer from "@/components/layout/section-container";
-import SectionHeader from "@/components/layout/section-header";
 import { resolveAssetUrl } from "@/lib/cms";
 
 export interface ReviewItem {
@@ -37,7 +37,19 @@ export const TestimonialSectionClient = ({
 }: Props) => {
   return (
     <SectionContainer id="testimonials">
-      <SectionHeader subTitle={subTitle} title={title} description={description} />
+      <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
+        <Badge
+          variant="outline"
+          className="bg-background/60 mb-5 rounded-full px-4 py-1.5 text-xs font-medium tracking-wider uppercase backdrop-blur"
+        >
+          <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+          {subTitle}
+        </Badge>
+        <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-5xl">{title}</h2>
+        {description ? (
+          <p className="text-muted-foreground text-base md:text-lg">{description}</p>
+        ) : null}
+      </div>
       <Carousel
         opts={{ align: "start" }}
         className="relative mx-auto w-[80%] sm:w-[90%] lg:max-w-(--breakpoint-xl)"

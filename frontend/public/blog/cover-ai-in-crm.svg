@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="AI in your CRM">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#BE185D"/>
+      <stop offset="1" stop-color="#9333EA"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.45" fill="#FFFFFF">
+    <path d="M180 200 L196 240 L236 256 L196 272 L180 312 L164 272 L124 256 L164 240 Z"/>
+    <path d="M1340 240 L1352 270 L1382 282 L1352 294 L1340 324 L1328 294 L1298 282 L1328 270 Z"/>
+    <path d="M1380 700 L1390 720 L1410 730 L1390 740 L1380 760 L1370 740 L1350 730 L1370 720 Z"/>
+  </g>
+  <g transform="translate(380 200)">
+    <rect width="840" height="500" rx="24" fill="#FFFFFF" opacity="0.97"/>
+    <g transform="translate(40 50)">
+      <rect width="120" height="36" rx="18" fill="#F3E8FF"/>
+      <text x="60" y="24" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#7E22CE">AI summary</text>
+    </g>
+    <text x="40" y="140" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" font-weight="700" fill="#111827">Acme Co · 3-month relationship</text>
+    <g transform="translate(40 170)" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#374151">
+      <text y="40">• Last touched 4 days ago by Priya — replied positively to pricing</text>
+      <text y="76">• Procurement signed off Tuesday; legal redlines outstanding</text>
+      <text y="112">• Next step: schedule final stakeholder call this week</text>
+    </g>
+    <g transform="translate(40 320)">
+      <rect width="760" height="120" rx="14" fill="#FAF5FF"/>
+      <text x="20" y="32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="700" fill="#7E22CE">Suggested reply</text>
+      <text x="20" y="64" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#4B5563">Hi Sarah — looping back on the redlines our legal sent</text>
+      <text x="20" y="88" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#4B5563">Tuesday. Happy to jump on a 20-min call this week to walk</text>
+      <text x="20" y="112" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#4B5563">through the data-residency clause. Wednesday 2pm work?</text>
+    </g>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">Useful AI: summary + drafts. Not agents.</text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="CRM bill reduction chart">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#059669"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <g opacity="0.16" stroke="#FFFFFF" stroke-width="2" fill="none">
+    <path d="M0 700 L1600 380"/>
+    <path d="M0 760 L1600 440"/>
+  </g>
+  <g transform="translate(420 200)">
+    <rect width="760" height="500" rx="24" fill="#FFFFFF" opacity="0.97"/>
+    <text x="40" y="70" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" font-weight="700" fill="#064E3B">Monthly stack cost</text>
+    <g transform="translate(40 110)" font-family="ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600">
+      <rect x="0" y="0" width="600" height="56" rx="10" fill="#D1FAE5"/>
+      <text x="20" y="36" fill="#065F46">Before</text>
+      <text x="540" y="36" text-anchor="end" fill="#065F46">$1,840</text>
+      <rect x="0" y="76" width="216" height="56" rx="10" fill="#10B981"/>
+      <text x="20" y="112" fill="#FFFFFF">After</text>
+      <text x="196" y="112" text-anchor="end" fill="#FFFFFF">$39</text>
+    </g>
+    <g transform="translate(40 280)">
+      <text font-family="ui-sans-serif, system-ui, sans-serif" font-size="24" font-weight="700" fill="#065F46">−64%</text>
+      <text y="36" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" fill="#047857">savings, no pipeline lost</text>
+    </g>
+    <g transform="translate(540 280)" stroke="#10B981" stroke-width="6" fill="none" stroke-linecap="round">
+      <polyline points="0,160 40,140 80,150 120,90 160,100 200,40"/>
+    </g>
+  </g>
+  <text x="80" y="820" font-family="ui-sans-serif, system-ui, sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">Case Study · Northbeam Marketing</text>
+</svg>

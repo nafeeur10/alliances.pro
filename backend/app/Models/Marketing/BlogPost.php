@@ -30,6 +30,7 @@ class BlogPost extends Model implements HasMedia
         'tags',
         'reading_minutes',
         'is_published',
+        'is_featured',
         'published_at',
         'seo_title',
         'seo_description',
@@ -40,6 +41,7 @@ class BlogPost extends Model implements HasMedia
         return [
             'tags' => 'array',
             'is_published' => 'boolean',
+            'is_featured' => 'boolean',
             'published_at' => 'datetime',
             'reading_minutes' => 'integer',
         ];
@@ -59,6 +61,11 @@ class BlogPost extends Model implements HasMedia
             ->where(function (Builder $q): void {
                 $q->whereNull('published_at')->orWhere('published_at', '<=', now());
             });
+    }
+
+    public function scopeFeatured(Builder $query): Builder
+    {
+        return $this->scopePublished($query)->where('is_featured', true);
     }
 
     public function getRouteKeyName(): string

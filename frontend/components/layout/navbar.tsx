@@ -65,14 +65,39 @@ const HOVER_OPEN = "data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-zinc
 
 export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: NavbarProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const firstRoute = routes[0];
   const restRoutes = routes.slice(1);
 
   return (
-    <header className="sticky top-2 z-40 lg:top-5">
-      <div className="container">
-        <div className="bg-background/70 flex items-center justify-between rounded-2xl border p-3 backdrop-blur-sm">
+    <header
+      className={cn(
+        "sticky z-40 transition-[top] duration-300",
+        scrolled ? "top-0" : "top-2 lg:top-5"
+      )}
+    >
+      <div
+        className={cn(
+          "transition-all duration-300",
+          scrolled ? "bg-background/80 w-full border-b shadow-sm backdrop-blur-md" : "container"
+        )}
+      >
+        <div
+          className={cn(
+            "flex items-center justify-between transition-all duration-300",
+            scrolled
+              ? "container mx-auto px-4 py-3"
+              : "bg-background/70 rounded-2xl border p-3 backdrop-blur-sm"
+          )}
+        >
           <Logo {...logo} />
 
           {/* Mobile */}

@@ -104,32 +104,17 @@ export const BenefitsSection = () => {
                 </span>
 
                 <div className="relative flex h-full flex-col">
-                  <div className="relative mb-6 inline-flex size-14 items-center justify-center">
-                    {/* breathing glow — soft, 4s cycle */}
-                    <span
+                  <div className="bg-background ring-border mb-4 flex size-12 items-center justify-center rounded-xl ring-1 transition-transform duration-300 group-hover:scale-105">
+                    <Image
+                      src={benefit.icon}
+                      alt=""
                       aria-hidden
-                      className="from-primary/30 via-primary/10 to-accent/30 absolute inset-0 rounded-2xl bg-gradient-to-br blur-md"
-                      style={{ animation: "soft-glow 4s ease-in-out infinite" }}
+                      width={28}
+                      height={28}
+                      unoptimized
+                      className="size-7"
                     />
-                    {/* slow-rotating dashed ring */}
-                    <span
-                      aria-hidden
-                      className="border-primary/25 absolute inset-[-4px] rounded-2xl border border-dashed"
-                      style={{ animation: "slow-spin 18s linear infinite" }}
-                    />
-                    {/* icon plate */}
-                    <span className="bg-background/80 ring-foreground/5 relative flex size-14 items-center justify-center rounded-xl ring-1 backdrop-blur transition-transform duration-300 group-hover:scale-105">
-                      <Image
-                        src={benefit.icon}
-                        alt=""
-                        width={36}
-                        height={36}
-                        className="size-9 object-contain"
-                        unoptimized
-                      />
-                    </span>
                   </div>
-
                   <h3 className="text-foreground mb-3 text-xl font-semibold tracking-tight sm:text-2xl">
                     {benefit.title}
                   </h3>

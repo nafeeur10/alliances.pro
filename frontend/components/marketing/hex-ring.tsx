@@ -232,7 +232,7 @@ function Icon({
             y={cy + 7}
             fontSize="18"
             fontWeight="800"
-            fontFamily="system-ui, sans-serif"
+            fontFamily="var(--font-sans)"
             textAnchor="middle"
             fill="#070707"
           >
