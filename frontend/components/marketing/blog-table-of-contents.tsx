@@ -48,7 +48,7 @@ export function BlogTableOfContents({ body, className }: Props) {
     <aside
       aria-label="Quick Read"
       className={cn(
-        "relative mx-auto my-10 max-w-3xl overflow-hidden rounded-2xl border border-amber-200/70 bg-amber-50/80 px-7 py-7 pr-24 sm:my-12 sm:pr-28 dark:border-amber-500/25 dark:bg-amber-500/5",
+        "relative mx-auto my-10 max-w-3xl rounded-2xl border border-amber-200/70 bg-amber-50/80 px-7 py-7 sm:my-12 dark:border-amber-500/25 dark:bg-amber-500/5",
         className
       )}
     >
@@ -69,9 +69,9 @@ export function BlogTableOfContents({ body, className }: Props) {
         ))}
       </ul>
       <Lightbulb
-        className="absolute right-4 bottom-4 size-14 text-amber-400 sm:right-6 sm:bottom-6 sm:size-16 dark:text-amber-300"
+        className="absolute -top-[22px] -left-[23px] size-12 rounded-full border border-amber-200/70 bg-amber-50 p-2 text-amber-500 dark:border-amber-500/25 dark:bg-amber-500/10 dark:text-amber-300"
         aria-hidden
-        strokeWidth={1.5}
+        strokeWidth={1.75}
       />
     </aside>
   );
