@@ -68,9 +68,12 @@ async function main() {
   const links = extractInternalHrefs();
   console.log(`${ANSI.dim}Checking ${links.length} internal links against ${BASE}${ANSI.reset}\n`);
 
-  const results = await Promise.all(links.map(checkOne));
-
-  for (const r of results) {
+  // Sequential rather than parallel so a cold dev server isn't asked to
+  // compile 10+ pages at once (which then hits nginx's read timeout).
+  const results = [];
+  for (const link of links) {
+    const r = await checkOne(link);
+    results.push(r);
     const code = r.status === 0 ? "ERR" : String(r.status);
     const tag = colorize(r.status, code.padStart(3));
     console.log(`  ${tag}  ${r.path}${r.error ? ` ${ANSI.dim}(${r.error})${ANSI.reset}` : ""}`);
@@ -83,6 +86,9 @@ async function main() {
     process.exit(0);
   } else {
     console.log(`${ANSI.red}✗ ${failed.length} of ${results.length} links failed.${ANSI.reset}`);
+    console.log(
+      `${ANSI.dim}(In dev, a cold Turbopack server can return 504 on first hit. Retry once warm.)${ANSI.reset}`
+    );
     process.exit(1);
   }
 }
