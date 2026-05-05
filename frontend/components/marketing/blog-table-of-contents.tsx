@@ -1,5 +1,3 @@
-import { Lightbulb } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 
 interface Heading {
@@ -46,14 +44,14 @@ export function BlogTableOfContents({ body, className }: Props) {
 
   return (
     <aside
-      aria-label="Quick Read"
+      aria-label="Table of Contents"
       className={cn(
         "relative mx-auto my-10 max-w-3xl rounded-2xl border border-amber-200/70 bg-amber-50/80 px-7 py-7 sm:my-12 dark:border-amber-500/25 dark:bg-amber-500/5",
         className
       )}
     >
       <h2 className="text-foreground mb-4 text-xl font-bold tracking-tight sm:text-2xl">
-        Quick Read
+        Table of Contents
       </h2>
       <ul className="space-y-2.5">
         {headings.map((h) => (
@@ -68,11 +66,13 @@ export function BlogTableOfContents({ body, className }: Props) {
           </li>
         ))}
       </ul>
-      <Lightbulb
-        className="absolute -top-[22px] -left-[23px] size-12 rounded-full border border-amber-200/70 bg-amber-50 p-2 text-amber-500 dark:border-amber-500/25 dark:bg-amber-500/10 dark:text-amber-300"
-        aria-hidden
-        strokeWidth={1.75}
-      />
+      <span
+        role="img"
+        aria-label="traffic light"
+        className="absolute -top-[22px] -left-[23px] flex size-12 items-center justify-center rounded-full border border-amber-200/70 bg-amber-50 text-2xl leading-none dark:border-amber-500/25 dark:bg-amber-500/10"
+      >
+        🚦
+      </span>
     </aside>
   );
 }
