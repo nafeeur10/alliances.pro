@@ -17,8 +17,9 @@ import { FooterNewsletterForm } from "./footer-newsletter-form";
 export const FooterSection = () => {
   return (
     <>
-      <footer id="footer" className="container space-y-4 pb-4 lg:pb-8">
-        <div className="relative">
+      <div className="bg-muted/30 pt-16 sm:pt-24">
+        <footer id="footer" className="container space-y-4 pb-4 lg:pb-8">
+          <div className="relative">
           {/* Newsletter — half outside / half inside, centered */}
           <div className="absolute inset-x-0 top-0 z-10 flex -translate-y-1/2 justify-center px-4">
             <div className="w-full max-w-md">
@@ -107,7 +108,8 @@ export const FooterSection = () => {
             ))}
           </div>
         </div>
-      </footer>
+        </footer>
+      </div>
 
       <BackToTop />
     </>
