@@ -179,6 +179,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     <div className="text-muted-foreground text-xs">Author</div>
                   </div>
                 </div>
+                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                  We build Alliances PRO — a flat-rate CRM for small agencies and service teams.
+                  Our writing covers pipeline, retention, and the operational reality of running a
+                  service business — minus the vendor speak.
+                </p>
               </div>
 
               {/* CTA — Ready to put it into practice */}
