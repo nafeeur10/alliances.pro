@@ -1,30 +1,67 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { cn } from "@/lib/utils";
 import { resolveAssetUrl } from "@/lib/cms";
 
+function nodeToText(node: ReactNode): string {
+  if (node === null || node === undefined || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(nodeToText).join("");
+  if (typeof node === "object" && "props" in node) {
+    return nodeToText((node as { props: { children?: ReactNode } }).props.children);
+  }
+  return "";
+}
+
+function slugifyHeading(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 const components: Components = {
-  h1: ({ className, ...props }) => (
+  h1: ({ className, children, ...props }) => (
     <h1
       {...props}
-      className={cn("text-foreground mt-12 mb-5 text-3xl font-bold tracking-tight", className)}
-    />
+      id={slugifyHeading(nodeToText(children))}
+      className={cn(
+        "text-foreground scroll-mt-28 mt-12 mb-5 text-3xl font-bold tracking-tight",
+        className
+      )}
+    >
+      {children}
+    </h1>
   ),
-  h2: ({ className, ...props }) => (
+  h2: ({ className, children, ...props }) => (
     <h2
       {...props}
-      className={cn("text-foreground mt-12 mb-4 text-2xl font-bold tracking-tight", className)}
-    />
+      id={slugifyHeading(nodeToText(children))}
+      className={cn(
+        "text-foreground scroll-mt-28 mt-12 mb-4 text-2xl font-bold tracking-tight",
+        className
+      )}
+    >
+      {children}
+    </h2>
   ),
-  h3: ({ className, ...props }) => (
+  h3: ({ className, children, ...props }) => (
     <h3
       {...props}
-      className={cn("text-foreground mt-10 mb-3 text-xl font-semibold tracking-tight", className)}
-    />
+      id={slugifyHeading(nodeToText(children))}
+      className={cn(
+        "text-foreground scroll-mt-28 mt-10 mb-3 text-xl font-semibold tracking-tight",
+        className
+      )}
+    >
+      {children}
+    </h3>
   ),
   p: ({ className, ...props }) => (
     <p {...props} className={cn("text-foreground/90 mb-5 text-base leading-relaxed", className)} />

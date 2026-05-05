@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Calendar, Clock } from "lucide-react";
 
-import { Breadcrumbs } from "@/components/breadcrumbs";
 import { FooterSection } from "@/components/layout/sections/footer";
+import { BlogTableOfContents } from "@/components/marketing/blog-table-of-contents";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ArticleSchema } from "@/components/seo/json-ld";
 import { getBlogPost, listBlogPosts } from "@/lib/api";
 import { authorInitials } from "@/lib/blog";
-import { resolveAssetUrl } from "@/lib/cms";
 import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
-
-const FALLBACK_COVER = "/blog/cover-stack.svg";
 
 export async function generateStaticParams() {
   const index = await listBlogPosts(1, 50);
@@ -64,7 +59,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const post = await getBlogPost(slug);
   if (!post) notFound();
 
-  const cover = resolveAssetUrl(post.cover_image) ?? FALLBACK_COVER;
   const date = formatDate(post.published_at);
   const author = post.author_name ?? "Alliances PRO Team";
 
@@ -73,79 +67,62 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* ---------- Hero ---------- */}
       <section className="pt-28 pb-10 lg:pt-36">
         <div className="container">
-          <Breadcrumbs
-            items={[
-              { name: "Blog", url: "/blog" },
-              { name: post.title, url: `/blog/${post.slug}` }
-            ]}
-            className="mb-8"
-          />
-
-          <div className="mx-auto grid max-w-(--breakpoint-xl) gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-            <div>
-              <div className="mb-5 flex flex-wrap items-center gap-2">
-                {post.category ? (
-                  <Badge
-                    variant="outline"
-                    className="bg-background/60 rounded-full px-3 py-1 text-[11px] font-medium tracking-wider uppercase backdrop-blur"
-                  >
-                    <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
-                    {post.category}
-                  </Badge>
-                ) : null}
-                {post.is_featured ? (
-                  <Badge variant="secondary" className="text-xs font-medium">
-                    Featured
-                  </Badge>
-                ) : null}
-              </div>
-              <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                {post.title}
-              </h1>
-              {post.excerpt ? (
-                <p className="text-muted-foreground mt-5 text-lg leading-relaxed">{post.excerpt}</p>
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
+              {post.category ? (
+                <Badge
+                  variant="outline"
+                  className="bg-background/60 rounded-full px-3 py-1 text-[11px] font-medium tracking-wider uppercase backdrop-blur"
+                >
+                  <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+                  {post.category}
+                </Badge>
               ) : null}
-
-              <div className="mt-7 flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <Avatar className="size-10">
-                    <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
-                      {authorInitials(author)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="leading-tight">
-                    <div className="text-foreground text-sm font-semibold">{author}</div>
-                    <div className="text-muted-foreground text-xs">Alliances PRO</div>
-                  </div>
-                </div>
-                <span className="bg-border h-6 w-px" aria-hidden />
-                <div className="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
-                  {date ? (
-                    <span className="flex items-center gap-1.5">
-                      <Calendar className="size-3.5" />
-                      {date}
-                    </span>
-                  ) : null}
-                  {post.reading_minutes > 0 ? (
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="size-3.5" />
-                      {post.reading_minutes} min read
-                    </span>
-                  ) : null}
-                </div>
-              </div>
+              {post.is_featured ? (
+                <Badge variant="secondary" className="text-xs font-medium">
+                  Featured
+                </Badge>
+              ) : null}
             </div>
 
-            <figure className="bg-muted relative aspect-[16/10] w-full overflow-hidden rounded-3xl border">
-              <Image
-                src={cover}
-                alt={post.title}
-                fill
-                className="object-cover"
-                priority
-                unoptimized
-              />
-            </figure>
+            <h1 className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              {post.title}
+            </h1>
+
+            {post.excerpt ? (
+              <p className="text-muted-foreground mx-auto mt-5 max-w-2xl text-lg leading-relaxed">
+                {post.excerpt}
+              </p>
+            ) : null}
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <div className="flex items-center gap-3">
+                <Avatar className="size-10">
+                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-semibold">
+                    {authorInitials(author)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="text-left leading-tight">
+                  <div className="text-foreground text-sm font-semibold">{author}</div>
+                  <div className="text-muted-foreground text-xs">Alliances PRO</div>
+                </div>
+              </div>
+              <span className="bg-border h-6 w-px" aria-hidden />
+              <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs">
+                {date ? (
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="size-3.5" />
+                    {date}
+                  </span>
+                ) : null}
+                {post.reading_minutes > 0 ? (
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="size-3.5" />
+                    {post.reading_minutes} min read
+                  </span>
+                ) : null}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -153,70 +130,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* ---------- Body ---------- */}
       <section className="pb-20">
         <div className="container">
-          <div className="mx-auto grid max-w-(--breakpoint-xl) gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div>
-              <MarkdownArticle>{post.body}</MarkdownArticle>
-            </div>
+          <div className="mx-auto max-w-3xl">
+            <BlogTableOfContents body={post.body} />
+            <MarkdownArticle>{post.body}</MarkdownArticle>
 
-            <aside className="lg:sticky lg:top-24 lg:self-start lg:[&>*+*]:mt-6">
-              {/* Author card */}
-              <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
-                <div className="flex items-center gap-3">
-                  <Avatar className="size-12">
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                      {authorInitials(author)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="leading-tight">
-                    <div className="text-foreground font-semibold">{author}</div>
-                    <div className="text-muted-foreground text-xs">Author</div>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-                  Practical writing on CRM, pipelines, and service-business operations from the
-                  Alliances PRO team.
-                </p>
-              </div>
-
-              {/* Inline newsletter */}
-              <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
-                <Badge
-                  variant="outline"
-                  className="bg-background/60 mb-3 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase"
-                >
-                  <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
-                  The Playbook
-                </Badge>
-                <h3 className="text-foreground text-lg font-semibold tracking-tight">
-                  Get the CRM playbook in your inbox
-                </h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                  Monthly: one practical playbook, one product update, zero fluff.
-                </p>
-                <form className="mt-4 flex flex-col gap-2" action="/api/newsletter" method="post">
-                  <Input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    className="bg-background"
-                    aria-label="email"
-                  />
-                  <Button type="submit" className="w-full">
-                    Subscribe
-                  </Button>
-                </form>
-                <p className="text-muted-foreground mt-3 text-xs">No spam. Unsubscribe anytime.</p>
-              </div>
-
-              {/* Back to all posts */}
+            <div className="mt-16 flex justify-center">
               <Link
                 href="/blog"
                 className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
               >
                 ← All articles
               </Link>
-            </aside>
+            </div>
           </div>
         </div>
       </section>
