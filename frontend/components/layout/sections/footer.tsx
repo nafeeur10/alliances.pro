@@ -7,7 +7,6 @@ import {
   footerColumns,
   footerCopyright,
   footerLogo,
-  footerNewsletter,
   footerSocial
 } from "@/@data/footer";
 import { BackToTop } from "@/components/layout/back-to-top";
@@ -19,41 +18,48 @@ export const FooterSection = () => {
   return (
     <>
       <footer id="footer" className="container space-y-4 pb-4 lg:pb-8">
-        <div className="bg-muted relative overflow-hidden rounded-2xl border p-10">
-          {/* Decorative gradient blob */}
-          <div
-            className="from-primary/20 pointer-events-none absolute -top-24 -right-24 size-72 rounded-full bg-gradient-to-br to-transparent blur-3xl"
-            aria-hidden
-          />
-
-          <div className="relative grid grid-cols-2 gap-x-12 gap-y-8 md:grid-cols-4 xl:grid-cols-6">
-            <div className="col-span-full space-y-4 xl:col-span-2">
-              <Logo {...footerLogo} />
-              <p className="text-muted-foreground">{footerBlurb}</p>
+        <div className="relative">
+          {/* Newsletter — half outside / half inside, centered */}
+          <div className="absolute inset-x-0 top-0 z-10 flex -translate-y-1/2 justify-center px-4">
+            <div className="w-full max-w-md">
               <FooterNewsletterForm />
-              <p className="text-muted-foreground text-xs">{footerNewsletter.microcopy}</p>
+            </div>
+          </div>
+
+          <div className="bg-muted relative rounded-2xl border p-10 pt-20">
+            {/* Decorative gradient blob, clipped to card corners */}
+            <div
+              className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"
+              aria-hidden
+            >
+              <div className="from-primary/20 absolute -top-24 -right-24 size-72 rounded-full bg-gradient-to-br to-transparent blur-3xl" />
             </div>
 
-            {footerColumns.map((col) => (
-              <div key={col.heading} className="flex flex-col gap-2">
-                <h3 className="mb-2 text-lg font-bold">{col.heading}</h3>
-                {col.links.map((l) => (
-                  <Link
-                    key={`${col.heading}-${l.label}`}
-                    href={l.url}
-                    className="text-muted-foreground hover:text-foreground group inline-flex items-center gap-1.5 text-sm transition-colors"
-                  >
-                    <ArrowRight
-                      aria-hidden
-                      className="size-3.5 -translate-x-2 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100"
-                    />
-                    <span className="transition-transform duration-200 group-hover:-translate-x-1">
-                      {l.label}
-                    </span>
-                  </Link>
-                ))}
+            <div className="relative grid grid-cols-2 gap-x-12 gap-y-8 md:grid-cols-4 xl:grid-cols-6">
+              <div className="col-span-full space-y-4 xl:col-span-2">
+                <Logo {...footerLogo} />
+                <p className="text-muted-foreground">{footerBlurb}</p>
               </div>
-            ))}
+
+              {footerColumns.map((col) => (
+                <div key={col.heading} className="flex flex-col gap-2">
+                  <h3 className="mb-2 text-lg font-bold">{col.heading}</h3>
+                  {col.links.map((l) => (
+                    <Link
+                      key={`${col.heading}-${l.label}`}
+                      href={l.url}
+                      className="text-muted-foreground hover:text-foreground group inline-flex items-center gap-1.5 text-sm transition-colors"
+                    >
+                      <ArrowRight
+                        aria-hidden
+                        className="text-primary/70 group-hover:text-primary size-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                      />
+                      <span>{l.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -84,7 +90,7 @@ export const FooterSection = () => {
                   width={20}
                   height={20}
                   unoptimized
-                  className="size-5 transition-transform duration-200 group-hover:scale-110"
+                  className="size-5"
                 />
               </Link>
             ))}

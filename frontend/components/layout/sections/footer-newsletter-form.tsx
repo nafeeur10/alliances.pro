@@ -32,7 +32,7 @@ export function FooterNewsletterForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 flex w-full max-w-sm items-center gap-2 rounded-md border border-emerald-500/30 px-3 py-2 text-sm">
+      <div className="flex w-full max-w-sm items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-700 dark:text-emerald-300">
         <Check className="size-4 shrink-0" aria-hidden />
         <span>Thanks — check your inbox to confirm.</span>
       </div>
@@ -55,12 +55,7 @@ export function FooterNewsletterForm() {
         className="bg-background/60 h-9"
         disabled={status === "submitting"}
       />
-      <Button
-        type="submit"
-        size="sm"
-        className="h-9 shrink-0"
-        disabled={status === "submitting"}
-      >
+      <Button type="submit" size="sm" className="h-9 shrink-0" disabled={status === "submitting"}>
         {status === "submitting" ? (
           <>
             <Loader2 className="size-4 animate-spin" aria-hidden />
