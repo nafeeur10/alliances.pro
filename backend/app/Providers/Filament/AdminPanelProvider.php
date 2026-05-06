@@ -11,6 +11,8 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use App\Filament\Widgets\BlogStatsOverview;
+use App\Filament\Widgets\BlogTopPosts;
 use App\Filament\Widgets\RecentMarketingLeads;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
@@ -41,6 +43,8 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
+                BlogStatsOverview::class,
+                BlogTopPosts::class,
                 RecentMarketingLeads::class,
                 FilamentInfoWidget::class,
             ])

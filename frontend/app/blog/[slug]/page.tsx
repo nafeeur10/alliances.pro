@@ -45,8 +45,9 @@ export async function generateMetadata({
     description: post.seo_description ?? post.excerpt ?? post.title,
     path: `/blog/${post.slug}`,
     type: "article",
-    image: post.cover_image ?? undefined,
-    publishedTime: post.published_at ?? undefined
+    image: post.og_image ?? post.cover_image ?? undefined,
+    publishedTime: post.published_at ?? undefined,
+    noIndex: post.allow_indexing === false
   });
 }
 
@@ -63,7 +64,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   if (!post) notFound();
 
   const date = formatDate(post.published_at);
-  const author = post.author_name ?? "Alliances PRO Team";
+  const author = post.author?.name ?? post.author_name ?? "Alliances PRO Team";
+  const showToc = post.show_toc !== false;
 
   const indexData = await listBlogPosts(1, 12);
   const allOthers = (indexData?.items ?? []).filter((p) => p.slug !== post.slug);
@@ -162,7 +164,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="container">
           <div className="mx-auto grid max-w-(--breakpoint-xl) gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div>
-              <BlogTableOfContents body={post.body} className="mt-0 mb-10" />
+              {showToc ? <BlogTableOfContents body={post.body} className="mt-0 mb-10" /> : null}
               <MarkdownArticle>{post.body}</MarkdownArticle>
               <ShareButtons url={absoluteUrl(`/blog/${post.slug}`)} title={post.title} />
             </div>

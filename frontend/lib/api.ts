@@ -105,24 +105,46 @@ export interface PricingPlan {
   comparison_note: string | null;
 }
 
+export interface BlogPostAuthor {
+  id: number;
+  name: string;
+}
+
+export type BlogPostStatus = "draft" | "published" | "scheduled" | "archived";
+export type BlogPostVisibility = "public" | "private" | "members";
+
 export interface BlogPostSummary {
   id: number;
   slug: string;
   title: string;
   excerpt: string | null;
   cover_image: string | null;
+  og_image?: string | null;
   author_name: string | null;
+  author?: BlogPostAuthor | null;
   category: string | null;
   tags: string[];
   reading_minutes: number;
+  views_count?: number;
   is_featured: boolean;
+  is_pinned?: boolean;
+  status?: BlogPostStatus;
+  visibility?: BlogPostVisibility;
+  allow_indexing?: boolean;
+  show_toc?: boolean;
+  allow_comments?: boolean;
   published_at: string | null;
   seo_title: string | null;
   seo_description: string | null;
+  focus_keyword?: string | null;
 }
 
 export interface BlogPost extends BlogPostSummary {
   body: string;
+  /** Opt-in structured content. When non-empty, frontend should render blocks
+   *  instead of the markdown body. Block renderer is a follow-up task — until
+   *  it lands, treat as unknown and fall through to `body`. */
+  content_blocks?: unknown[] | null;
 }
 
 export interface BlogIndex {

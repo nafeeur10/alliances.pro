@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Marketing\BlogPosts;
 use App\Filament\Resources\Marketing\BlogPosts\Pages\CreateBlogPost;
 use App\Filament\Resources\Marketing\BlogPosts\Pages\EditBlogPost;
 use App\Filament\Resources\Marketing\BlogPosts\Pages\ListBlogPosts;
+use App\Filament\Resources\Marketing\BlogPosts\Pages\ViewBlogPost;
 use App\Filament\Resources\Marketing\BlogPosts\Schemas\BlogPostForm;
 use App\Filament\Resources\Marketing\BlogPosts\Tables\BlogPostsTable;
 use App\Models\Marketing\BlogPost;
@@ -13,6 +14,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BlogPostResource extends Resource
 {
@@ -44,7 +47,14 @@ class BlogPostResource extends Resource
         return [
             'index' => ListBlogPosts::route('/'),
             'create' => CreateBlogPost::route('/create'),
+            'view' => ViewBlogPost::route('/{record}'),
             'edit' => EditBlogPost::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([SoftDeletingScope::class]);
     }
 }

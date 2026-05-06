@@ -20,6 +20,8 @@ class ListBlogPosts extends Controller
 
         return $this->cached("blog.index:p{$page}:n{$perPage}", function () use ($perPage): array {
             $paginator = BlogPost::published()
+                ->with('author:id,name')
+                ->orderByDesc('is_pinned')
                 ->orderByDesc('published_at')
                 ->paginate($perPage);
 
