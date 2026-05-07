@@ -1,0 +1,20 @@
+# Install: sudo cp infra/systemd/alliances-queue.service /etc/systemd/system/
+#          sudo systemctl daemon-reload
+#          sudo systemctl enable --now alliances-queue
+[Unit]
+Description=Alliances Laravel queue worker
+After=network.target redis-server.service mysql.service
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/alliances/backend/current
+ExecStart=/usr/bin/php artisan queue:work --queue=default --sleep=3 --tries=3 --backoff=30 --max-time=3600
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
