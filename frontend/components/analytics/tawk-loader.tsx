@@ -45,9 +45,11 @@ export function TawkLoader() {
 
     // Defer until the browser is idle so the widget never drags first paint.
     if ("requestIdleCallback" in window) {
-      const handle = (window as typeof window & {
-        requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number;
-      }).requestIdleCallback(load, { timeout: 3000 });
+      const handle = (
+        window as typeof window & {
+          requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number;
+        }
+      ).requestIdleCallback(load, { timeout: 3000 });
       return () => {
         if (
           "cancelIdleCallback" in window &&

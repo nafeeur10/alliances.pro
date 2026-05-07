@@ -13,10 +13,12 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const TYPE_STYLES: Record<ChangelogType, string> = {
-  Feature: "border-emerald-300/60 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
+  Feature:
+    "border-emerald-300/60 bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300",
   Improvement: "border-sky-300/60 bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300",
   Fix: "border-amber-300/60 bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
-  Update: "border-violet-300/60 bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300"
+  Update:
+    "border-violet-300/60 bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300"
 };
 
 function formatDate(iso: string): string {

@@ -73,9 +73,10 @@ export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
       });
 
       if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as
-          | { message?: string; errors?: Record<string, string[]> }
-          | null;
+        const data = (await res.json().catch(() => null)) as {
+          message?: string;
+          errors?: Record<string, string[]>;
+        } | null;
         const firstError =
           data?.errors && Object.values(data.errors)[0] ? Object.values(data.errors)[0]?.[0] : null;
         setErrorMsg(firstError ?? data?.message ?? "Submission failed. Please try again.");
@@ -103,12 +104,7 @@ export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
           <p className="text-muted-foreground max-w-sm text-sm">
             Thanks — we got it. The team will reply to you within one business day.
           </p>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="mt-2"
-            onClick={() => setStatus("idle")}
-          >
+          <Button variant="ghost" size="sm" className="mt-2" onClick={() => setStatus("idle")}>
             Send another
           </Button>
         </CardContent>

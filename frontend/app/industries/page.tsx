@@ -25,7 +25,8 @@ interface Industry {
 const INDUSTRIES: readonly Industry[] = [
   {
     icon: Users,
-    iconBgClass: "bg-violet-50 border-violet-200/70 dark:bg-violet-500/10 dark:border-violet-500/30",
+    iconBgClass:
+      "bg-violet-50 border-violet-200/70 dark:bg-violet-500/10 dark:border-violet-500/30",
     iconTextClass: "text-violet-500 dark:text-violet-300",
     name: "Agencies",
     pitch:
@@ -33,7 +34,8 @@ const INDUSTRIES: readonly Industry[] = [
   },
   {
     icon: Building2,
-    iconBgClass: "bg-emerald-50 border-emerald-200/70 dark:bg-emerald-500/10 dark:border-emerald-500/30",
+    iconBgClass:
+      "bg-emerald-50 border-emerald-200/70 dark:bg-emerald-500/10 dark:border-emerald-500/30",
     iconTextClass: "text-emerald-500 dark:text-emerald-300",
     name: "Consultancies",
     pitch:
@@ -70,7 +72,11 @@ export default function IndustriesPage() {
                 <div
                   className={`flex size-12 items-center justify-center rounded-xl border ${industry.iconBgClass}`}
                 >
-                  <Icon className={`size-6 ${industry.iconTextClass}`} aria-hidden strokeWidth={2} />
+                  <Icon
+                    className={`size-6 ${industry.iconTextClass}`}
+                    aria-hidden
+                    strokeWidth={2}
+                  />
                 </div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-foreground text-lg font-semibold">{industry.name}</h3>
@@ -95,7 +101,7 @@ export default function IndustriesPage() {
         <div className="mt-8 flex justify-center">
           <Link
             href="/#features"
-            className="text-primary hover:underline inline-flex items-center gap-1.5 text-sm font-medium"
+            className="text-primary inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
           >
             See product features
             <ArrowRight className="size-4" aria-hidden />

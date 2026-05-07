@@ -25,7 +25,8 @@ export default function TeamsPage() {
       >
         <div className="mx-auto flex max-w-md flex-col items-center gap-4">
           <p className="text-muted-foreground text-center text-sm">
-            Want to know how we think about teams? The story behind the product is on the about page.
+            Want to know how we think about teams? The story behind the product is on the about
+            page.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button asChild>

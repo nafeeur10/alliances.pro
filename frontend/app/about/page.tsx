@@ -71,23 +71,25 @@ export default async function AboutPage() {
       <section className="container pb-16 lg:pb-24">
         <div className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-6 md:grid-cols-2">
           <article className="bg-background relative overflow-hidden rounded-2xl border p-8">
-            <div className="from-emerald-400/10 pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-gradient-to-br to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-gradient-to-br from-emerald-400/10 to-transparent blur-3xl" />
             <div className="relative">
               <div className="flex size-12 items-center justify-center rounded-xl border border-emerald-200/70 bg-white text-emerald-500 shadow-sm dark:border-emerald-500/30">
                 <Target className="size-6" aria-hidden strokeWidth={2.25} />
               </div>
-              <h2 className="text-foreground mt-5 text-2xl font-bold tracking-tight">Our mission</h2>
+              <h2 className="text-foreground mt-5 text-2xl font-bold tracking-tight">
+                Our mission
+              </h2>
               <p className="text-muted-foreground mt-3 text-base leading-relaxed">
                 Build the CRM that small agencies and service teams actually like using — one
                 workspace that follows a customer end to end, priced fairly per workspace instead of
-                per seat, and shipped weekly so the product keeps getting better with the team
-                using it.
+                per seat, and shipped weekly so the product keeps getting better with the team using
+                it.
               </p>
             </div>
           </article>
 
           <article className="bg-background relative overflow-hidden rounded-2xl border p-8">
-            <div className="from-sky-400/10 pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-gradient-to-br to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -top-20 -right-20 size-56 rounded-full bg-gradient-to-br from-sky-400/10 to-transparent blur-3xl" />
             <div className="relative">
               <div className="flex size-12 items-center justify-center rounded-xl border border-sky-200/70 bg-white text-sky-500 shadow-sm dark:border-sky-500/30">
                 <Compass className="size-6" aria-hidden strokeWidth={2.25} />
