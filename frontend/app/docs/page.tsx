@@ -32,7 +32,7 @@ export default function DocsPage() {
             <a className="text-primary hover:underline" href="mailto:hello@alliances.pro">
               hello@alliances.pro
             </a>{" "}
-            and we'll send you the relevant interface details.
+            and we&apos;ll send you the relevant interface details.
           </p>
           <Button asChild variant="outline">
             <Link href="/help" className="inline-flex items-center gap-1.5">

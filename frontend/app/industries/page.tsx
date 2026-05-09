@@ -91,7 +91,7 @@ export default function IndustriesPage() {
         </div>
 
         <p className="text-muted-foreground mt-12 text-center text-sm">
-          Don't see your industry?{" "}
+          Don&apos;t see your industry?{" "}
           <Link className="text-primary hover:underline" href="/#contact">
             Tell us what you do
           </Link>{" "}

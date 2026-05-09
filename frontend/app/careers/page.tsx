@@ -64,11 +64,11 @@ export default function CareersPage() {
                 We hire occasionally as we grow.
               </h3>
               <p className="text-muted-foreground mx-auto mt-2 max-w-md text-sm leading-relaxed">
-                If you'd like to be considered when a role opens, drop a line to{" "}
+                If you&apos;d like to be considered when a role opens, drop a line to{" "}
                 <a className="text-primary hover:underline" href="mailto:careers@alliances.pro">
                   careers@alliances.pro
                 </a>{" "}
-                with what you'd like to work on.
+                with what you&apos;d like to work on.
               </p>
             </div>
           )}

@@ -96,7 +96,7 @@ export default async function AboutPage() {
               </div>
               <h2 className="text-foreground mt-5 text-2xl font-bold tracking-tight">Our vision</h2>
               <p className="text-muted-foreground mt-3 text-base leading-relaxed">
-                A world where running a service business doesn't require five disconnected SaaS
+                A world where running a service business doesn&apos;t require five disconnected SaaS
                 tools and a per-seat tax on hiring. We see Alliances PRO becoming the default
                 workspace for the next million teams that grow from solo operators to fifty-person
                 agencies — without ever changing how the workspace feels.
