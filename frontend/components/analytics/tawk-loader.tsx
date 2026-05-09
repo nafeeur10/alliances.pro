@@ -63,8 +63,8 @@ export function TawkLoader() {
       };
     }
 
-    const timer = window.setTimeout(load, 1500);
-    return () => window.clearTimeout(timer);
+    const timer = setTimeout(load, 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   return null;
