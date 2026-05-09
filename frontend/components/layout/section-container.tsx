@@ -9,7 +9,7 @@ interface Props {
 
 export default function SectionContainer({ children, id, className }: Props) {
   return (
-    <section id={id} className={cn("pb-20 sm:pb-32", className)}>
+    <section id={id} className={cn("py-16 sm:py-24", className)}>
       <div className="container">{children}</div>
     </section>
   );

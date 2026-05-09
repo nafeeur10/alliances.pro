@@ -84,7 +84,7 @@ export const PricingSection = async () => {
   const { lead, highlight } = splitHeadline(headline);
 
   return (
-    <SectionContainer id="pricing" className="bg-muted/30 pt-20 sm:pt-32">
+    <SectionContainer id="pricing" className="bg-muted/30">
       <div className="relative isolate">
         <PricingBlob />
 

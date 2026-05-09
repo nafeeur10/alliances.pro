@@ -35,7 +35,7 @@ export const FeaturesSectionClient = ({
   const [value, setValue] = React.useState<string | null>(null);
 
   return (
-    <SectionContainer id="features" className="bg-muted/30 pt-20 sm:pt-32">
+    <SectionContainer id="features" className="bg-muted/30">
       <div className="mx-auto max-w-2xl text-center">
         <Badge
           variant="outline"
