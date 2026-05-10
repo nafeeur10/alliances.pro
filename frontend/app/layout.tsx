@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Public_Sans } from "next/font/google";
 import "./globals.css";
 
-import { TawkLoader } from "@/components/analytics/tawk-loader";
 import { NavbarShell } from "@/components/layout/navbar-shell";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/json-ld";
@@ -14,7 +13,6 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 const PLAUSIBLE_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ?? "https://plausible.io";
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-const TAWK_PROPERTY_ID = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID;
 const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 const publicSans = Public_Sans({
@@ -74,9 +72,7 @@ export default function RootLayout({
         {GA_MEASUREMENT_ID ? (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         ) : null}
-        {TAWK_PROPERTY_ID ? (
-          <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
-        ) : null}
+        <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
       </head>
       <body
         className={cn("from-muted to-primary/5 min-h-screen bg-gradient-to-tl")}
@@ -121,7 +117,17 @@ gtag('config', '${GA_MEASUREMENT_ID}', { anonymize_ip: true });`}
             </Script>
           </>
         ) : null}
-        <TawkLoader />
+        <Script id="tawk-to" strategy="afterInteractive">
+          {`var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/69fb1d7e04c2b71c35758971/1jnueme1d';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();`}
+        </Script>
       </body>
     </html>
   );
