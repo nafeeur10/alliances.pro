@@ -46,7 +46,7 @@ We share information only with:
 
 ## 5. Security
 
-We use TLS in transit, encryption at rest, scoped access controls, and standard industry safeguards. No system is perfectly secure; report any concerns to security@alliances.pro.
+We use TLS in transit, encryption at rest, scoped access controls, and standard industry safeguards. No system is perfectly secure; report any concerns to alliancesprohq@gmail.com.
 
 ## 6. Your Rights
 
@@ -57,7 +57,7 @@ Depending on where you live (EU, UK, California, and others), you may have right
 - Receive a portable copy
 - Withdraw consent for marketing communications
 
-To exercise any of these, email hello@alliances.pro from the address on your account.
+To exercise any of these, email alliancesprohq@gmail.com from the address on your account.
 
 ## 7. International Transfers
 
@@ -73,7 +73,7 @@ We may update this Policy from time to time. Material changes will be announced 
 
 ## 10. Contact
 
-Questions or requests? Email hello@alliances.pro.`;
+Questions or requests? Email alliancesprohq@gmail.com.`;
 
 export default function PrivacyPage() {
   return (

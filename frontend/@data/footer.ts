@@ -83,15 +83,29 @@ export const footerColumns: FooterLinkColumn[] = [
 ];
 
 // ---------- Social ----------
-// Order is preserved in render. Replace `url: "#"` with real profile URLs as
-// they come online.
+// Order is preserved in render.
 export const footerSocial: FooterSocial[] = [
-  { label: "LinkedIn", url: "#", iconUrl: "/icons/linkedin.svg" },
-  { label: "X", url: "#", iconUrl: "/icons/x.svg" },
-  { label: "Facebook", url: "#", iconUrl: "/icons/facebook.svg" },
-  { label: "Instagram", url: "#", iconUrl: "/icons/instagram.svg" },
-  { label: "YouTube", url: "#", iconUrl: "/icons/youtube.svg" },
-  { label: "Reddit", url: "#", iconUrl: "/icons/reddit.svg" }
+  {
+    label: "LinkedIn",
+    url: "https://linkedin.com/showcase/alliances-pro",
+    iconUrl: "/icons/linkedin.svg"
+  },
+  { label: "X", url: "https://x.com/alliances_pro", iconUrl: "/icons/x.svg" },
+  {
+    label: "Facebook",
+    url: "https://www.facebook.com/alliancespro",
+    iconUrl: "/icons/facebook.svg"
+  },
+  {
+    label: "YouTube",
+    url: "https://www.youtube.com/@AlliancesPRO",
+    iconUrl: "/icons/youtube.svg"
+  },
+  {
+    label: "Reddit",
+    url: "https://www.reddit.com/user/ArticleAvailable6643/",
+    iconUrl: "/icons/reddit.svg"
+  }
 ];
 
 // ---------- Newsletter ----------

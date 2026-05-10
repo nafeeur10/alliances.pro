@@ -24,18 +24,18 @@ export function OrganizationSchema() {
         name: SITE_NAME,
         url: SITE_URL,
         logo: absoluteUrl("/og/logo.png"),
-        sameAs: [SOCIAL.twitterUrl, SOCIAL.linkedinUrl, SOCIAL.githubUrl, SOCIAL.youtubeUrl],
+        sameAs: [
+          SOCIAL.twitterUrl,
+          SOCIAL.linkedinUrl,
+          SOCIAL.facebookUrl,
+          SOCIAL.youtubeUrl,
+          SOCIAL.redditUrl
+        ],
         contactPoint: [
           {
             "@type": "ContactPoint",
-            contactType: "sales",
-            email: "sales@alliances.pro",
-            availableLanguage: ["en"]
-          },
-          {
-            "@type": "ContactPoint",
             contactType: "customer support",
-            email: "support@alliances.pro",
+            email: "alliancesprohq@gmail.com",
             availableLanguage: ["en"]
           }
         ]

@@ -55,6 +55,6 @@ export const helpFaqs: HelpFaqItem[] = [
   {
     question: "Do you offer education or non-profit discounts?",
     answer:
-      "Yes — 30% off the Business plan for accredited schools, universities, and registered non-profits. Email sales@alliances.pro with verification."
+      "Yes — 30% off the Business plan for accredited schools, universities, and registered non-profits. Email alliancesprohq@gmail.com with verification."
   }
 ];

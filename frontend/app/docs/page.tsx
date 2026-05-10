@@ -29,8 +29,8 @@ export default function DocsPage() {
           </div>
           <p className="text-muted-foreground text-center text-sm">
             Need something specific now? Email{" "}
-            <a className="text-primary hover:underline" href="mailto:hello@alliances.pro">
-              hello@alliances.pro
+            <a className="text-primary hover:underline" href="mailto:alliancesprohq@gmail.com">
+              alliancesprohq@gmail.com
             </a>{" "}
             and we&apos;ll send you the relevant interface details.
           </p>

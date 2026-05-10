@@ -65,8 +65,8 @@ export default function CareersPage() {
               </h3>
               <p className="text-muted-foreground mx-auto mt-2 max-w-md text-sm leading-relaxed">
                 If you&apos;d like to be considered when a role opens, drop a line to{" "}
-                <a className="text-primary hover:underline" href="mailto:careers@alliances.pro">
-                  careers@alliances.pro
+                <a className="text-primary hover:underline" href="mailto:alliancesprohq@gmail.com">
+                  alliancesprohq@gmail.com
                 </a>{" "}
                 with what you&apos;d like to work on.
               </p>

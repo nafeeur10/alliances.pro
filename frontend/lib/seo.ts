@@ -9,11 +9,12 @@ export const SITE_DESCRIPTION =
   "The CRM platform built for service businesses that grow sideways.";
 
 export const SOCIAL = {
-  twitter: "@alliancespro",
-  twitterUrl: "https://twitter.com/alliancespro",
-  linkedinUrl: "https://linkedin.com/company/alliancespro",
-  githubUrl: "https://github.com/alliancespro",
-  youtubeUrl: "https://youtube.com/@alliancespro"
+  twitter: "@alliances_pro",
+  twitterUrl: "https://x.com/alliances_pro",
+  linkedinUrl: "https://linkedin.com/showcase/alliances-pro",
+  facebookUrl: "https://www.facebook.com/alliancespro",
+  youtubeUrl: "https://www.youtube.com/@AlliancesPRO",
+  redditUrl: "https://www.reddit.com/user/ArticleAvailable6643/"
 } as const;
 
 type OgType = "website" | "article" | "product";

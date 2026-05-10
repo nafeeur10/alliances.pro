@@ -21,7 +21,7 @@ You must be at least 18 years old and able to enter a binding contract to use th
 
 ## 2. Your Account
 
-You are responsible for safeguarding your account credentials and for all activity that occurs under your account. Notify us promptly at hello@alliances.pro if you suspect unauthorized access.
+You are responsible for safeguarding your account credentials and for all activity that occurs under your account. Notify us promptly at alliancesprohq@gmail.com if you suspect unauthorized access.
 
 ## 3. Acceptable Use
 
@@ -61,7 +61,7 @@ We may update these Terms from time to time. Material changes will be announced 
 
 ## 12. Contact
 
-Questions about these Terms? Email hello@alliances.pro.`;
+Questions about these Terms? Email alliancesprohq@gmail.com.`;
 
 export default function TermsPage() {
   return (
