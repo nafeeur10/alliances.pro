@@ -69,6 +69,7 @@ export const footerColumns: FooterLinkColumn[] = [
     links: [
       { label: "Documents", url: "/docs" },
       { label: "FAQs", url: "/help" },
+      { label: "Roadmap", url: "/roadmap" },
       { label: "Contact Us", url: "/#contact" }
     ]
   },

@@ -1,0 +1,8 @@
+<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <path fill="#10B981" d="M40 8H8a4 4 0 0 0-4 4v20a4 4 0 0 0 4 4h6v6l8-6h18a4 4 0 0 0 4-4V12a4 4 0 0 0-4-4z"/>
+  <path fill="#FFFFFF" d="M14 18h4v8h-4zM20 18h4v8h-4zM26 18h4v8h-4z"/>
+  <circle fill="#FACC15" cx="16" cy="22" r="1.5"/>
+  <circle fill="#FACC15" cx="22" cy="22" r="1.5"/>
+  <circle fill="#FACC15" cx="28" cy="22" r="1.5"/>
+  <text x="24" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="700" fill="#065F46">SMS</text>
+</svg>
