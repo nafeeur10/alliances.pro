@@ -20,7 +20,11 @@ npm ci --no-audit --no-fund
 npm run build
 
 ln -snf "$RELEASE/frontend" "$APP/current"
-sudo systemctl restart alliances-frontend
+
+# systemctl --user via non-interactive SSH needs XDG_RUNTIME_DIR.
+# `loginctl enable-linger deploy` (one-time, as root) keeps /run/user/$UID alive.
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+systemctl --user restart alliances-frontend
 
 ls -1dt "$APP"/releases/* | tail -n +6 | xargs -r rm -rf
 

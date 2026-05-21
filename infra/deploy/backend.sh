@@ -26,8 +26,17 @@ php artisan filament:cache-components || true
 
 ln -snf "$RELEASE/backend" "$APP/current"
 
-sudo systemctl reload php8.4-fpm
-sudo systemctl restart alliances-queue
+# Tell running PHP-FPM workers to pick up the new code (no sudo: `opcache_reset`
+# via artisan + queue:restart signals workers to exit gracefully and systemd
+# auto-restarts them).
+php artisan optimize:clear
+php artisan queue:restart
+
+# PHP-FPM reload is the only remaining root action. It's gated by a narrow
+# sudoers rule (see infra/deploy/README.md §1c). If you ever drop FPM caching
+# or move to FrankenPHP, this line can go away entirely.
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+sudo -n /bin/systemctl reload php8.4-fpm
 
 ls -1dt "$APP"/releases/* | tail -n +6 | xargs -r rm -rf
 

@@ -43,11 +43,40 @@ chmod 600 /home/deploy/.ssh/authorized_keys
 chown -R deploy:deploy /home/deploy/.ssh
 ```
 
-### 1c. Sudo for service reloads
+### 1c. Sudo for PHP-FPM reload (only)
+Frontend + queue restarts run via `systemctl --user`, so they need no sudo.
+PHP-FPM reload is the only root action left; whitelist exactly that one:
 ```bash
 visudo -f /etc/sudoers.d/deploy
-# Paste:
-deploy ALL=(root) NOPASSWD: /bin/systemctl reload php8.4-fpm, /bin/systemctl restart alliances-queue, /bin/systemctl restart alliances-frontend
+# Paste (use `which systemctl` on the droplet to confirm the absolute path):
+deploy ALL=(root) NOPASSWD: /bin/systemctl reload php8.4-fpm
+```
+Verify (must print nothing and exit 0 — no prompt):
+```bash
+sudo -u deploy sudo -n /bin/systemctl reload php8.4-fpm
+```
+
+### 1c-bis. Enable user-level systemd for the deploy user
+```bash
+loginctl enable-linger deploy   # keeps /run/user/$UID alive after logout
+sudo -u deploy mkdir -p /home/deploy/.config/systemd/user
+```
+After the first deploy populates `current/`, install the units **as the deploy user**:
+```bash
+sudo -u deploy bash -lc '
+  cp /var/www/alliances/frontend/current/infra/systemd/alliances-frontend.service ~/.config/systemd/user/
+  cp /var/www/alliances/backend/current/infra/systemd/alliances-queue.service     ~/.config/systemd/user/
+  export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  systemctl --user daemon-reload
+  systemctl --user enable --now alliances-frontend alliances-queue
+'
+```
+If you previously installed these at `/etc/systemd/system/`, remove them first:
+```bash
+systemctl stop alliances-frontend alliances-queue 2>/dev/null || true
+systemctl disable alliances-frontend alliances-queue 2>/dev/null || true
+rm -f /etc/systemd/system/alliances-{frontend,queue}.service
+systemctl daemon-reload
 ```
 
 ### 1d. Release directories
@@ -122,12 +151,8 @@ certbot --nginx -d site-api.alliances.pro
 ```
 
 ### 1j. systemd units
-```bash
-cp infra/systemd/alliances-frontend.service /etc/systemd/system/
-cp infra/systemd/alliances-queue.service    /etc/systemd/system/
-systemctl daemon-reload
-# Don't enable/start yet — current/ doesn't exist until first deploy.
-```
+Frontend + queue install as **user units** (covered in 1c-bis). Nothing to do
+here at the system level.
 
 ### 1k. Cron (scheduler)
 ```bash
@@ -145,7 +170,14 @@ run the scripts locally on the droplet first:
 ```bash
 sudo -u deploy bash -c 'curl -fsSL https://raw.githubusercontent.com/nafeeur10/alliances.pro/main/infra/deploy/backend.sh | bash'
 sudo -u deploy bash -c 'curl -fsSL https://raw.githubusercontent.com/nafeeur10/alliances.pro/main/infra/deploy/frontend.sh | bash'
-sudo systemctl enable --now alliances-frontend alliances-queue
+# Now install the user units (one-time):
+sudo -u deploy bash -lc '
+  cp /var/www/alliances/frontend/current/infra/systemd/alliances-frontend.service ~/.config/systemd/user/
+  cp /var/www/alliances/backend/current/infra/systemd/alliances-queue.service     ~/.config/systemd/user/
+  export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  systemctl --user daemon-reload
+  systemctl --user enable --now alliances-frontend alliances-queue
+'
 ```
 
 After the symlinks exist:
@@ -163,8 +195,8 @@ dig +short alliances.pro site-api.alliances.pro
 curl -I https://alliances.pro                                   # → 200
 curl -I https://site-api.alliances.pro                          # → 200/302
 curl  https://site-api.alliances.pro/api/v1/marketing/blog       # → JSON
-sudo journalctl -u alliances-frontend -n 50
-sudo journalctl -u alliances-queue -n 50
+sudo -u deploy XDG_RUNTIME_DIR=/run/user/$(id -u deploy) journalctl --user -u alliances-frontend -n 50
+sudo -u deploy XDG_RUNTIME_DIR=/run/user/$(id -u deploy) journalctl --user -u alliances-queue -n 50
 ```
 
 Then push a trivial change to `main` and watch the Actions run.
@@ -177,7 +209,13 @@ Then push a trivial change to `main` and watch the Actions run.
 cd /var/www/alliances/backend
 ls -1dt releases/*                     # find the previous timestamp
 sudo -u deploy ln -snf releases/<ts>/backend current
-sudo systemctl reload php8.4-fpm
-sudo systemctl restart alliances-queue
+sudo -u deploy bash -lc '
+  export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  php /var/www/alliances/backend/current/artisan queue:restart
+'
+sudo /bin/systemctl reload php8.4-fpm
 ```
-Same pattern for `frontend`, but restart `alliances-frontend` instead.
+Same pattern for `frontend` — repoint `current/`, then:
+```bash
+sudo -u deploy bash -lc 'XDG_RUNTIME_DIR=/run/user/$(id -u) systemctl --user restart alliances-frontend'
+```

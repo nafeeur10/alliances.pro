@@ -1,14 +1,16 @@
-# Install: sudo cp infra/systemd/alliances-frontend.service /etc/systemd/system/
-#          sudo systemctl daemon-reload
-#          sudo systemctl enable --now alliances-frontend
+# Install as a per-user unit (no sudo needed at deploy time):
+#   ssh deploy@host
+#   mkdir -p ~/.config/systemd/user
+#   cp /var/www/alliances/frontend/current/infra/systemd/alliances-frontend.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now alliances-frontend
+# Root must run `loginctl enable-linger deploy` once so the unit survives logout.
 [Unit]
 Description=Alliances marketing site (Next.js)
 After=network.target
 
 [Service]
 Type=simple
-User=deploy
-Group=deploy
 WorkingDirectory=/var/www/alliances/frontend/current
 EnvironmentFile=/var/www/alliances/frontend/current/.env.production
 Environment=NODE_ENV=production
@@ -21,4 +23,4 @@ StandardOutput=journal
 StandardError=journal
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
