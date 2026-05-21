@@ -52,13 +52,16 @@ async function apiFetch<T>(path: string, opts: FetchOptions = {}): Promise<T | n
     });
     if (res.status === 404) return null;
     if (!res.ok) {
-      throw new ApiError(res.status, `GET ${path} → ${res.status}`);
+      // Marketing data is read-only and cached. A backend hiccup should
+      // degrade gracefully (callers handle `null`) rather than crash the
+      // build or 500 the page. Logged so it shows up in journal/Sentry.
+      console.warn(`[marketing-api] GET ${path} → ${res.status} (returning null)`);
+      return null;
     }
     const json = (await res.json()) as ApiEnvelope<T>;
     return json.data ?? null;
   } catch (err) {
-    if (err instanceof ApiError) throw err;
-    // Network errors during build / SSR — log and let the caller decide.
+    // Network errors during build / SSR — same graceful-degradation policy.
     console.warn(`[marketing-api] ${url} failed:`, err);
     return null;
   }
