@@ -20,9 +20,17 @@ import { absoluteUrl, buildMetadata } from "@/lib/seo";
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const index = await listBlogPosts(1, 50);
-  if (!index) return [];
-  return index.items.map((p) => ({ slug: p.slug }));
+  // Pre-rendering is a build-time optimization, not a hard requirement.
+  // If the backend is unreachable or 5xx's during deploy, fall back to
+  // on-demand rendering — `revalidate` above keeps content fresh.
+  try {
+    const index = await listBlogPosts(1, 50);
+    if (!index) return [];
+    return index.items.map((p) => ({ slug: p.slug }));
+  } catch (err) {
+    console.warn("[blog] generateStaticParams skipped — backend unavailable:", err);
+    return [];
+  }
 }
 
 export async function generateMetadata({
