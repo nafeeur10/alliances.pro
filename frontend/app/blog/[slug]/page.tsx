@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   Flat $39/mo, unlimited seats. 14-day free trial — no credit card.
                 </p>
                 <Button asChild size="sm" className="mt-4 w-full">
-                  <Link href="https://app.alliances.pro/signup">Start 14-day free trial</Link>
+                  <Link href="https://crm.alliances.pro/signup">Start 14-day free trial</Link>
                 </Button>
               </div>
 

@@ -14,7 +14,7 @@ interface HeroCtasProps {
 }
 
 export function HeroCtas({
-  signupUrl = "https://app.alliances.pro/signup",
+  signupUrl = "https://crm.alliances.pro/signup",
   signupLabel = "Start Free Trial",
   demoUrl = "/contact?intent=demo",
   demoLabel = "Book a Demo"

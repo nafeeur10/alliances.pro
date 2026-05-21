@@ -43,7 +43,7 @@ const FALLBACK_PLANS: PricingPlanItem[] = [
       "14-day free trial"
     ],
     cta: "Start Pro trial",
-    ctaUrl: "https://app.alliances.pro/signup?plan=pro"
+    ctaUrl: "https://crm.alliances.pro/signup?plan=pro"
   },
   {
     name: "Business",
@@ -60,7 +60,7 @@ const FALLBACK_PLANS: PricingPlanItem[] = [
       "Everything in Pro"
     ],
     cta: "Start Business trial",
-    ctaUrl: "https://app.alliances.pro/signup?plan=business",
+    ctaUrl: "https://crm.alliances.pro/signup?plan=business",
     popular: true
   }
 ];

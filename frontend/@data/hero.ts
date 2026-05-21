@@ -28,7 +28,7 @@ export const heroContent: HeroContent = {
     "Built with a focus on service businesses. Alliances PRO organizes every client, generates AI summaries on every lead and deal, runs your pipeline to signed deals, and sends bulk email — so you can stop juggling tools and just serve.",
   imageUrl: "/alliances-hero.png",
   imageAlt: "Alliances PRO hero section image",
-  primaryCta: { label: "Start Free Trial", url: "https://app.alliances.pro/signup" },
+  primaryCta: { label: "Start Free Trial", url: "https://crm.alliances.pro/signup" },
   secondaryCta: { label: "Contact Us", url: "#contact" },
   trustChecks: [{ label: "No credit card" }, { label: "14-day trial" }, { label: "Cancel anytime" }]
 };
