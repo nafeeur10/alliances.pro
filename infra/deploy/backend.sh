@@ -55,6 +55,10 @@ ln -snf "$APP/shared/storage" storage
 composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 php artisan storage:link || true
 php artisan migrate --force
+# Seed demo content only — MarketingBlogPostSeeder self-guards against a
+# non-empty table, so this is a no-op once posts are managed in /admin.
+# Run the class directly (not DatabaseSeeder) to skip the test-user factory.
+php artisan db:seed --class=MarketingBlogPostSeeder --force
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

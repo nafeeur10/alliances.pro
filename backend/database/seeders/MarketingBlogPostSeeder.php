@@ -11,6 +11,13 @@ class MarketingBlogPostSeeder extends Seeder
 {
     public function run(): void
     {
+        // Seed the demo posts only on a truly empty table. Once content is
+        // managed in the Filament admin this becomes a no-op, so re-running
+        // it on every deploy never overwrites or resurrects edited posts.
+        if (BlogPost::withTrashed()->exists()) {
+            return;
+        }
+
         $now = Carbon::now();
 
         $posts = [
@@ -465,6 +472,7 @@ MD,
                     'tags' => [],
                     'reading_minutes' => $post['reading_minutes'],
                     'is_published' => true,
+                    'status' => 'published',
                     'is_featured' => $post['is_featured'] ?? false,
                     'published_at' => $publishedAt,
                     'seo_title' => $post['title'].' — Alliances PRO',
