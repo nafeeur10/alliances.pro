@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { trackEvent } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 import { cn } from "@/lib/utils";
 
 interface WaitlistFormProps {
@@ -57,7 +58,8 @@ export function WaitlistForm({ waitlistFor, heading, subheading, className }: Wa
                   email: formData.get("email"),
                   company: formData.get("company") || null,
                   consent_given: true,
-                  honeypot: formData.get("honeypot") || ""
+                  honeypot: formData.get("honeypot") || "",
+                  ...getAttribution()
                 })
               });
 

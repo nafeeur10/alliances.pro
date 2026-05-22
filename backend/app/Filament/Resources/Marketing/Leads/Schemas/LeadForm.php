@@ -36,6 +36,16 @@ class LeadForm
                 TextInput::make('waitlist_for'),
                 TextInput::make('ip_address'),
                 TextInput::make('user_agent'),
+                // Campaign attribution — captured automatically from the
+                // visitor's first landing URL; shown here for reference.
+                TextInput::make('utm_source')->label('UTM source'),
+                TextInput::make('utm_medium')->label('UTM medium'),
+                TextInput::make('utm_campaign')->label('UTM campaign'),
+                TextInput::make('utm_term')->label('UTM term'),
+                TextInput::make('utm_content')->label('UTM content'),
+                TextInput::make('referrer_url')
+                    ->label('Referrer URL')
+                    ->columnSpanFull(),
                 Toggle::make('consent_given')
                     ->required(),
                 DateTimePicker::make('notified_at'),

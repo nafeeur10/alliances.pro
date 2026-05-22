@@ -42,10 +42,21 @@ class LeadsTable
                         default => 'gray',
                     }),
                 TextColumn::make('waitlist_for')->label('Waitlist')->placeholder('—'),
+                TextColumn::make('utm_source')
+                    ->label('Source site')
+                    ->badge()
+                    ->color('gray')
+                    ->searchable()
+                    ->placeholder('direct'),
                 IconColumn::make('processed_at')
                     ->label('Processed')
                     ->boolean()
                     ->getStateUsing(fn (Lead $record): bool => $record->processed_at !== null),
+                TextColumn::make('utm_medium')->label('Medium')->placeholder('—')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('utm_campaign')->label('Campaign')->searchable()->placeholder('—')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('utm_term')->label('Term')->placeholder('—')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('utm_content')->label('Content')->placeholder('—')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('referrer_url')->label('Referrer')->placeholder('—')->limit(40)->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('notified_at')->dateTime('M j, H:i')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('ip_address')->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -108,7 +119,7 @@ class LeadsTable
                         ->label('Export CSV')
                         ->icon('heroicon-o-arrow-down-tray')
                         ->action(function (Collection $records): StreamedResponse {
-                            $columns = ['id', 'created_at', 'name', 'email', 'company', 'team_size', 'source', 'waitlist_for', 'message', 'consent_given', 'processed_at', 'ip_address'];
+                            $columns = ['id', 'created_at', 'name', 'email', 'company', 'team_size', 'source', 'waitlist_for', 'message', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'referrer_url', 'consent_given', 'processed_at', 'ip_address'];
                             $filename = 'marketing-leads-'.Carbon::now()->format('Ymd-His').'.csv';
 
                             return response()->streamDownload(function () use ($records, $columns): void {

@@ -6,6 +6,7 @@ import { Check, Loader2 } from "lucide-react";
 
 import { footerNewsletter } from "@/@data/footer";
 import { trackEvent } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -34,7 +35,8 @@ export function FooterNewsletterForm() {
           source: "newsletter",
           email,
           consent_given: true,
-          page_url: typeof window !== "undefined" ? window.location.href : undefined
+          page_url: typeof window !== "undefined" ? window.location.href : undefined,
+          ...getAttribution()
         })
       });
 

@@ -49,7 +49,7 @@ pages are returned (404 otherwise).
           "eyebrow": "Multi-vertical CRM platform · Trusted by …",
           "headline": "The CRM platform built for service businesses that grow sideways.",
           "subheadline": "One login. One inbox. One bill…",
-          "primary_cta": { "label": "Start 14-day free trial", "url": "https://app.alliances.pro/signup" },
+          "primary_cta": { "label": "Start 14-day free trial", "url": "https://crm.alliances.pro/signup" },
           "secondary_cta": { "label": "Watch 2-min product tour", "url": "#tour" },
           "trust_strip": "Used by 1,200+ teams across 30 countries"
         }
@@ -158,11 +158,42 @@ to consume when generating `sitemap.xml`.
 }
 ```
 
-### Lead capture (planned — Prompt 2)
+### Lead capture
 
-- `POST /leads` — accepts contact / demo / waitlist submissions. Validation,
-  notifications, and Slack/email delivery are scaffolded out in the next
-  prompt.
+#### `POST /leads`
+
+Accepts contact / demo / newsletter / waitlist submissions. Subject to an
+extra `marketing-leads` throttle on top of the global limit. A repeat
+submission with the same `email` + `source` inside 60 minutes is treated as a
+duplicate — it returns `200` with the original lead instead of creating a new
+row. New leads return `201`.
+
+**Request body (JSON):**
+
+| Field | Required | Notes |
+|---|---|---|
+| `source` | yes | One of `contact_form`, `demo_form`, `newsletter`, `waitlist`. |
+| `name` | unless `newsletter` | Max 120 chars. |
+| `email` | yes | Valid email, max 160 chars. |
+| `company` | no | Max 120 chars. |
+| `team_size` | no | One of `solo`, `2-10`, `11-50`, `51-200`, `200+`. |
+| `message` | if `contact_form`/`demo_form` | Max 5000 chars. |
+| `waitlist_for` | if `waitlist` | One of `education_crm`, `real_estate_crm`, `healthcare_crm`. |
+| `consent_given` | yes | Must be truthy. |
+| `honeypot` | no | Anti-spam — must be empty/absent. |
+| `recaptcha_token` | if `contact_form`/`demo_form` | reCAPTCHA v3 token. |
+| `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` | no | First-touch campaign attribution, max 255 chars each. The marketing site captures these from the visitor's landing URL. |
+| `referrer_url` | no | Referring page when the visitor came from an external site, max 1024 chars. |
+
+The `utm_*` and `referrer_url` fields are optional and stored on the lead so
+each submission records which external site it originated from. They surface
+in the Filament admin (`/admin`) Leads table and CSV export.
+
+**Response (`201` / `200`):**
+
+```json
+{ "data": { "id": 42, "source": "contact_form", "received_at": "2026-05-22T10:13:59+00:00" } }
+```
 
 ## Error responses
 

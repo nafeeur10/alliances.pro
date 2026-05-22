@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { trackEvent } from "@/lib/analytics";
+import { getAttribution } from "@/lib/attribution";
 
 const formSchema = z.object({
   firstName: z.string().trim().min(1).max(20),
@@ -68,7 +69,8 @@ export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
           message,
           consent_given: true,
           recaptcha_token: RECAPTCHA_PLACEHOLDER,
-          page_url: typeof window !== "undefined" ? window.location.href : undefined
+          page_url: typeof window !== "undefined" ? window.location.href : undefined,
+          ...getAttribution()
         })
       });
 

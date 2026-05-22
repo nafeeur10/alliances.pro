@@ -6,6 +6,7 @@ import { Public_Sans } from "next/font/google";
 import "./globals.css";
 
 import { NavbarShell } from "@/components/layout/navbar-shell";
+import { AttributionTracker } from "@/components/marketing/attribution-tracker";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/json-ld";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
@@ -87,6 +88,7 @@ export default function RootLayout({
           <NavbarShell />
           {children}
         </ThemeProvider>
+        <AttributionTracker />
         <OrganizationSchema />
         <WebSiteSchema />
         {PLAUSIBLE_DOMAIN ? (

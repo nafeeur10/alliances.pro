@@ -28,6 +28,14 @@ class StoreLeadRequest extends FormRequest
             'consent_given' => 'accepted',
             'honeypot' => 'nullable|prohibited',
             'recaptcha_token' => 'required_if:source,contact_form,demo_form|string',
+            // Optional campaign attribution — sent by the marketing site so we
+            // can see which external site the lead first clicked through from.
+            'utm_source' => 'nullable|string|max:255',
+            'utm_medium' => 'nullable|string|max:255',
+            'utm_campaign' => 'nullable|string|max:255',
+            'utm_term' => 'nullable|string|max:255',
+            'utm_content' => 'nullable|string|max:255',
+            'referrer_url' => 'nullable|string|max:1024',
         ];
     }
 
@@ -70,6 +78,12 @@ class StoreLeadRequest extends FormRequest
             'message' => $validated['message'] ?? null,
             'source' => $validated['source'],
             'waitlist_for' => $validated['waitlist_for'] ?? null,
+            'utm_source' => $validated['utm_source'] ?? null,
+            'utm_medium' => $validated['utm_medium'] ?? null,
+            'utm_campaign' => $validated['utm_campaign'] ?? null,
+            'utm_term' => $validated['utm_term'] ?? null,
+            'utm_content' => $validated['utm_content'] ?? null,
+            'referrer_url' => $validated['referrer_url'] ?? null,
             'consent_given' => true,
         ];
     }
