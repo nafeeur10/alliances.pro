@@ -15,6 +15,7 @@ const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 const PLAUSIBLE_HOST = process.env.NEXT_PUBLIC_PLAUSIBLE_HOST ?? "https://plausible.io";
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const CRISP_WEBSITE_ID = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
@@ -73,7 +74,9 @@ export default function RootLayout({
         {GA_MEASUREMENT_ID ? (
           <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         ) : null}
-        <link rel="preconnect" href="https://embed.tawk.to" crossOrigin="anonymous" />
+        {CRISP_WEBSITE_ID ? (
+          <link rel="preconnect" href="https://client.crisp.chat" crossOrigin="anonymous" />
+        ) : null}
       </head>
       <body
         className={cn("from-muted to-primary/5 min-h-screen bg-gradient-to-tl")}
@@ -119,17 +122,11 @@ gtag('config', '${GA_MEASUREMENT_ID}', { anonymize_ip: true });`}
             </Script>
           </>
         ) : null}
-        <Script id="tawk-to" strategy="afterInteractive">
-          {`var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/69fb1d7e04c2b71c35758971/1jnueme1d';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();`}
-        </Script>
+        {CRISP_WEBSITE_ID ? (
+          <Script id="crisp-chat" strategy="afterInteractive">
+            {`window.$crisp=[];window.CRISP_WEBSITE_ID="${CRISP_WEBSITE_ID}";(function(){var d=document,s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`}
+          </Script>
+        ) : null}
       </body>
     </html>
   );
