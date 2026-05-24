@@ -11,6 +11,7 @@ import {
 } from "@/@data/footer";
 import { BackToTop } from "@/components/layout/back-to-top";
 import Logo from "@/components/layout/logo";
+import { ProductHuntBadge } from "@/components/marketing/product-hunt-badge";
 
 import { FooterNewsletterForm } from "./footer-newsletter-form";
 
@@ -87,6 +88,7 @@ export const FooterSection = () => {
                 <span>All systems operational</span>
               </span>
             </div>
+            <ProductHuntBadge className="ml-auto" alt="Featured on Product Hunt" />
             <div className="flex items-center justify-center gap-2">
               {footerSocial.map((s) => (
                 <Link
