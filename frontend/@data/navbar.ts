@@ -98,7 +98,7 @@ export const resourceGroups: ResourceGroup[] = [
 // ---------- Header CTAs ----------
 export const loginCta: NavCta = {
   label: "Log in",
-  url: "https://crm.alliances.pro/login"
+  url: "https://crm.alliances.pro/signin"
 };
 
 export const signupCta: NavCta = {

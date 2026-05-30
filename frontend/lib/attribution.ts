@@ -12,13 +12,7 @@
 
 const STORAGE_KEY = "alliances.attribution";
 
-const UTM_KEYS = [
-  "utm_source",
-  "utm_medium",
-  "utm_campaign",
-  "utm_term",
-  "utm_content"
-] as const;
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"] as const;
 
 export type Attribution = Partial<Record<(typeof UTM_KEYS)[number], string>> & {
   referrer_url?: string;
