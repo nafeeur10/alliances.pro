@@ -80,8 +80,7 @@ export function CleaningCalculator() {
   const [sqft, setSqft] = useState(1100);
   const [addons, setAddons] = useState<Set<string>>(new Set());
 
-  const fmt = (n: number) =>
-    `${CURRENCY[cur].sym}${Math.round(n).toLocaleString()}`;
+  const fmt = (n: number) => `${CURRENCY[cur].sym}${Math.round(n).toLocaleString()}`;
   const conv = (n: number) => n * CURRENCY[cur].mult;
 
   const calc = useMemo(() => {
@@ -144,8 +143,7 @@ export function CleaningCalculator() {
         <div className="field">
           <label>Type of clean</label>
           <div className="hint">
-            Deep cleans take 1.5–2× longer than routine, so they&apos;re priced
-            higher.
+            Deep cleans take 1.5–2× longer than routine, so they&apos;re priced higher.
           </div>
           <div className="seg">
             {TYPE_BUTTONS.map((b) => (
@@ -194,12 +192,10 @@ export function CleaningCalculator() {
 
         <div className="field">
           <label>
-            Square footage —{" "}
-            <span className="sqft-val">{sqft.toLocaleString()}</span> sq ft
+            Square footage — <span className="sqft-val">{sqft.toLocaleString()}</span> sq ft
           </label>
           <div className="hint">
-            Condition matters more than size. Heavier buildup = top of the
-            range.
+            Condition matters more than size. Heavier buildup = top of the range.
           </div>
           <input
             type="range"
@@ -214,8 +210,7 @@ export function CleaningCalculator() {
         <div className="field">
           <label>Paid add-ons</label>
           <div className="hint">
-            Keep these as visible line items — never bury them in the base
-            price.
+            Keep these as visible line items — never bury them in the base price.
           </div>
           <div className="addons">
             {ADDONS.map((a) => {
@@ -223,7 +218,7 @@ export function CleaningCalculator() {
               return (
                 <div
                   key={a.id}
-                  className={`addon${on ? " on" : ""}`}
+                  className={`addon${on ? "on" : ""}`}
                   onClick={() => toggleAddon(a.id)}
                   role="button"
                   tabIndex={0}
@@ -280,10 +275,9 @@ export function CleaningCalculator() {
             ))}
           </div>
           <div className="disc">
-            Estimates use 2026 US/EU market averages: routine ≈ base rate, deep
-            ≈ +50–100%, move-out ≈ +50–70%. Always adjust for your local
-            market, travel, and supplies. This is a starting point, not a fixed
-            rate.
+            Estimates use 2026 US/EU market averages: routine ≈ base rate, deep ≈ +50–100%, move-out
+            ≈ +50–70%. Always adjust for your local market, travel, and supplies. This is a starting
+            point, not a fixed rate.
           </div>
         </div>
       </div>

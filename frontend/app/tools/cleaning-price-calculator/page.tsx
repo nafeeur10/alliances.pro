@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
+import { FooterSection } from "@/components/layout/sections/footer";
 import { buildMetadata } from "@/lib/seo";
 
 import { CleaningCalculator } from "./calculator";
 
 export const metadata: Metadata = buildMetadata({
-  title:
-    "House Cleaning Price Calculator (2026) — Deep Clean vs Routine | Alliances",
+  title: "House Cleaning Price Calculator (2026) — Deep Clean vs Routine | Alliances",
   description:
     "Free house cleaning price calculator for 2026. See what counts as a deep clean vs routine clean, estimate quotes by size & add-ons, in USD or EUR.",
   path: "/tools/cleaning-price-calculator",
@@ -182,15 +182,8 @@ const PAGE_CSS = `
 export default function CleaningPriceCalculatorPage() {
   return (
     <>
-      <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-      />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="anonymous"
-      />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -205,9 +198,9 @@ export default function CleaningPriceCalculatorPage() {
               What should you charge for a <em>deep clean</em>?
             </h1>
             <p className="lede">
-              A realistic, no-fluff price calculator for cleaning business
-              owners — plus a clear breakdown of what belongs in a deep clean, a
-              routine clean, and what should always be a paid add-on.
+              A realistic, no-fluff price calculator for cleaning business owners — plus a clear
+              breakdown of what belongs in a deep clean, a routine clean, and what should always be
+              a paid add-on.
             </p>
             <div className="meta">
               <span>
@@ -227,34 +220,26 @@ export default function CleaningPriceCalculatorPage() {
           <article>
             <div className="toc">
               <strong>In this guide</strong>
-              <a href="#what-counts">
-                What counts as a deep clean vs a routine clean
-              </a>
+              <a href="#what-counts">What counts as a deep clean vs a routine clean</a>
               <a href="#addons">Add-ons you should always charge separately</a>
               <a href="#how-to-price">How to actually price a job (3 methods)</a>
-              <a href="#example">
-                A real example: 3 bed / 2 bath, 1,100 sq ft
-              </a>
+              <a href="#example">A real example: 3 bed / 2 bath, 1,100 sq ft</a>
               <a href="#mistakes">5 pricing mistakes new owners make</a>
             </div>
 
-            <h2 id="what-counts">
-              Deep clean vs routine clean: where&apos;s the line?
-            </h2>
+            <h2 id="what-counts">Deep clean vs routine clean: where&apos;s the line?</h2>
             <p>
-              This is the question that trips up almost every new cleaning
-              business owner. A client asks for baseboards wiped, walls
-              spot-cleaned, and vents done — and you&apos;re left wondering
-              whether that&apos;s part of the deep clean or something extra.
-              Here&apos;s the simplest way to think about it.
+              This is the question that trips up almost every new cleaning business owner. A client
+              asks for baseboards wiped, walls spot-cleaned, and vents done — and you&apos;re left
+              wondering whether that&apos;s part of the deep clean or something extra. Here&apos;s
+              the simplest way to think about it.
             </p>
             <p>
-              A <strong>routine clean</strong> (also called maintenance or
-              recurring) keeps an already-clean home looking good. A{" "}
-              <strong>deep clean</strong> tackles everything that gets skipped
-              week to week — the buildup, the edges, the reachable-but-ignored
-              surfaces. A <strong>move-out clean</strong> behaves more like an
-              empty-home project than a regular visit.
+              A <strong>routine clean</strong> (also called maintenance or recurring) keeps an
+              already-clean home looking good. A <strong>deep clean</strong> tackles everything that
+              gets skipped week to week — the buildup, the edges, the reachable-but-ignored
+              surfaces. A <strong>move-out clean</strong> behaves more like an empty-home project
+              than a regular visit.
             </p>
 
             <div className="tbl-scroll">
@@ -362,133 +347,118 @@ export default function CleaningPriceCalculatorPage() {
             </div>
 
             <div className="callout">
-              <b>The short answer to the client&apos;s question:</b> baseboards,
-              wall wiping, and vents are part of a standard deep clean. Inside
-              the oven and fridge are not — those are paid add-ons, even on a
-              deep clean. List them as separate lines so the client sees
+              <b>The short answer to the client&apos;s question:</b> baseboards, wall wiping, and
+              vents are part of a standard deep clean. Inside the oven and fridge are not — those
+              are paid add-ons, even on a deep clean. List them as separate lines so the client sees
               exactly what they&apos;re paying for.
             </div>
 
             <h2 id="addons">Add-ons you should always charge separately</h2>
             <p>
-              The fastest way to lose money is to quietly fold high-effort
-              tasks into your base rate. Keep these as visible line items. It
-              protects your base price and makes upselling feel natural instead
-              of pushy.
+              The fastest way to lose money is to quietly fold high-effort tasks into your base
+              rate. Keep these as visible line items. It protects your base price and makes
+              upselling feel natural instead of pushy.
             </p>
             <ul>
               <li>
-                <strong>Inside oven</strong> — roughly $25–$50 (€25–€45). High
-                effort, low frequency.
+                <strong>Inside oven</strong> — roughly $25–$50 (€25–€45). High effort, low
+                frequency.
               </li>
               <li>
                 <strong>Inside fridge</strong> — roughly $20–$40 (€20–€35).
               </li>
               <li>
-                <strong>Interior windows</strong> — priced per window or per
-                home, depending on count.
+                <strong>Interior windows</strong> — priced per window or per home, depending on
+                count.
               </li>
               <li>
-                <strong>Carpet shampoo</strong> — often around $0.18/sq ft or a
-                flat per-room rate.
+                <strong>Carpet shampoo</strong> — often around $0.18/sq ft or a flat per-room rate.
               </li>
               <li>
-                <strong>Wall washing (full, not spot)</strong> — when walls
-                need real scrubbing, not a wipe.
+                <strong>Wall washing (full, not spot)</strong> — when walls need real scrubbing, not
+                a wipe.
               </li>
             </ul>
 
             <h2 id="how-to-price">How to actually price a job: 3 methods</h2>
             <p>
-              There&apos;s no single &quot;right&quot; number — but there are
-              three reliable methods. Most experienced owners blend them rather
-              than relying on one.
+              There&apos;s no single &quot;right&quot; number — but there are three reliable
+              methods. Most experienced owners blend them rather than relying on one.
             </p>
             <h3>1. By room count (fastest)</h3>
             <p>
-              Assign a rate per bedroom and per bathroom, then add a base for
-              the kitchen and living areas. Simple and quick for quotes over
-              the phone, but it ignores condition.
+              Assign a rate per bedroom and per bathroom, then add a base for the kitchen and living
+              areas. Simple and quick for quotes over the phone, but it ignores condition.
             </p>
             <h3>2. By square footage (standardized)</h3>
             <p>
-              Typical rates run about $0.10–$0.17/sq ft for routine and
-              $0.11–$0.30/sq ft for deep cleans. Good for consistency across
-              homes, but a clean 1,500 sq ft home and a filthy one
-              shouldn&apos;t cost the same.
+              Typical rates run about $0.10–$0.17/sq ft for routine and $0.11–$0.30/sq ft for deep
+              cleans. Good for consistency across homes, but a clean 1,500 sq ft home and a filthy
+              one shouldn&apos;t cost the same.
             </p>
             <h3>3. By estimated labor hours (most accurate)</h3>
             <p>
-              Estimate how long the job takes, multiply by your target hourly
-              rate per cleaner, then add supplies and profit. This is the
-              method that actually protects your margin — the other two are
-              shortcuts that should land near this number.
+              Estimate how long the job takes, multiply by your target hourly rate per cleaner, then
+              add supplies and profit. This is the method that actually protects your margin — the
+              other two are shortcuts that should land near this number.
             </p>
 
             <div className="callout">
-              <b>Rule of thumb:</b> price deep cleans by the home&apos;s{" "}
-              <i>condition</i>, not just its size. A neglected 1,100 sq ft home
-              can take longer than a well-kept 2,000 sq ft one. And always
-              charge more for first-time visits — they&apos;re slower, every
-              time.
+              <b>Rule of thumb:</b> price deep cleans by the home&apos;s <i>condition</i>, not just
+              its size. A neglected 1,100 sq ft home can take longer than a well-kept 2,000 sq ft
+              one. And always charge more for first-time visits — they&apos;re slower, every time.
             </div>
 
-            <h2 id="example">
-              A real example: 3 bed / 2 bath, ~1,100 sq ft
-            </h2>
+            <h2 id="example">A real example: 3 bed / 2 bath, ~1,100 sq ft</h2>
             <p>
-              Say a client wants a first-time deep clean with baseboards, wall
-              wiping, and vents. Those are all standard deep-clean tasks, so
-              they don&apos;t need to be add-ons. Across 2026 US market data, a
-              job like this typically lands in the <strong>$250–$320</strong>{" "}
-              range, with published rates from real cleaning businesses for a
-              comparable 3-bed home sitting right around{" "}
-              <strong>$315 for roughly 3.5 hours</strong> of work.
+              Say a client wants a first-time deep clean with baseboards, wall wiping, and vents.
+              Those are all standard deep-clean tasks, so they don&apos;t need to be add-ons. Across
+              2026 US market data, a job like this typically lands in the <strong>$250–$320</strong>{" "}
+              range, with published rates from real cleaning businesses for a comparable 3-bed home
+              sitting right around <strong>$315 for roughly 3.5 hours</strong> of work.
             </p>
             <p>
-              If the same client also wanted the inside of the oven and fridge
-              done, you&apos;d add those as two separate lines (about $25–$50
-              and $20–$40) on top of the base — bringing the quote to roughly
-              $300–$400 without ever discounting your core work.
+              If the same client also wanted the inside of the oven and fridge done, you&apos;d add
+              those as two separate lines (about $25–$50 and $20–$40) on top of the base — bringing
+              the quote to roughly $300–$400 without ever discounting your core work.
             </p>
 
             <h2 id="mistakes">5 pricing mistakes new owners make</h2>
             <ul>
               <li>
-                <strong>Racing to the bottom.</strong> Lowballing attracts
-                price-sensitive clients who leave the moment someone cheaper
-                appears. Compete on quality.
+                <strong>Racing to the bottom.</strong> Lowballing attracts price-sensitive clients
+                who leave the moment someone cheaper appears. Compete on quality.
               </li>
               <li>
-                <strong>Pricing the first clean like a recurring one.</strong>{" "}
-                First-time and deep cleans should be 1.5–2× a routine visit.
+                <strong>Pricing the first clean like a recurring one.</strong> First-time and deep
+                cleans should be 1.5–2× a routine visit.
               </li>
               <li>
-                <strong>Burying add-ons.</strong> Folding oven/fridge/windows
-                into the base rate silently destroys your hourly earnings.
+                <strong>Burying add-ons.</strong> Folding oven/fridge/windows into the base rate
+                silently destroys your hourly earnings.
               </li>
               <li>
-                <strong>Quoting by size alone.</strong> Condition drives labor
-                time more than square footage does.
+                <strong>Quoting by size alone.</strong> Condition drives labor time more than square
+                footage does.
               </li>
               <li>
-                <strong>Never raising rates.</strong> Build a price review into
-                your calendar — most early-stage owners go too long without
-                one.
+                <strong>Never raising rates.</strong> Build a price review into your calendar — most
+                early-stage owners go too long without one.
               </li>
             </ul>
 
             <footer className="foot">
               <div className="wrap" style={{ padding: 0 }}>
-                Estimates are based on 2026 US and European market averages and
-                are intended as a starting point for your own pricing. Local
-                market, travel time, supplies, insurance, and your experience
-                level should all factor into your final quote.
+                Estimates are based on 2026 US and European market averages and are intended as a
+                starting point for your own pricing. Local market, travel time, supplies, insurance,
+                and your experience level should all factor into your final quote.
               </div>
             </footer>
           </article>
         </div>
       </div>
+
+      <FooterSection />
     </>
   );
 }
