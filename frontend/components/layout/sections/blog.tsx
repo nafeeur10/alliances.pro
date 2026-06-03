@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { blogSection, featuredBlogPosts } from "@/@data/blog";
 import SectionContainer from "@/components/layout/section-container";
 import { BlogPostCard } from "@/components/marketing/blog-post-card";
+import { ToolFeaturedCard } from "@/components/marketing/tool-featured-card";
 import { Badge } from "@/components/ui/badge";
 import { type BlogPostSummary, listBlogPosts } from "@/lib/api";
 
@@ -31,9 +32,11 @@ function staticFallback(): BlogPostSummary[] {
 }
 
 export const BlogSection = async () => {
-  const index = await listBlogPosts(1, 3);
+  // One of the three featured slots is reserved for the Cleaning Price
+  // Calculator tool card, so only fetch two posts for the remaining slots.
+  const index = await listBlogPosts(1, 2);
   const apiPosts = index?.items ?? [];
-  const posts = apiPosts.length > 0 ? apiPosts.slice(0, 3) : staticFallback();
+  const posts = apiPosts.length > 0 ? apiPosts.slice(0, 2) : staticFallback().slice(0, 2);
 
   return (
     <SectionContainer id="blog">
@@ -54,6 +57,14 @@ export const BlogSection = async () => {
       </div>
 
       <div className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ToolFeaturedCard
+          href="/tools/cleaning-price-calculator"
+          category="Cleaning Price Calculator"
+          title="What should you charge for a deep clean?"
+          description="Free interactive calculator — deep clean vs routine, room count, square footage, and paid add-ons in USD or EUR."
+          coverImage="/blog/commercial-cleaning-calculator.jpg"
+          coverAlt="House cleaning price calculator preview"
+        />
         {posts.map((post) => (
           <BlogPostCard key={post.slug} post={post} />
         ))}

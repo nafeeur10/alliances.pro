@@ -70,6 +70,7 @@ export const footerColumns: FooterLinkColumn[] = [
       { label: "Documents", url: "/docs" },
       { label: "FAQs", url: "/help" },
       { label: "Roadmap", url: "/roadmap" },
+      { label: "Cleaning Price Calculator", url: "/tools/cleaning-price-calculator" },
       { label: "Contact Us", url: "/#contact" }
     ]
   },
