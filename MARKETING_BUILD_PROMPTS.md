@@ -131,7 +131,7 @@ table names should be prefixed `marketing_*` (e.g. marketing_pages).
     seeded with Pro $19/$190 and Business $39/$390 + 14-day trial + LemonSqueezy
     variant IDs). Editors must keep this PricingPlan visually in sync with the
     real Plan, but billing/checkout is handled in the CRM project. The CTA
-    URL on each plan should redirect to https://app.alliances.pro/signup?plan=
+    URL on each plan should redirect to https://crm.alliances.pro/signup?plan=
     {slug} (or whichever signup URL the CRM exposes).
 
   app/Models/Marketing/Faq.php
@@ -224,9 +224,9 @@ appropriate tables. Specifically:
   - 2 PricingPlan rows from section 10.10:
       Pro       — $19/mo or $190/yr — limits: 10 projects, 500 orgs, 1,000
                   leads, 10 members, unlimited tasks. is_featured=false.
-                  external_signup_url: https://app.alliances.pro/signup?plan=pro
+                  external_signup_url: https://crm.alliances.pro/signup?plan=pro
       Business  — $39/mo or $390/yr — unlimited everything. is_featured=true.
-                  external_signup_url: https://app.alliances.pro/signup?plan=business
+                  external_signup_url: https://crm.alliances.pro/signup?plan=business
     Both: 14-day trial mentioned in description, currency=USD.
     These mirror what's in ~/Projects/crm/backend/database/seeders/PlanSeeder.php
     for the actual billing system, but THIS table is for marketing display only —

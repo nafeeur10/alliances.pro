@@ -9,7 +9,8 @@ export const FeaturesSection = () => {
     description: f.description,
     image: f.image,
     href: f.href,
-    bgColor: f.bgColor
+    bgColor: f.bgColor,
+    bullets: f.bullets
   }));
 
   return (

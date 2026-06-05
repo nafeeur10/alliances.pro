@@ -85,7 +85,7 @@ export default function NeverMissFollowUpPage() {
         <div className="from-muted to-muted/50 mx-auto max-w-5xl rounded-2xl border bg-gradient-to-br p-8 text-center sm:p-10">
           <h2 className="mb-3 text-2xl font-bold tracking-tight md:text-3xl">Try Alliances PRO</h2>
           <p className="text-muted-foreground mb-6">
-            Sales CRM live. Education CRM in beta. Join the waitlist or see pricing.
+            Follow-up focused Sales CRM live. Join the waitlist or see pricing.
           </p>
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild>

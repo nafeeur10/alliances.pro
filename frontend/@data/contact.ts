@@ -6,7 +6,7 @@ export const contactSection = {
   headline: "Get Connect With Us",
   description:
     "Stay in touch with us for updates, support, and valuable insights. We're here to help you every step of the way!",
-  location: "H#32, R#29, Pallabi R/A, Mirpur-12, Dhaka-1216",
+  location: "108 W 13th St, Wilmington, DE, 19801, United States",
   phone: "+88 01339 364047",
   email: "alliancesprohq@gmail.com",
   // Premium support promise — shown under "Business Hours".

@@ -2,11 +2,9 @@
 
 import Image from "next/image";
 import React from "react";
+import { CheckIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { CardTitle } from "@/components/ui/card";
-import Icon from "@/components/icon";
-import { CardHover, CardsHover } from "@/components/ui/extras/cards-hover";
 import SectionContainer from "@/components/layout/section-container";
 import HexRing from "@/components/marketing/hex-ring";
 
@@ -17,6 +15,7 @@ export interface FeatureItem {
   image: string;
   href: string;
   bgColor?: string;
+  bullets: string[];
 }
 
 interface Props {
@@ -32,8 +31,6 @@ export const FeaturesSectionClient = ({
   title = "Everything You Need to Succeed",
   description = "Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business."
 }: Props) => {
-  const [value, setValue] = React.useState<string | null>(null);
-
   return (
     <SectionContainer id="features" className="bg-muted/30">
       <div className="mx-auto max-w-2xl text-center">
@@ -52,49 +49,30 @@ export const FeaturesSectionClient = ({
       <div className="mx-auto mb-12 w-full max-w-(--breakpoint-md) lg:mb-20">
         <HexRing />
       </div>
-      <CardsHover
-        className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-        value={value}
-        onValueChange={setValue}
-      >
+      <div className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         {items.map((card) => (
-          <CardHover
-            key={`${card.icon}-${card.title}`}
-            value={card.icon}
-            className="group flex flex-col p-0"
-          >
+          <div key={`${card.icon}-${card.title}`} className="flex flex-col gap-4">
             <div
-              className="bg-muted relative aspect-[4/3] w-full overflow-hidden"
+              className="bg-muted relative h-[250px] w-full overflow-hidden rounded-2xl"
               style={card.bgColor ? { backgroundColor: card.bgColor } : undefined}
             >
-              <Image
-                src={card.image}
-                alt={card.title}
-                width={900}
-                height={675}
-                unoptimized
-                className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-105"
-              />
-              <div className="bg-primary/90 ring-primary/20 absolute top-3 left-3 flex size-9 items-center justify-center rounded-full ring-4 backdrop-blur-sm">
-                <Icon name={card.icon} className="size-4 text-white" />
-              </div>
+              <Image src={card.image} alt={card.title} fill unoptimized />
             </div>
-            <div className="flex flex-1 flex-col gap-3 p-5">
-              <CardTitle className="text-lg">{card.title}</CardTitle>
-              <p className="text-muted-foreground line-clamp-3 text-sm font-normal">
-                {card.description}
-              </p>
-              <a
-                href={card.href}
-                aria-label={`Learn more about ${card.title}`}
-                className="text-primary mt-auto inline-flex items-center gap-1 text-sm font-medium transition-transform duration-300 group-hover:translate-x-1"
-              >
-                Learn more <span aria-hidden>→</span>
-              </a>
-            </div>
-          </CardHover>
+            <h3 className="text-lg leading-snug font-bold">{card.title}</h3>
+            <p className="text-muted-foreground text-sm font-normal">{card.description}</p>
+            <ul className="mt-1 flex flex-col gap-2">
+              {card.bullets.map((point) => (
+                <li key={point} className="flex items-center gap-2 text-sm font-medium">
+                  <span className="bg-primary/10 text-primary flex size-5 shrink-0 items-center justify-center rounded-full">
+                    <CheckIcon className="size-3" strokeWidth={3} />
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </CardsHover>
+      </div>
     </SectionContainer>
   );
 };
