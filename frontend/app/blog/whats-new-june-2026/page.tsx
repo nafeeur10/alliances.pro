@@ -157,7 +157,7 @@ export default function ProductUpdateJune2026Page() {
             <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-base leading-relaxed sm:text-lg">
               Google Sign-In, Spanish (i18n), Redis-backed dashboards, a read-only demo workspace,
               password resets, duplicate-lead protection, email open tracking — and a long list of
-              quieter polish. Here's the full rundown.
+              quieter polish. Here&apos;s the full rundown.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-4">
