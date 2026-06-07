@@ -18,7 +18,7 @@ import { FooterNewsletterForm } from "./footer-newsletter-form";
 export const FooterSection = () => {
   return (
     <>
-      <div className="bg-muted/30 pt-16 sm:pt-24">
+      <div className="bg-muted/30 pt-28 sm:pt-24">
         <footer id="footer" className="container space-y-4 pb-4 lg:pb-8">
           <div className="relative">
             {/* Newsletter — half outside / half inside, centered */}
@@ -28,7 +28,7 @@ export const FooterSection = () => {
               </div>
             </div>
 
-            <div className="bg-muted relative rounded-2xl border p-10 pt-20">
+            <div className="bg-muted relative rounded-2xl border p-6 pt-28 sm:p-10 sm:pt-20">
               {/* Decorative gradient blob, clipped to card corners */}
               <div
                 className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl"

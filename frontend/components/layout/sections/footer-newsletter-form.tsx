@@ -70,7 +70,7 @@ export function FooterNewsletterForm() {
       <form
         onSubmit={onSubmit}
         aria-label="Subscribe to our newsletter"
-        className="bg-background focus-within:border-primary/60 focus-within:ring-primary/20 flex w-full items-center rounded-full border shadow-md transition-shadow focus-within:ring-4"
+        className="bg-background focus-within:border-primary/60 focus-within:ring-primary/20 flex w-full flex-col gap-2 rounded-3xl border p-2 shadow-md transition-shadow focus-within:ring-4 sm:flex-row sm:items-center sm:gap-0 sm:rounded-full sm:p-0"
       >
         <input
           type="email"
@@ -80,12 +80,12 @@ export function FooterNewsletterForm() {
           aria-label="Email address"
           placeholder={footerNewsletter.placeholder}
           disabled={status === "submitting"}
-          className="text-foreground placeholder:text-muted-foreground h-14 flex-1 rounded-full bg-transparent pr-3 pl-6 text-sm outline-none disabled:opacity-60"
+          className="text-foreground placeholder:text-muted-foreground h-12 w-full rounded-full bg-transparent px-5 text-sm outline-none disabled:opacity-60 sm:h-14 sm:flex-1 sm:pr-3 sm:pl-6"
         />
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 my-1.5 mr-1.5 inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium shadow-sm transition-colors disabled:opacity-70"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-11 w-full shrink-0 items-center justify-center gap-2 rounded-full px-6 text-sm font-medium shadow-sm transition-colors disabled:opacity-70 sm:my-1.5 sm:mr-1.5 sm:w-auto"
         >
           {status === "submitting" ? (
             <>

@@ -124,6 +124,7 @@ export interface BlogPostSummary {
   cover_image: string | null;
   og_image?: string | null;
   author_name: string | null;
+  author_avatar?: string | null;
   author?: BlogPostAuthor | null;
   category: string | null;
   tags: string[];

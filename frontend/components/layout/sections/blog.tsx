@@ -13,14 +13,15 @@ import { type BlogPostSummary, listBlogPosts } from "@/lib/api";
  * homepage still renders something during early dev / before the backend
  * has any published posts. The CMS is the source of truth in production.
  */
-function staticFallback(): BlogPostSummary[] {
-  return featuredBlogPosts.map((p, i) => ({
+function toSummary(p: (typeof featuredBlogPosts)[number], i: number): BlogPostSummary {
+  return {
     id: -1 - i,
     slug: p.slug,
     title: p.title,
     excerpt: p.excerpt,
     cover_image: p.cover,
-    author_name: null,
+    author_name: p.author ?? null,
+    author_avatar: p.authorAvatar ?? null,
     category: p.category,
     tags: [],
     reading_minutes: parseInt(p.readTime, 10) || 0,
@@ -28,15 +29,25 @@ function staticFallback(): BlogPostSummary[] {
     published_at: p.date,
     seo_title: null,
     seo_description: null
-  }));
+  };
 }
 
+const PINNED_SLUG = "whats-new-june-2026";
+
 export const BlogSection = async () => {
-  // One of the three featured slots is reserved for the Cleaning Price
-  // Calculator tool card, so only fetch two posts for the remaining slots.
+  // Layout: 1 Tool card + 1 pinned post ("What's new") + 1 dynamic post.
+  // The pinned post is a static page (not in the CMS) so we render it
+  // ourselves; we only ask the backend for one additional slot.
+  const pinnedSource = featuredBlogPosts.find((p) => p.slug === PINNED_SLUG);
+  const pinned = pinnedSource ? toSummary(pinnedSource, 0) : null;
+
   const index = await listBlogPosts(1, 2);
-  const apiPosts = index?.items ?? [];
-  const posts = apiPosts.length > 0 ? apiPosts.slice(0, 2) : staticFallback().slice(0, 2);
+  const apiPosts = (index?.items ?? []).filter((p) => p.slug !== PINNED_SLUG);
+  const fallback = featuredBlogPosts
+    .filter((p) => p.slug !== PINNED_SLUG)
+    .map((p, i) => toSummary(p, i + 1));
+  const dynamic = (apiPosts.length > 0 ? apiPosts : fallback).slice(0, 1);
+  const posts = pinned ? [pinned, ...dynamic] : dynamic;
 
   return (
     <SectionContainer id="blog">

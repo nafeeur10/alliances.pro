@@ -10,6 +10,8 @@ interface BlogPost {
   readTime: string;
   date: string; // ISO date — used for display + ordering
   cover: string; // path under /public, e.g. "/blog/cover-1.jpg"
+  author?: string;
+  authorAvatar?: string; // path under /public, e.g. "/avatars/nafeeur.png"
 }
 
 export const blogSection = {
@@ -20,6 +22,18 @@ export const blogSection = {
 };
 
 export const featuredBlogPosts: BlogPost[] = [
+  {
+    slug: "whats-new-june-2026",
+    title: "What's new in Alliances CRM — June 2026",
+    excerpt:
+      "Google Sign-In, Spanish (i18n), Redis-backed dashboards, a read-only demo workspace, and email open tracking — plus a long list of quieter polish.",
+    category: "Product Update",
+    readTime: "6 min read",
+    date: "2026-06-07",
+    cover: "/blog/product-update-01.png",
+    author: "Nafeeur",
+    authorAvatar: "/avatars/nafeeur.png"
+  },
   {
     slug: "service-business-crm-stack",
     title: "The CRM stack that actually fits a service business",

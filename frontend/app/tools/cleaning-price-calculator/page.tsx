@@ -26,7 +26,7 @@ const PAGE_CSS = `
     --gold: #c98a3a;
     --shadow: 0 1px 2px rgba(31,42,36,.04), 0 8px 28px rgba(31,42,36,.08);
     --radius: 16px;
-    font-family: 'Spline Sans', -apple-system, sans-serif;
+    font-family: var(--font-sans);
     background: var(--bg);
     color: var(--ink);
     line-height: 1.65;
@@ -42,7 +42,7 @@ const PAGE_CSS = `
     color: var(--accent); margin-bottom: 18px;
   }
   .ccp-root h1 {
-    font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(34px, 6vw, 56px);
+    font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 6vw, 56px);
     line-height: 1.04; letter-spacing: -.02em; margin-bottom: 20px; color: var(--ink);
   }
   .ccp-root h1 em { font-style: italic; color: var(--accent); }
@@ -62,7 +62,7 @@ const PAGE_CSS = `
     background: var(--accent-deep); color: #fff; padding: 26px 30px;
     display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
   }
-  .ccp-root .calc-head h2 { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 600; color: #fff; margin: 0; }
+  .ccp-root .calc-head h2 { font-family: var(--font-sans); font-size: 24px; font-weight: 600; color: #fff; margin: 0; }
   .ccp-root .calc-head p { font-size: 14px; opacity: .82; margin-top: 3px; margin-bottom: 0; }
   .ccp-root .cur-switch { display: flex; background: rgba(255,255,255,.12); border-radius: 10px; padding: 4px; }
   .ccp-root .cur-switch button {
@@ -128,7 +128,7 @@ const PAGE_CSS = `
     color: #fff; border-radius: 14px; padding: 28px 30px; margin-top: 8px;
   }
   .ccp-root .result .rlabel { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; opacity: .8; }
-  .ccp-root .result .range { font-family: 'Fraunces', serif; font-size: clamp(38px,9vw,54px); font-weight: 800; line-height: 1.05; margin: 6px 0 4px; color: #fff; }
+  .ccp-root .result .range { font-family: var(--font-sans); font-size: clamp(38px,9vw,54px); font-weight: 800; line-height: 1.05; margin: 6px 0 4px; color: #fff; }
   .ccp-root .result .note { font-size: 14px; opacity: .85; }
   .ccp-root .breakdown { margin-top: 20px; border-top: 1px solid rgba(255,255,255,.18); padding-top: 16px; font-size: 14px; }
   .ccp-root .breakdown .br { display: flex; justify-content: space-between; padding: 4px 0; opacity: .92; }
@@ -137,10 +137,10 @@ const PAGE_CSS = `
 
   .ccp-root article { padding-bottom: 90px; }
   .ccp-root article h2 {
-    font-family: 'Fraunces', serif; font-size: clamp(26px,4vw,34px); font-weight: 700;
+    font-family: var(--font-sans); font-size: clamp(26px,4vw,34px); font-weight: 700;
     letter-spacing: -.01em; margin: 52px 0 16px; line-height: 1.12; color: var(--ink);
   }
-  .ccp-root article h3 { font-family: 'Fraunces', serif; font-size: 21px; font-weight: 600; margin: 32px 0 10px; color: var(--ink); }
+  .ccp-root article h3 { font-family: var(--font-sans); font-size: 21px; font-weight: 600; margin: 32px 0 10px; color: var(--ink); }
   .ccp-root article p { margin-bottom: 16px; font-size: 17px; color: #2c352e; }
   .ccp-root article ul { margin: 0 0 18px 2px; list-style: none; padding: 0; }
   .ccp-root article ul li { position: relative; padding-left: 26px; margin-bottom: 10px; font-size: 17px; }
@@ -182,12 +182,6 @@ const PAGE_CSS = `
 export default function CleaningPriceCalculatorPage() {
   return (
     <>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,500&family=Spline+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
       <style dangerouslySetInnerHTML={{ __html: PAGE_CSS }} />
 
       <div className="ccp-root">
