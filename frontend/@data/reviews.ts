@@ -33,9 +33,9 @@ export const reviewList: ReviewProps[] = [
   {
     image: "/avatars/omar.jpeg",
     name: "Omar Nasif",
-    userName: "Senior Marketing Manager",
+    userName: "Co-CEO at Optinify",
     comment:
-      "The training sessions were invaluable. Our team is now fully equipped to utilize all the features effectively!",
+      "I've explored Alliances PRO a bit, and it's a genuinely promising product. Most CRMs are built for sales pipelines and treat clients as deals to close and forget. Alliances PRO flips that as it's designed for the ongoing follow-ups, check-ins, and relationship management that service businesses actually run on.",
     rating: 4.9
   }
 ];

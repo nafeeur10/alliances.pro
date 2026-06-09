@@ -35,6 +35,18 @@ export const featuredBlogPosts: BlogPost[] = [
     authorAvatar: "/avatars/nafeeur.png"
   },
   {
+    slug: "whatsapp-campaign-bulk-personal-messaging",
+    title: "WhatsApp Campaigns + 1-on-1 Messaging",
+    excerpt:
+      "Send personalised bulk WhatsApp campaigns to a contact list and chat with individual leads from the same CRM — every reply attached to the lead's timeline.",
+    category: "Product Feature",
+    readTime: "5 min read",
+    date: "2026-06-09",
+    cover: "/campaign/whatsapp-campaign.jpg",
+    author: "Nafeeur",
+    authorAvatar: "/avatars/nafeeur.png"
+  },
+  {
     slug: "service-business-crm-stack",
     title: "The CRM stack that actually fits a service business",
     excerpt:

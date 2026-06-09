@@ -54,11 +54,14 @@ export const TestimonialSectionClient = ({
         opts={{ align: "start" }}
         className="relative mx-auto w-[80%] sm:w-[90%] lg:max-w-(--breakpoint-xl)"
       >
-        <CarouselContent>
+        <CarouselContent className="items-stretch">
           {items.map((review, idx) => (
-            <CarouselItem key={`${review.name}-${idx}`} className="md:basis-1/2 lg:basis-1/3">
-              <Card className="bg-muted">
-                <CardContent className="flex flex-col gap-4">
+            <CarouselItem
+              key={`${review.name}-${idx}`}
+              className="flex h-auto md:basis-1/2 lg:basis-1/3"
+            >
+              <Card className="bg-muted flex h-full w-full flex-col">
+                <CardContent className="flex flex-1 flex-col gap-4">
                   <div className="flex gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
@@ -71,8 +74,8 @@ export const TestimonialSectionClient = ({
                       />
                     ))}
                   </div>
-                  <p>{review.comment}</p>
-                  <div className="flex flex-row items-center gap-4">
+                  <p className="flex-1 text-sm leading-relaxed">{review.comment}</p>
+                  <div className="mt-auto flex flex-row items-center gap-4 border-t pt-4">
                     <Avatar className="size-12">
                       <AvatarImage
                         src={resolveAssetUrl(review.image) ?? review.image}

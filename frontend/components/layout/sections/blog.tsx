@@ -6,7 +6,7 @@ import SectionContainer from "@/components/layout/section-container";
 import { BlogPostCard } from "@/components/marketing/blog-post-card";
 import { ToolFeaturedCard } from "@/components/marketing/tool-featured-card";
 import { Badge } from "@/components/ui/badge";
-import { type BlogPostSummary, listBlogPosts } from "@/lib/api";
+import type { BlogPostSummary } from "@/lib/api";
 
 /**
  * Map the static `@data/blog.ts` fallback into the API summary shape so the
@@ -32,22 +32,20 @@ function toSummary(p: (typeof featuredBlogPosts)[number], i: number): BlogPostSu
   };
 }
 
-const PINNED_SLUG = "whats-new-june-2026";
+const PINNED_SLUGS = [
+  "whats-new-june-2026",
+  "whatsapp-campaign-bulk-personal-messaging"
+] as const;
 
-export const BlogSection = async () => {
-  // Layout: 1 Tool card + 1 pinned post ("What's new") + 1 dynamic post.
-  // The pinned post is a static page (not in the CMS) so we render it
-  // ourselves; we only ask the backend for one additional slot.
-  const pinnedSource = featuredBlogPosts.find((p) => p.slug === PINNED_SLUG);
-  const pinned = pinnedSource ? toSummary(pinnedSource, 0) : null;
-
-  const index = await listBlogPosts(1, 2);
-  const apiPosts = (index?.items ?? []).filter((p) => p.slug !== PINNED_SLUG);
-  const fallback = featuredBlogPosts
-    .filter((p) => p.slug !== PINNED_SLUG)
-    .map((p, i) => toSummary(p, i + 1));
-  const dynamic = (apiPosts.length > 0 ? apiPosts : fallback).slice(0, 1);
-  const posts = pinned ? [pinned, ...dynamic] : dynamic;
+export const BlogSection = () => {
+  // Layout: 1 Tool card (Calculator) + 2 pinned static posts.
+  // Both pinned posts are static pages (not in the CMS); we render them
+  // ourselves so the homepage shows exactly: Calculator, What's New,
+  // WhatsApp Campaigns.
+  const posts = PINNED_SLUGS.map((slug, i) => {
+    const source = featuredBlogPosts.find((p) => p.slug === slug);
+    return source ? toSummary(source, i) : null;
+  }).filter((p): p is BlogPostSummary => p !== null);
 
   return (
     <SectionContainer id="blog">
