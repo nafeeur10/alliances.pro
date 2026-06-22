@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ContactForm } from "./contact-form";
 
 export const ContactSection = () => {
-  const { eyebrow, headline, description, location, phone, email, hoursPrimary, hoursSecondary } =
+  const { eyebrow, headline, description, phone, email, hoursPrimary, hoursSecondary } =
     contactSection;
 
   // Strip everything that isn't a digit so wa.me/tel: links are well-formed.
@@ -29,27 +29,6 @@ export const ContactSection = () => {
       <section className="mx-auto grid max-w-screen-lg grid-cols-1 gap-6 md:grid-cols-2">
         <div>
           <div className="flex flex-col gap-6 *:rounded-lg *:border *:p-6">
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-muted hover:border-primary/40 block transition-colors"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <Image
-                  src="/icons/location-pin.svg"
-                  alt=""
-                  aria-hidden
-                  width={28}
-                  height={28}
-                  unoptimized
-                  className="size-7"
-                />
-                <div className="font-bold">Location:</div>
-              </div>
-              <div className="text-muted-foreground">{location}</div>
-            </a>
-
             <a
               href={`https://wa.me/${phoneDigits}`}
               target="_blank"
