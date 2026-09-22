@@ -33,15 +33,15 @@ function toSummary(p: (typeof featuredBlogPosts)[number], i: number): BlogPostSu
 }
 
 const PINNED_SLUGS = [
-  "whats-new-june-2026",
+  "shopify-partner-crm-for-app-developers",
   "whatsapp-campaign-bulk-personal-messaging"
 ] as const;
 
 export const BlogSection = () => {
   // Layout: 1 Tool card (Calculator) + 2 pinned static posts.
   // Both pinned posts are static pages (not in the CMS); we render them
-  // ourselves so the homepage shows exactly: Calculator, What's New,
-  // WhatsApp Campaigns.
+  // ourselves so the homepage shows exactly: Calculator, the latest
+  // product update, WhatsApp Campaigns.
   const posts = PINNED_SLUGS.map((slug, i) => {
     const source = featuredBlogPosts.find((p) => p.slug === slug);
     return source ? toSummary(source, i) : null;

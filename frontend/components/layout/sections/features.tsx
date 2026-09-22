@@ -1,4 +1,4 @@
-import { featureList, featuresSection } from "@/@data/features";
+import { crmCycle, featureList, featuresSection } from "@/@data/features";
 
 import { FeaturesSectionClient, type FeatureItem } from "./features-client";
 
@@ -19,6 +19,7 @@ export const FeaturesSection = () => {
       subTitle={featuresSection.eyebrow}
       title={featuresSection.headline}
       description={featuresSection.description}
+      cycle={crmCycle}
     />
   );
 };

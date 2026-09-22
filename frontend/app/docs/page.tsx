@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 import { FooterSection } from "@/components/layout/sections/footer";
-import { docsSections, type DocsSection } from "@/@data/docs";
+import type { DocsSection } from "@/@data/docs";
+import { getDocsSections } from "@/lib/docs";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -282,11 +283,66 @@ function IconSettings() {
   );
 }
 
+function IconIntegrations() {
+  return (
+    <svg aria-hidden viewBox="0 0 32 32" fill="none" className="h-8 w-8">
+      <defs>
+        <radialGradient
+          id="intg-l"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="matrix(0 21 -21 0 16 3)"
+        >
+          <stop stopColor="#84CC16" />
+          <stop stopColor="#10B981" offset=".527" />
+          <stop stopColor="#0EA5E9" offset="1" />
+        </radialGradient>
+        <radialGradient
+          id="intg-d"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="matrix(0 21 -21 0 16 5)"
+        >
+          <stop stopColor="#84CC16" />
+          <stop stopColor="#10B981" offset=".527" />
+          <stop stopColor="#0EA5E9" offset="1" />
+        </radialGradient>
+      </defs>
+      <g className="dark:hidden">
+        <circle cx="16" cy="12" r="12" fill="url(#intg-l)" />
+        <path
+          d="M12 5v5M20 5v5M9 10h14v5a7 7 0 0 1-14 0v-5zM16 22v6"
+          fillOpacity="0.5"
+          className="fill-white stroke-slate-900"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <g className="hidden dark:inline">
+        <path
+          d="M11 3v6M21 3v6M7 9h18v6a9 9 0 0 1-18 0V9zM16 24v5"
+          fill="url(#intg-d)"
+          stroke="url(#intg-d)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  );
+}
+
 const SECTION_ICONS: Record<string, () => React.JSX.Element> = {
   Installation: IconInstallation,
   "Lead Management": IconLeads,
   "Deal Management": IconDeals,
   Marketing: IconMarketing,
+  Integrations: IconIntegrations,
   Settings: IconSettings
 };
 
@@ -294,23 +350,28 @@ const SECTION_ICONS: Record<string, () => React.JSX.Element> = {
 
 function SectionCard({ section }: { section: DocsSection }) {
   const Icon = SECTION_ICONS[section.title] ?? IconInstallation;
-  const firstArticle = section.articles[0];
-  const href = firstArticle ? `/docs/${firstArticle.slug}` : null;
 
   return (
-    <div className="group relative overflow-hidden rounded-xl bg-white p-6 ring-1 ring-slate-900/5 dark:bg-white/2.5 dark:ring-white/10">
+    <div className="relative overflow-hidden rounded-xl bg-white p-6 ring-1 ring-slate-900/5 dark:bg-white/2.5 dark:ring-white/10">
       <Icon />
       <h2 className="mt-4 text-base font-semibold text-slate-900 dark:text-white">
-        {href ? (
-          <a href={href}>
-            <span className="absolute -inset-px rounded-xl" />
-            {section.title}
-          </a>
-        ) : (
-          section.title
-        )}
+        {section.title}
       </h2>
       <p className="mt-1 text-sm text-slate-700 dark:text-slate-400">{section.description}</p>
+      {section.articles.length > 0 ? (
+        <ul className="mt-4 space-y-2 border-t border-slate-900/5 pt-4 dark:border-white/10">
+          {section.articles.map((article) => (
+            <li key={article.slug}>
+              <a
+                href={`/docs/${article.slug}`}
+                className="text-primary text-sm font-medium underline-offset-4 hover:underline"
+              >
+                {article.title} →
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }
@@ -318,6 +379,8 @@ function SectionCard({ section }: { section: DocsSection }) {
 /* ── Page ─────────────────────────────────────────────────────────────────── */
 
 export default function DocsPage() {
+  const sections = getDocsSections();
+
   return (
     <main className="min-h-screen">
       <section className="pt-32 pb-20">
@@ -336,7 +399,7 @@ export default function DocsPage() {
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {docsSections.map((section) => (
+              {sections.map((section) => (
                 <SectionCard key={section.title} section={section} />
               ))}
             </div>

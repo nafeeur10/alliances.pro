@@ -2,9 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
 
 import Icon from "@/components/icon";
 import {
@@ -38,12 +37,22 @@ export interface NavResourceItem {
   title: string;
   href: string;
   icon?: string;
+  gradient?: string;
   description?: string;
 }
 
 export interface NavResourceGroup {
   label: string;
   items: NavResourceItem[];
+}
+
+export interface NavResourceFeatured {
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  image: string;
+  cta: string;
 }
 
 export interface NavCta {
@@ -55,6 +64,7 @@ export interface NavbarProps {
   logo: LogoProps;
   routes: NavRoute[];
   resourceGroups: NavResourceGroup[];
+  resourceFeatured?: NavResourceFeatured;
   loginCta: NavCta;
   signupCta: NavCta;
 }
@@ -64,12 +74,30 @@ export interface NavbarProps {
 const HOVER = "hover:bg-gray-200 dark:hover:bg-zinc-800/60 transition-colors";
 const HOVER_OPEN = "data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-zinc-800/60";
 
-export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: NavbarProps) => {
+function ResourceIcon({ item }: { item: NavResourceItem }) {
+  if (!item.icon) return null;
+  return (
+    <span
+      className={cn(
+        "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br text-white shadow-sm",
+        item.gradient ?? "from-sky-500 to-indigo-500"
+      )}
+    >
+      <Icon name={item.icon} className="h-4 w-4 text-white" />
+    </span>
+  );
+}
+
+export const Navbar = ({
+  logo,
+  routes,
+  resourceGroups,
+  resourceFeatured,
+  loginCta,
+  signupCta
+}: NavbarProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-
   React.useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -77,15 +105,8 @@ export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: Na
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // On non-home pages the "#blog" anchor would dead-link, so route it to the
-  // full blog index instead. Other anchors (#benefits, #features) stay as-is
-  // since the user asked for this only for Blogs.
-  const resolvedRoutes = routes.map((r) =>
-    r.href === "#blog" && !isHome ? { ...r, href: "/blog" } : r
-  );
-
-  const firstRoute = resolvedRoutes[0];
-  const restRoutes = resolvedRoutes.slice(1);
+  const firstRoute = routes[0];
+  const restRoutes = routes.slice(1);
 
   return (
     <header
@@ -152,6 +173,25 @@ export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: Na
                         <Link href={href}>{label}</Link>
                       </Button>
                     ))}
+
+                    {resourceGroups.map((group) => (
+                      <div key={group.label} className="mt-2 px-4">
+                        <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-widest uppercase">
+                          {group.label}
+                        </p>
+                        {group.items.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsOpen(false)}
+                            className={cn("-mx-2 flex items-center gap-3 rounded-md p-2", HOVER)}
+                          >
+                            <ResourceIcon item={item} />
+                            <span className="text-base">{item.title}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                 </div>
 
@@ -164,7 +204,11 @@ export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: Na
           </div>
 
           {/* Desktop */}
-          <NavigationMenu className="mx-auto hidden lg:block">
+          {/* viewport={false}: the shared viewport is positioned at the menu
+              root's left edge, which opened the panel under the first item
+              instead of under Resources. Without it each content renders
+              inside its own (relative) item — see the centring below. */}
+          <NavigationMenu viewport={false} className="mx-auto hidden lg:block">
             <NavigationMenuList className="space-x-0">
               {firstRoute ? (
                 <NavigationMenuItem>
@@ -196,6 +240,91 @@ export const Navbar = ({ logo, routes, resourceGroups, loginCta, signupCta }: Na
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
+
+              {resourceGroups.length > 0 ? (
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      "bg-transparent!",
+                      HOVER_OPEN,
+                      "hover:bg-gray-200! dark:hover:bg-zinc-800/60!"
+                    )}
+                  >
+                    Resources
+                  </NavigationMenuTrigger>
+                  {/* Centred on its trigger rather than left-aligned to it. */}
+                  <NavigationMenuContent className="left-1/2! -translate-x-1/2">
+                    {/* Narrower below xl so the centred panel stays on screen at 1024px. */}
+                    <div className="flex w-[680px] gap-2 p-3 xl:w-[820px]">
+                      {resourceGroups.map((group) => (
+                        <div key={group.label} className="w-52 shrink-0 xl:w-60">
+                          <p className="text-muted-foreground px-2 pt-1 pb-2 text-xs font-semibold tracking-widest uppercase">
+                            {group.label}
+                          </p>
+                          <ul className="flex flex-col gap-1">
+                            {group.items.map((item) => (
+                              <li key={item.href}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={item.href}
+                                    className={cn(
+                                      "flex flex-row items-start gap-3 rounded-md p-2",
+                                      HOVER
+                                    )}
+                                  >
+                                    <ResourceIcon item={item} />
+                                    <span className="flex flex-col">
+                                      <span className="text-sm font-medium">{item.title}</span>
+                                      {item.description ? (
+                                        <span className="text-muted-foreground text-xs">
+                                          {item.description}
+                                        </span>
+                                      ) : null}
+                                    </span>
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+
+                      {resourceFeatured ? (
+                        <NavigationMenuLink asChild>
+                          <Link
+                            href={resourceFeatured.href}
+                            className="group/featured bg-muted/50 hover:bg-muted ml-auto flex w-56 shrink-0 flex-col gap-0! overflow-hidden rounded-lg border p-0! transition-colors xl:w-72"
+                          >
+                            <span className="relative block aspect-[16/9] w-full overflow-hidden">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={resourceFeatured.image}
+                                alt=""
+                                className="h-full w-full object-cover transition-transform duration-300 group-hover/featured:scale-[1.03]"
+                              />
+                            </span>
+                            <span className="flex flex-col gap-1 p-3">
+                              <span className="text-primary text-[11px] font-semibold tracking-widest uppercase">
+                                {resourceFeatured.eyebrow}
+                              </span>
+                              <span className="text-sm font-semibold">
+                                {resourceFeatured.title}
+                              </span>
+                              <span className="text-muted-foreground text-xs leading-relaxed">
+                                {resourceFeatured.description}
+                              </span>
+                              <span className="text-foreground mt-1 inline-flex items-center gap-1 text-xs font-medium">
+                                {resourceFeatured.cta}
+                                <ArrowRight className="size-3.5 transition-transform group-hover/featured:translate-x-0.5" />
+                              </span>
+                            </span>
+                          </Link>
+                        </NavigationMenuLink>
+                      ) : null}
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              ) : null}
             </NavigationMenuList>
           </NavigationMenu>
 

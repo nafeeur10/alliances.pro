@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { Calendar, Clock } from "lucide-react";
 
 import { FooterSection } from "@/components/layout/sections/footer";
+import { ArticleRail, RailSeparator } from "@/components/marketing/article-rail";
 import { BlogPostCard } from "@/components/marketing/blog-post-card";
-import { BlogTableOfContents } from "@/components/marketing/blog-table-of-contents";
+import { ContentIndex } from "@/components/marketing/content-index";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
 import { ShareButtons } from "@/components/marketing/share-buttons";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -15,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { ArticleSchema } from "@/components/seo/json-ld";
 import { getBlogPost, listBlogPosts } from "@/lib/api";
 import { authorInitials } from "@/lib/blog";
+import { extractHeadings } from "@/lib/toc";
 import { absoluteUrl, buildMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
@@ -74,6 +76,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const date = formatDate(post.published_at);
   const author = post.author?.name ?? post.author_name ?? "Alliances PRO Team";
   const showToc = post.show_toc !== false;
+  const headings = extractHeadings(post.body);
 
   const indexData = await listBlogPosts(1, 12);
   const allOthers = (indexData?.items ?? []).filter((p) => p.slug !== post.slug);
@@ -88,6 +91,25 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {/* ---------- Hero ---------- */}
       <section className="pt-28 pb-10 lg:pt-36">
         <div className="container">
+          {/* Breadcrumb sits at the very top of the page, above the hero. */}
+          <nav aria-label="Breadcrumb" className="text-muted-foreground mb-8 text-sm">
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Home
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <Link href="/blog" className="hover:text-foreground transition-colors">
+              Blog
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <span className="text-foreground/80 inline-block max-w-[52ch] truncate align-bottom">
+              {post.title}
+            </span>
+          </nav>
+
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
               {post.category ? (
@@ -168,88 +190,99 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </section>
 
       {/* ---------- Body ---------- */}
+      {/* Full-width two-column read: sticky content index on the left, the
+          article taking every pixel that is left. */}
       <section className="pb-20">
         <div className="container">
-          <div className="mx-auto grid max-w-(--breakpoint-xl) gap-12 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div>
-              {showToc ? <BlogTableOfContents body={post.body} className="mt-0 mb-10" /> : null}
-              <MarkdownArticle>{post.body}</MarkdownArticle>
-              <ShareButtons url={absoluteUrl(`/blog/${post.slug}`)} title={post.title} />
-            </div>
-
-            <aside className="lg:sticky lg:top-24 lg:self-start lg:[&>*+*]:mt-6">
-              {/* Author card */}
-              <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
-                <div className="flex items-center gap-3">
-                  <Avatar className="size-12 border border-violet-200/70 dark:border-violet-500/30">
-                    <AvatarFallback className="bg-gradient-to-br from-violet-500 to-fuchsia-500 font-semibold text-white">
-                      {authorInitials(author)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="leading-tight">
-                    <div className="text-foreground font-semibold">{author}</div>
-                    <div className="text-muted-foreground text-xs">Author</div>
-                  </div>
+          <div className="grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-14">
+            <ArticleRail>
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <Avatar className="size-11 border border-violet-200/70 dark:border-violet-500/30">
+                  <AvatarFallback className="bg-gradient-to-br from-violet-500 to-fuchsia-500 text-sm font-semibold text-white">
+                    {authorInitials(author)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="leading-tight">
+                  <div className="text-foreground text-sm font-semibold">{author}</div>
+                  <div className="text-muted-foreground text-xs">Author</div>
                 </div>
-                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-                  We build Alliances PRO — a flat-rate CRM for small agencies and service teams. Our
-                  writing covers pipeline, retention, and the operational reality of running a
-                  service business — minus the vendor speak.
-                </p>
               </div>
 
-              {/* CTA — Ready to put it into practice */}
-              <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
-                <h3 className="text-foreground text-lg font-bold tracking-tight">
-                  Ready to put it into practice?
-                </h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                  Flat $39/mo, unlimited seats. 14-day free trial — no credit card.
-                </p>
-                <Button asChild size="sm" className="mt-4 w-full">
-                  <Link href="https://crm.alliances.pro/signup">Start 14-day free trial</Link>
-                </Button>
-              </div>
+              {showToc && headings.length > 0 ? (
+                <>
+                  <RailSeparator />
+                  <ContentIndex headings={headings} />
+                </>
+              ) : null}
 
-              {/* Inline newsletter */}
-              <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
-                <Badge
-                  variant="outline"
-                  className="bg-background/60 mb-3 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase"
-                >
-                  <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
-                  The Playbook
-                </Badge>
-                <h3 className="text-foreground text-lg font-semibold tracking-tight">
-                  Get the CRM playbook in your inbox
-                </h3>
-                <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                  Monthly: one practical playbook, one product update, zero fluff.
-                </p>
-                <form className="mt-4 flex flex-col gap-2" action="/api/newsletter" method="post">
-                  <Input
-                    name="email"
-                    type="email"
-                    required
-                    placeholder="you@example.com"
-                    className="bg-background"
-                    aria-label="email"
-                  />
-                  <Button type="submit" className="w-full">
-                    Subscribe
-                  </Button>
-                </form>
-                <p className="text-muted-foreground mt-3 text-xs">No spam. Unsubscribe anytime.</p>
-              </div>
+              <RailSeparator />
+              <ShareButtons compact url={absoluteUrl(`/blog/${post.slug}`)} title={post.title} />
 
-              {/* Back to all posts */}
+              <RailSeparator />
               <Link
                 href="/blog"
                 className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
               >
                 ← All articles
               </Link>
-            </aside>
+            </ArticleRail>
+
+            <div className="min-w-0">
+              <div id="article-body">
+                <MarkdownArticle>{post.body}</MarkdownArticle>
+              </div>
+
+              <div className="mt-14 grid gap-6 md:grid-cols-2">
+                {/* CTA — Ready to put it into practice */}
+                <div className="bg-primary/5 border-primary/20 rounded-2xl border p-6">
+                  <h3 className="text-foreground text-lg font-bold tracking-tight">
+                    Ready to put it into practice?
+                  </h3>
+                  <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                    Flat $39/mo, unlimited seats. 14-day free trial — no credit card.
+                  </p>
+                  <Button asChild size="sm" className="mt-4">
+                    <Link href="https://crm.alliances.pro/signup">Start 14-day free trial</Link>
+                  </Button>
+                </div>
+
+                {/* Inline newsletter */}
+                <div className="bg-background/60 rounded-2xl border p-6 backdrop-blur-sm">
+                  <Badge
+                    variant="outline"
+                    className="bg-background/60 mb-3 rounded-full px-3 py-1 text-[10px] font-medium tracking-wider uppercase"
+                  >
+                    <span className="bg-primary mr-2 inline-block size-1.5 rounded-full" />
+                    The Playbook
+                  </Badge>
+                  <h3 className="text-foreground text-lg font-semibold tracking-tight">
+                    Get the CRM playbook in your inbox
+                  </h3>
+                  <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
+                    Monthly: one practical playbook, one product update, zero fluff.
+                  </p>
+                  <form
+                    className="mt-4 flex flex-col gap-2 sm:flex-row"
+                    action="/api/newsletter"
+                    method="post"
+                  >
+                    <Input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="you@example.com"
+                      className="bg-background"
+                      aria-label="email"
+                    />
+                    <Button type="submit">Subscribe</Button>
+                  </form>
+                  <p className="text-muted-foreground mt-3 text-xs">
+                    No spam. Unsubscribe anytime.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -258,7 +291,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       {related.length > 0 ? (
         <section className="pb-20">
           <div className="container">
-            <div className="mx-auto max-w-(--breakpoint-xl)">
+            <div>
               <div className="mb-8 flex items-end justify-between gap-4">
                 <h2 className="text-foreground text-2xl font-bold tracking-tight sm:text-3xl">
                   Related posts

@@ -37,18 +37,6 @@ const TARGETS: ShareTarget[] = [
     iconUrl: "/icons/whatsapp.svg",
     build: (u, t) => `https://wa.me/?text=${t}%20${u}`,
     newTab: true
-  },
-  {
-    label: "Share on Reddit",
-    iconUrl: "/icons/reddit.svg",
-    build: (u, t) => `https://www.reddit.com/submit?url=${u}&title=${t}`,
-    newTab: true
-  },
-  {
-    label: "Share by email",
-    iconUrl: "/icons/email.svg",
-    build: (u, t) => `mailto:?subject=${t}&body=${u}`,
-    newTab: false
   }
 ];
 
@@ -56,9 +44,11 @@ interface Props {
   url: string;
   title: string;
   className?: string;
+  /** Rail variant: no top rule, smaller targets, label above the icons. */
+  compact?: boolean;
 }
 
-export function ShareButtons({ url, title, className }: Props) {
+export function ShareButtons({ url, title, className, compact = false }: Props) {
   const [copied, setCopied] = useState(false);
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -76,12 +66,19 @@ export function ShareButtons({ url, title, className }: Props) {
   return (
     <div
       className={cn(
-        "border-border/60 mt-12 flex flex-wrap items-center gap-x-4 gap-y-3 border-t pt-6",
+        compact
+          ? "flex flex-col gap-3"
+          : "border-border/60 mt-12 flex flex-wrap items-center gap-x-4 gap-y-3 border-t pt-6",
         className
       )}
     >
-      <span className="text-muted-foreground text-[11px] font-medium tracking-wider uppercase">
-        Share this article
+      <span
+        className={cn(
+          "text-muted-foreground text-[11px] font-medium tracking-wider uppercase",
+          compact && "font-semibold tracking-widest"
+        )}
+      >
+        {compact ? "Share" : "Share this article"}
       </span>
       <div className="flex flex-wrap items-center gap-2">
         {TARGETS.map((target) => (
@@ -91,7 +88,10 @@ export function ShareButtons({ url, title, className }: Props) {
             target={target.newTab ? "_blank" : undefined}
             rel={target.newTab ? "noopener noreferrer" : undefined}
             aria-label={target.label}
-            className="border-border/70 hover:border-primary/40 hover:bg-background flex size-10 items-center justify-center rounded-full border bg-white shadow-sm transition-colors"
+            className={cn(
+              "border-border/70 hover:border-primary/40 hover:bg-background flex items-center justify-center rounded-full border bg-white shadow-sm transition-colors",
+              compact ? "size-9" : "size-10"
+            )}
           >
             <Image
               src={target.iconUrl}
@@ -108,7 +108,10 @@ export function ShareButtons({ url, title, className }: Props) {
           type="button"
           onClick={handleCopy}
           aria-label={copied ? "Link copied" : "Copy link"}
-          className="text-muted-foreground hover:text-foreground border-border/70 hover:border-primary/40 hover:bg-background flex size-10 items-center justify-center rounded-full border bg-white shadow-sm transition-colors"
+          className={cn(
+            "text-muted-foreground hover:text-foreground border-border/70 hover:border-primary/40 hover:bg-background flex items-center justify-center rounded-full border bg-white shadow-sm transition-colors",
+            compact ? "size-9" : "size-10"
+          )}
         >
           {copied ? (
             <Check className="size-5 text-emerald-500" aria-hidden strokeWidth={2.25} />

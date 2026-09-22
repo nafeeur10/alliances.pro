@@ -6,7 +6,8 @@ import { CheckIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import SectionContainer from "@/components/layout/section-container";
-import HexRing from "@/components/marketing/hex-ring";
+import type { CrmCycleStage } from "@/@data/features";
+import CrmCycle from "@/components/marketing/crm-cycle";
 
 export interface FeatureItem {
   icon: string;
@@ -23,13 +24,15 @@ interface Props {
   subTitle?: string;
   title?: string;
   description?: string;
+  cycle: { hub: string; stages: CrmCycleStage[] };
 }
 
 export const FeaturesSectionClient = ({
   items,
   subTitle = "Features",
   title = "Everything You Need to Succeed",
-  description = "Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business."
+  description = "Our comprehensive CRM platform provides all the tools you need to manage clients, streamline operations, and grow your service business.",
+  cycle
 }: Props) => {
   return (
     <SectionContainer id="features" className="bg-muted/30">
@@ -46,8 +49,8 @@ export const FeaturesSectionClient = ({
           <p className="text-muted-foreground text-base md:text-lg">{description}</p>
         ) : null}
       </div>
-      <div className="mx-auto mb-12 w-full max-w-(--breakpoint-md) lg:mb-20">
-        <HexRing />
+      <div className="mx-auto mt-10 mb-12 w-full max-w-(--breakpoint-xl) lg:mb-20">
+        <CrmCycle stages={cycle.stages} hub={cycle.hub} />
       </div>
       <div className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         {items.map((card) => (

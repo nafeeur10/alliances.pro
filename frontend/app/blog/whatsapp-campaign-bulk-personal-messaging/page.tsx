@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Calendar, Clock } from "lucide-react";
 
 import { FooterSection } from "@/components/layout/sections/footer";
+import { ArticleRail, RailSeparator } from "@/components/marketing/article-rail";
+import { ContentIndex } from "@/components/marketing/content-index";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
+import { ShareButtons } from "@/components/marketing/share-buttons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ArticleSchema } from "@/components/seo/json-ld";
 import { authorInitials } from "@/lib/blog";
-import { buildMetadata } from "@/lib/seo";
+import { absoluteUrl, buildMetadata } from "@/lib/seo";
+import { extractHeadings } from "@/lib/toc";
 
 const POST_PATH = "/blog/whatsapp-campaign-bulk-personal-messaging";
-const POST_TITLE =
-  "WhatsApp Campaigns + 1-on-1 Messaging — Reach Leads Where They Actually Reply";
+const POST_TITLE = "WhatsApp Campaigns + 1-on-1 Messaging — Reach Leads Where They Actually Reply";
 const POST_DESCRIPTION =
   "Send personalised bulk WhatsApp campaigns to a contact list and chat with individual leads from the same CRM. Higher open rates than email, zero tab-switching, and full conversation history attached to every lead in Alliances CRM.";
 const POST_COVER = "/campaign/whatsapp-campaign.jpg";
@@ -162,6 +166,25 @@ export default function WhatsAppCampaignBlogPage() {
       {/* ---------- Hero ---------- */}
       <section className="pt-28 pb-10 lg:pt-36">
         <div className="container">
+          {/* Breadcrumb sits at the very top of the page, above the hero. */}
+          <nav aria-label="Breadcrumb" className="text-muted-foreground mb-8 text-sm">
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Home
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <Link href="/blog" className="hover:text-foreground transition-colors">
+              Blog
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <span className="text-foreground/80 inline-block max-w-[52ch] truncate align-bottom">
+              {POST_TITLE}
+            </span>
+          </nav>
+
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-5 flex flex-wrap items-center justify-center gap-2">
               <Badge
@@ -246,10 +269,42 @@ export default function WhatsAppCampaignBlogPage() {
       </section>
 
       {/* ---------- Body ---------- */}
+      {/* Content index pinned left, the article running the full width beside it. */}
       <section className="pb-20">
         <div className="container">
-          <div className="mx-auto max-w-3xl">
-            <MarkdownArticle>{POST_BODY}</MarkdownArticle>
+          <div className="grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-14">
+            <ArticleRail>
+              <div className="flex items-center gap-3">
+                <Avatar className="size-11 border border-violet-200/70 dark:border-violet-500/30">
+                  <AvatarImage src={AUTHOR_AVATAR} alt={AUTHOR} />
+                  <AvatarFallback className="bg-gradient-to-br from-violet-500 to-fuchsia-500 text-sm font-semibold text-white">
+                    {authorInitials(AUTHOR)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="leading-tight">
+                  <div className="text-foreground text-sm font-semibold">{AUTHOR}</div>
+                  <div className="text-muted-foreground text-xs">Author</div>
+                </div>
+              </div>
+
+              <RailSeparator />
+              <ContentIndex headings={extractHeadings(POST_BODY)} />
+
+              <RailSeparator />
+              <ShareButtons compact url={absoluteUrl(POST_PATH)} title={POST_TITLE} />
+
+              <RailSeparator />
+              <Link
+                href="/blog"
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+              >
+                ← All articles
+              </Link>
+            </ArticleRail>
+
+            <div className="min-w-0" id="article-body">
+              <MarkdownArticle>{POST_BODY}</MarkdownArticle>
+            </div>
           </div>
         </div>
       </section>

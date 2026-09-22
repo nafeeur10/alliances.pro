@@ -12,6 +12,55 @@ export interface ChangelogEntry {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    date: "2026-09-21",
+    version: "v2.1",
+    type: "Feature",
+    title: "Shopify Partner integration",
+    body: "Connect your Shopify Partner account and every store that installs your app lands in Companies as a merchant. Uninstalls are flagged automatically, synced about every 15 minutes."
+  },
+  {
+    date: "2026-09-21",
+    type: "Feature",
+    title: "Merchant email collection",
+    body: "Your app sends the store owner's contact details once per install using a token and copy-paste snippets from Settings. Backfill older installs in bulk."
+  },
+  {
+    date: "2026-09-21",
+    type: "Feature",
+    title: "Merchant follow-ups and campaigns",
+    body: "Welcome and farewell emails, uninstall alerts for your team, a merchant audience in email campaigns, and follow-up dates with contact logs on every company."
+  },
+  {
+    date: "2026-09-21",
+    type: "Feature",
+    title: "Workspace types",
+    body: "Choose Shopify App Founder or Generic Sales when you sign up, or switch later in Settings. Switching never deletes data, so switching back restores everything."
+  },
+  {
+    date: "2026-09-21",
+    type: "Improvement",
+    title: "Spanish screens and cleaner breadcrumbs",
+    body: 'All new screens are translated into Spanish. Settings breadcrumbs now read properly, such as "General" instead of "general".'
+  },
+  {
+    date: "2026-09-21",
+    type: "Improvement",
+    title: "Honest status monitoring",
+    body: 'The health check now tests the database, cache, background workers and scheduler, and reports "down" when any of them fails.'
+  },
+  {
+    date: "2026-09-21",
+    type: "Fix",
+    title: "Large file uploads",
+    body: 'Bigger files, such as lead attachments up to 20 MB, no longer fail with a vague "failed to upload" error.'
+  },
+  {
+    date: "2026-09-21",
+    type: "Fix",
+    title: "Long background jobs finish reliably",
+    body: "Long-running jobs like the Shopify sync are no longer cut off partway and retried, so they finish in one pass."
+  },
+  {
     date: "2026-05-03",
     version: "v2.0",
     type: "Feature",

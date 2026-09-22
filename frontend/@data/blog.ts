@@ -23,6 +23,18 @@ export const blogSection = {
 
 export const featuredBlogPosts: BlogPost[] = [
   {
+    slug: "shopify-partner-crm-for-app-developers",
+    title: "Shopify Partner Integration: A CRM for Shopify App Developers",
+    excerpt:
+      "Connect your Shopify Partner account and every install lands in your CRM as a merchant. Uninstalls are flagged, emails collected and follow-ups planned.",
+    category: "Product Update",
+    readTime: "6 min read",
+    date: "2026-09-21",
+    cover: "/blog/cover-shopify-partner.svg",
+    author: "Nafeeur",
+    authorAvatar: "/avatars/nafeeur.png"
+  },
+  {
     slug: "whats-new-june-2026",
     title: "What's new in Alliances CRM — June 2026",
     excerpt:

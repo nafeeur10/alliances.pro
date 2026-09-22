@@ -22,11 +22,11 @@ interface HeroContent {
 }
 
 export const heroContent: HeroContent = {
-  eyebrow: "CRM · Easiest & Effective",
-  headline: "Best AI CRM for Small Businesses",
+  eyebrow: "Shopify Partner CRM · Easiest & Effective",
+  headline: "Every Shopify App Install, Straight Into Your CRM",
   subheadline:
-    "Built with a focus on follow-up. Alliances PRO organizes every client, generates AI summaries on every lead and deal, runs your pipeline to signed deals, and sends bulk email — so you can stop juggling tools and just serve.",
-  imageUrl: "/alliances-hero.png",
+    "Alliances PRO syncs installs and uninstalls from your Partner account, collects merchant emails after OAuth, and runs follow-ups so churned stores come back. Also built for agencies and small businesses.",
+  imageUrl: "/company.png",
   imageAlt: "Alliances PRO hero section image",
   primaryCta: { label: "Start Free Trial", url: "https://crm.alliances.pro/signup" },
   secondaryCta: { label: "Contact Us", url: "#contact" },

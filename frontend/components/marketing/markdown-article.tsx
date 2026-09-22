@@ -32,7 +32,7 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground mt-12 mb-5 scroll-mt-28 text-3xl font-bold tracking-tight",
+        "text-foreground mt-12 mb-5 scroll-mt-28 text-3xl font-bold tracking-tight first:mt-0",
         className
       )}
     >
@@ -44,7 +44,7 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground mt-12 mb-4 scroll-mt-28 text-2xl font-bold tracking-tight",
+        "text-foreground mt-12 mb-4 scroll-mt-28 text-2xl font-bold tracking-tight first:mt-0",
         className
       )}
     >
@@ -56,12 +56,22 @@ const components: Components = {
       {...props}
       id={slugifyHeading(nodeToText(children))}
       className={cn(
-        "text-foreground mt-10 mb-3 scroll-mt-28 text-xl font-semibold tracking-tight",
+        "text-foreground mt-10 mb-3 scroll-mt-28 text-xl font-semibold tracking-tight first:mt-0",
         className
       )}
     >
       {children}
     </h3>
+  ),
+  // No id/anchor: h4s sit below the content index's h2/h3 level, so they label
+  // variants (code samples, options) without appearing in the rail.
+  h4: ({ className, children, ...props }) => (
+    <h4
+      {...props}
+      className={cn("text-foreground mt-8 mb-2 text-base font-semibold tracking-tight", className)}
+    >
+      {children}
+    </h4>
   ),
   p: ({ className, ...props }) => (
     <p {...props} className={cn("text-foreground/90 mb-5 text-base leading-relaxed", className)} />
@@ -157,13 +167,20 @@ const components: Components = {
   td: ({ className, ...props }) => (
     <td {...props} className={cn("text-foreground/90 px-4 py-3 align-top", className)} />
   ),
+  // Optional size hint: ![alt](/docs/shot.png?width=480) caps the image at 480px and centers it.
   img: ({ src, alt, className }) => {
     const resolved = resolveAssetUrl(src) ?? src;
     if (!resolved || typeof resolved !== "string") return null;
+    const widthMatch = resolved.match(/[?&]width=(\d+)/);
+    const maxWidth = widthMatch ? Number(widthMatch[1]) : undefined;
+    const cleanSrc = resolved.replace(/[?&]width=\d+/, "").replace(/\?$/, "");
     return (
-      <span className="my-8 block overflow-hidden rounded-2xl border">
+      <span
+        className="mx-auto my-8 block overflow-hidden rounded-2xl border"
+        style={maxWidth ? { maxWidth } : undefined}
+      >
         <Image
-          src={resolved}
+          src={cleanSrc}
           alt={alt ?? ""}
           width={1600}
           height={900}

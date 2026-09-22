@@ -10,7 +10,7 @@ interface BenefitItem {
 
 export const benefitsSection = {
   eyebrow: "Benefits",
-  headline: "Why Choose Alliances PRO?",
+  headline: "Why Shopify App Developers & Small Businesses Choose Alliances PRO?",
   description:
     "Service businesses don't run on pipelines — they run on follow-ups, ongoing client relationships, and emails that can't be allowed to slip. Alliances PRO is built for that shape of work."
 };
@@ -20,28 +20,28 @@ export const benefitList: BenefitItem[] = [
     icon: "/icons/alarm-clock.svg",
     title: "Never miss a follow-up again",
     description:
-      "Every lead gets a follow-up date and a preferred channel, and the assigned teammate is reminded by email and notification before the date, so follow-ups land on time, on the channel the lead actually replies to.",
+      "Every lead and client gets a follow-up date and a preferred channel. The assigned teammate is reminded by email and notification before it's due — and after Closed Won, renewals and check-ins stay on the same schedule.",
     slug: "never-miss-follow-up"
   },
   {
     icon: "/icons/relationship.svg",
-    title: "Build long-term client relationships, not just deals",
+    title: "Every Shopify app install becomes a merchant",
     description:
-      "After Closed Won, the client stays on your follow-up radar. Set the next check-in date, track renewals, and keep every stakeholder at the organization on one record — so you stay close long after the deal closes.",
+      "Connect your Shopify Partner account once. Each install lands in Companies as a merchant, each uninstall is flagged, and the store goes onto your follow-up list — so you reach churned merchants while the reason is still fresh.",
     slug: "long-term-client-relationships"
   },
   {
     icon: "/icons/idea.svg",
-    title: "Skip the scroll, get the context",
+    title: "AI summaries on every lead, deal and client",
     description:
-      "Open any lead, deal, or client record. Read the AI summary at the top instead of scrolling through months of conversation history. The context you need is right there — so every call starts up to speed.",
+      "Open any record and read the AI summary at the top instead of scrolling through months of conversation history. The context you need is right there — so every call starts up to speed.",
     slug: "skip-the-scroll"
   },
   {
     icon: "/icons/download.svg",
-    title: "No lock-in, take your data anywhere",
+    title: "No lock-in — export everything to CSV",
     description:
-      "Export every lead, deal, and client to CSV anytime. Cancel inside the app — no support ticket required. Your data walks out with you the day you decide — day one or day three hundred, no questions asked.",
+      "Export every lead, deal, and client to CSV anytime. Cancel inside the app — no support ticket required. Your data walks out with you the day you decide, no questions asked.",
     slug: "take-your-data-anywhere"
   }
 ];

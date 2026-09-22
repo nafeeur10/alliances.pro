@@ -32,6 +32,11 @@ export const docsSections: DocsSection[] = [
     articles: []
   },
   {
+    title: "Integrations",
+    description: "Connect Shopify Partner and other tools so their data flows into Alliances PRO.",
+    articles: []
+  },
+  {
     title: "Settings",
     description: "Configure notifications, profile preferences, and workspace-level options.",
     articles: [

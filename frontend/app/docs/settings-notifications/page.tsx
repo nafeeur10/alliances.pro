@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
+import { Clock } from "lucide-react";
 
 import { FooterSection } from "@/components/layout/sections/footer";
+import { DocPager } from "@/components/docs/doc-nav";
+import { ArticleRail, RailAuthor, RailSeparator } from "@/components/marketing/article-rail";
+import { ContentIndex } from "@/components/marketing/content-index";
 import { MarkdownArticle } from "@/components/marketing/markdown-article";
-import { buildMetadata } from "@/lib/seo";
+import { ShareButtons } from "@/components/marketing/share-buttons";
+import { DEFAULT_DOC_AUTHOR, getDocNeighbours, readingMinutes } from "@/lib/docs";
+import { absoluteUrl, buildMetadata } from "@/lib/seo";
+import { extractHeadings } from "@/lib/toc";
 
 const DOC_PATH = "/docs/settings-notifications";
 const DOC_TITLE = "Notification Settings — Alliances PRO";
@@ -13,7 +20,7 @@ const DOC_DESCRIPTION =
 export const metadata: Metadata = buildMetadata({
   title: DOC_TITLE,
   description: DOC_DESCRIPTION,
-  path: DOC_PATH,
+  path: DOC_PATH
 });
 
 const DOC_BODY = `## How to Stop Daily Digest Email
@@ -43,38 +50,78 @@ The Feedback button floats on every page and lets you send quick suggestions or 
 4. Toggle **Feedback Button** to **hide** or **show** it.
 
 Again, the change is instant and reversible.
+
+## Screenshot
+
+![Notification settings screen showing Daily Digest Email and Feedback Button toggles](/docs/notification.png?width=623)
 `;
 
 export default function SettingsNotificationsPage() {
+  const headings = extractHeadings(DOC_BODY);
+  const { prev, next } = getDocNeighbours("settings-notifications");
+
   return (
     <main className="min-h-screen">
-      <section className="pt-32 pb-20">
+      {/* ---------- Hero ---------- */}
+      <section className="pt-32 pb-12">
         <div className="container">
-          <div className="mx-auto max-w-(--breakpoint-xl)">
-            <div className="mb-8">
-              <p className="text-muted-foreground mb-1 text-xs font-semibold tracking-widest uppercase">
-                Settings
-              </p>
-              <h1 className="text-foreground text-3xl font-bold tracking-tight">
-                Notification Settings
-              </h1>
-              <p className="text-muted-foreground mt-2 text-base">
-                Control Daily Digest email and the Feedback button from your profile.
-              </p>
-            </div>
+          <nav aria-label="Breadcrumb" className="text-muted-foreground text-sm">
+            <Link href="/" className="hover:text-foreground transition-colors">
+              Home
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <Link href="/docs" className="hover:text-foreground transition-colors">
+              Docs
+            </Link>
+            <span className="px-1.5" aria-hidden>
+              /
+            </span>
+            <span className="text-foreground/80">Notification Settings</span>
+          </nav>
 
-            <MarkdownArticle>{DOC_BODY}</MarkdownArticle>
+          <p className="text-primary mt-4 text-xs font-semibold tracking-widest uppercase">
+            Docs · Settings
+          </p>
 
-            <div className="mt-10">
-              <h2 className="text-foreground mb-4 text-2xl font-bold tracking-tight">Screenshot</h2>
-              <Image
-                src="/docs/notification.png"
-                alt="Notification settings screen showing Daily Digest Email and Feedback Button toggles"
-                width={623}
-                height={373}
-                unoptimized
-                className="rounded-2xl border"
-              />
+          <h1 className="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            Notification Settings
+          </h1>
+
+          <p className="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed sm:text-lg">
+            Control Daily Digest email and the Feedback button from your profile.
+          </p>
+
+          <div className="text-muted-foreground mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+            <span className="inline-flex items-center gap-2">
+              <Clock className="size-4 text-sky-500" aria-hidden strokeWidth={2} />
+              {readingMinutes(DOC_BODY)} min read
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------- Body ---------- */}
+      <section className="pb-20">
+        <div className="container">
+          <div className="grid gap-10 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-14">
+            <ArticleRail>
+              <RailAuthor {...DEFAULT_DOC_AUTHOR} />
+
+              <RailSeparator />
+              <ContentIndex headings={headings} label="Contents" />
+
+              <RailSeparator />
+              <ShareButtons compact url={absoluteUrl(DOC_PATH)} title="Notification Settings" />
+            </ArticleRail>
+
+            <div className="min-w-0">
+              <div id="article-body">
+                <MarkdownArticle>{DOC_BODY}</MarkdownArticle>
+              </div>
+
+              <DocPager prev={prev} next={next} />
             </div>
           </div>
         </div>
