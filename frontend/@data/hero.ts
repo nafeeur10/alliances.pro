@@ -30,7 +30,8 @@ export const heroContent: HeroContent = {
   subheadline:
     "Alliances PRO syncs installs and uninstalls from your Partner account, collects merchant emails after OAuth, and runs follow-ups so churned stores come back. Also built for agencies and small businesses.",
   imageUrl: "/company-1440.webp",
-  imageSrcSet: "/company-640.webp 640w, /company-1024.webp 1024w, /company-1440.webp 1440w",
+  imageSrcSet:
+    "/company-640.webp 640w, /company-768.webp 768w, /company-1024.webp 1024w, /company-1280.webp 1280w, /company-1440.webp 1440w",
   imageWidth: 1440,
   imageHeight: 722,
   imageAlt:
