@@ -24,7 +24,7 @@ const PUBLISHED_AT = "2026-09-21T00:00:00.000Z";
 const PUBLISHED_DISPLAY = "September 21, 2026";
 const READING_MINUTES = 6;
 const AUTHOR = "Nafeeur";
-const AUTHOR_AVATAR = "/avatars/nafeeur.png";
+const AUTHOR_AVATAR = "/avatars/nafeeur-96.webp";
 
 export const metadata: Metadata = buildMetadata({
   title: POST_TITLE,

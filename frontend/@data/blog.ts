@@ -11,7 +11,7 @@ interface BlogPost {
   date: string; // ISO date — used for display + ordering
   cover: string; // path under /public, e.g. "/blog/cover-1.jpg"
   author?: string;
-  authorAvatar?: string; // path under /public, e.g. "/avatars/nafeeur.png"
+  authorAvatar?: string; // path under /public, e.g. "/avatars/nafeeur-96.webp"
 }
 
 export const blogSection = {
@@ -32,7 +32,7 @@ export const featuredBlogPosts: BlogPost[] = [
     date: "2026-09-21",
     cover: "/blog/cover-shopify-partner.svg",
     author: "Nafeeur",
-    authorAvatar: "/avatars/nafeeur.png"
+    authorAvatar: "/avatars/nafeeur-96.webp"
   },
   {
     slug: "whats-new-june-2026",
@@ -42,9 +42,9 @@ export const featuredBlogPosts: BlogPost[] = [
     category: "Product Update",
     readTime: "6 min read",
     date: "2026-06-07",
-    cover: "/blog/product-update-01.png",
+    cover: "/blog/product-update-01.webp",
     author: "Nafeeur",
-    authorAvatar: "/avatars/nafeeur.png"
+    authorAvatar: "/avatars/nafeeur-96.webp"
   },
   {
     slug: "whatsapp-campaign-bulk-personal-messaging",
@@ -54,9 +54,9 @@ export const featuredBlogPosts: BlogPost[] = [
     category: "Product Feature",
     readTime: "5 min read",
     date: "2026-06-09",
-    cover: "/campaign/whatsapp-campaign.jpg",
+    cover: "/campaign/whatsapp-campaign.webp",
     author: "Nafeeur",
-    authorAvatar: "/avatars/nafeeur.png"
+    authorAvatar: "/avatars/nafeeur-96.webp"
   },
   {
     slug: "service-business-crm-stack",

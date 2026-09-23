@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { CheckIcon } from "lucide-react";
 
 import { heroContent } from "@/@data/hero";
@@ -13,6 +12,9 @@ export const HeroSection = () => {
     headline,
     subheadline,
     imageUrl,
+    imageSrcSet,
+    imageWidth,
+    imageHeight,
     imageAlt,
     primaryCta,
     secondaryCta,
@@ -58,13 +60,18 @@ export const HeroSection = () => {
           <div className="bg-primary/60 absolute top-2 left-1/2 mx-auto h-24 w-[90%] -translate-x-1/2 transform rounded-full blur-3xl lg:-top-8 lg:h-80"></div>
           {/* blur effect */}
 
-          <Image
-            width={1240}
-            height={1200}
-            className="rouded-lg relative mx-auto flex w-full items-center rounded-lg mask-b-from-20% mask-b-to-90% leading-none"
+          {/* Plain <img>: next/image runs unoptimized here, so it would not
+              emit a srcset. The WebP sizes are pre-generated in /public. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={imageUrl}
+            srcSet={imageSrcSet}
+            sizes="(min-width: 1280px) 1216px, calc(100vw - 32px)"
+            width={imageWidth}
+            height={imageHeight}
             alt={imageAlt}
-            unoptimized
+            decoding="async"
+            className="relative mx-auto flex h-auto w-full items-center rounded-lg mask-b-from-20% mask-b-to-90% leading-none"
           />
         </div>
       </div>

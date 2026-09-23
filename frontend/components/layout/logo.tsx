@@ -12,11 +12,12 @@ export interface LogoProps {
 
 export default function Logo({ text = "Alliances PRO", iconName = "SunDim", imageUrl }: LogoProps) {
   return (
-    <Link href="/" aria-label={`${text} home`} className="flex items-center font-bold">
+    // The visible name is the link's accessible name; the mark is decorative.
+    <Link href="/" className="flex items-center font-bold">
       {imageUrl ? (
         <Image
           src={imageUrl}
-          alt={text}
+          alt=""
           width={32}
           height={32}
           className="mr-2 size-7 rounded-lg lg:size-8"

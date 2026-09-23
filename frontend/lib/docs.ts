@@ -33,7 +33,7 @@ export interface DocAuthor {
 export const DEFAULT_DOC_AUTHOR: DocAuthor = {
   name: "Nafeeur Rahman",
   role: "Founder, Alliances PRO",
-  avatar: "/avatars/nafeeur.png"
+  avatar: "/avatars/nafeeur-96.webp"
 };
 
 // Same 200 wpm the blog uses. Images and code fences inflate it slightly;

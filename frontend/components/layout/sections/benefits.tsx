@@ -85,7 +85,6 @@ export const BenefitsSection = () => {
               <Link
                 key={`${benefit.title}-${index}`}
                 href={`/benefits/${benefit.slug}`}
-                aria-label={`Learn more about ${benefit.title}`}
                 className={cn("block", featured && "md:col-span-2 lg:col-span-1")}
               >
                 <article

@@ -15,7 +15,7 @@ export const testimonialSection = {
 
 export const reviewList: ReviewProps[] = [
   {
-    image: "/avatars/hafizur.jpg",
+    image: "/avatars/hafizur-96.webp",
     name: "Hafizur Rahman",
     userName: "Founder and CEO at orDevs",
     comment:
@@ -23,7 +23,7 @@ export const reviewList: ReviewProps[] = [
     rating: 5.0
   },
   {
-    image: "/avatars/simon-carter.png",
+    image: "/avatars/simon-carter-96.webp",
     name: "Simon Carter",
     userName: "Managing Director at Greenbox Digital",
     comment:
@@ -31,7 +31,7 @@ export const reviewList: ReviewProps[] = [
     rating: 4.8
   },
   {
-    image: "/avatars/omar.jpeg",
+    image: "/avatars/omar-96.webp",
     name: "Omar Nasif",
     userName: "Co-CEO at Optinify",
     comment:

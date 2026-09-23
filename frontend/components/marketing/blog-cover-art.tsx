@@ -80,7 +80,7 @@ export function BlogCoverArt({ post, className }: Props) {
           aria-hidden
           className="pointer-events-none flex shrink-0 items-center justify-center rounded-full bg-white/85 p-1.5 shadow-md backdrop-blur-sm"
         >
-          <Image src="/logo.png" alt="" width={28} height={28} unoptimized className="size-7" />
+          <Image src="/logo-64.webp" alt="" width={28} height={28} unoptimized className="size-7" />
         </div>
       </div>
 

@@ -1,4 +1,3 @@
-"use client";
 
 import Image from "next/image";
 import React from "react";
@@ -59,7 +58,7 @@ export const FeaturesSectionClient = ({
               className="bg-muted relative h-[250px] w-full overflow-hidden rounded-2xl"
               style={card.bgColor ? { backgroundColor: card.bgColor } : undefined}
             >
-              <Image src={card.image} alt={card.title} fill unoptimized />
+              <Image src={card.image} alt={card.title} fill unoptimized className="object-cover" />
             </div>
             <h3 className="text-lg leading-snug font-bold">{card.title}</h3>
             <p className="text-muted-foreground text-sm font-normal">{card.description}</p>

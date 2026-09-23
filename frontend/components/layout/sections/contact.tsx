@@ -4,7 +4,7 @@ import { contactSection } from "@/@data/contact";
 import SectionContainer from "@/components/layout/section-container";
 import { Badge } from "@/components/ui/badge";
 
-import { ContactForm } from "./contact-form";
+import { ContactFormLazy } from "./contact-form-lazy";
 
 export const ContactSection = () => {
   const { eyebrow, headline, description, phone, email, hoursPrimary, hoursSecondary } =
@@ -90,7 +90,7 @@ export const ContactSection = () => {
           </div>
         </div>
 
-        <ContactForm contactEmail={email} />
+        <ContactFormLazy contactEmail={email} />
       </section>
     </SectionContainer>
   );

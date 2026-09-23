@@ -120,7 +120,7 @@
   --secondary: oklch(0.96 0.01 264);             /* Slate · 100 #F1F5F9 */
   --secondary-foreground: oklch(0.20 0.04 264);
   --muted: oklch(0.96 0.01 264);
-  --muted-foreground: oklch(0.55 0.04 264);      /* Slate · 500 */
+  --muted-foreground: oklch(0.5 0.04 264);       /* Slate · 500, darkened for 4.5:1 contrast */
 
   /* Status */
   --destructive: oklch(0.65 0.21 25);            /* #EF4444 */

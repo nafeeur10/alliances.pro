@@ -13,11 +13,14 @@
  * (or a step button) jumps straight to it. Reduced-motion users get the
  * static ring and the panel, with no travelling record.
  *
+ * GSAP is imported only once the section first scrolls into view, so it
+ * stays out of the page's initial JavaScript.
+ *
  *   <CrmCycle stages={crmCycle.stages} hub={crmCycle.hub} />
  */
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { gsap } from "gsap";
+import type { gsap as GsapInstance } from "gsap";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 
 import type { CrmCycleStage } from "@/@data/features";
@@ -42,6 +45,7 @@ const MOVE = 1.1; // time to travel to the next stage
 const FADE = 0.18;
 
 type Point = [number, number];
+type Gsap = typeof GsapInstance;
 
 interface PositionedStage extends CrmCycleStage {
   index: number;
@@ -260,14 +264,12 @@ function StageIcon({
 // ─── Single isometric coin ─────────────────────────────────────────────────
 function Coin({
   stage,
-  total,
   active,
   arrowMarker,
   onSelect,
   onHover
 }: {
   stage: PositionedStage;
-  total: number;
   active: boolean;
   arrowMarker: string;
   onSelect: (i: number) => void;
@@ -293,7 +295,6 @@ function Coin({
       data-index={stage.index}
       role="button"
       tabIndex={0}
-      aria-label={`Step ${stage.index + 1} of ${total}: ${stage.title}`}
       aria-pressed={active}
       onClick={() => onSelect(stage.index)}
       onKeyDown={(e) => {
@@ -422,10 +423,14 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
   const arcRef = useRef<SVGCircleElement | null>(null);
   const tokenRef = useRef<SVGCircleElement | null>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const [gsap, setGsap] = useState<Gsap | null>(null);
 
   const [active, setActive] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  // Drives the CSS dash animation, which runs on the main thread, so it only
+  // plays while the diagram is on screen.
+  const [visible, setVisible] = useState(false);
   const hovering = useRef(false);
   const onScreen = useRef(false);
   const userPausedRef = useRef(false);
@@ -462,28 +467,43 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Entrance + the travelling record.
+  // Track visibility, and fetch GSAP the first time the diagram shows up.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    let requested = false;
+    let cancelled = false;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen.current = entry.isIntersecting;
+        setVisible(entry.isIntersecting);
+        if (entry.isIntersecting && !requested) {
+          requested = true;
+          import("gsap").then((mod) => {
+            if (!cancelled) setGsap(() => mod.gsap);
+          });
+        }
+        syncPlayback();
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(root);
+    return () => {
+      cancelled = true;
+      io.disconnect();
+    };
+  }, [syncPlayback]);
+
+  // The travelling record.
   useEffect(() => {
     const svg = svgRef.current;
     const token = tokenRef.current;
     const arc = arcRef.current;
-    if (!svg || !token || !arc) return;
+    if (!gsap || !svg || !token || !arc) return;
 
-    const stageEls = svg.querySelectorAll<SVGGElement>(".cycle-stage");
     const pathEls = Array.from(svg.querySelectorAll<SVGPathElement>(".cycle-connection"));
 
     const ctx = gsap.context(() => {
-      if (!reducedMotion) {
-        gsap.from(stageEls, {
-          y: 60,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.11,
-          ease: "back.out(1.5)"
-        });
-        gsap.from(pathEls, { opacity: 0, duration: 0.6, stagger: 0.08, delay: 0.2 });
-      }
-
       if (reducedMotion) {
         gsap.set(token, { opacity: 0 });
         return;
@@ -498,7 +518,7 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
       const tl = gsap.timeline({
         repeat: -1,
         paused: true,
-        delay: 1.4,
+        delay: 0.6,
         onUpdate: () => {
           arc.setAttribute("stroke-dashoffset", String(ARC_LEN * (1 - tl.progress())));
         }
@@ -525,28 +545,19 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
       }
 
       tlRef.current = tl;
-
-      const io = new IntersectionObserver(
-        ([entry]) => {
-          onScreen.current = entry.isIntersecting;
-          syncPlayback();
-        },
-        { threshold: 0.25 }
-      );
-      if (rootRef.current) io.observe(rootRef.current);
-      return () => io.disconnect();
+      syncPlayback();
     }, svg);
 
     return () => {
       ctx.revert();
       tlRef.current = null;
     };
-  }, [total, reducedMotion, syncPlayback]);
+  }, [gsap, total, reducedMotion, syncPlayback]);
 
   // Lift the active coin; settle the rest.
   useEffect(() => {
     const svg = svgRef.current;
-    if (!svg) return;
+    if (!gsap || !svg) return;
     svg.querySelectorAll<SVGGElement>(".cycle-stage").forEach((el) => {
       const on = Number(el.dataset.index) === active;
       const coin = el.querySelector(".cycle-coin");
@@ -566,7 +577,7 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
         String(ARC_LEN * (1 - (active + 1) / total))
       );
     }
-  }, [active, reducedMotion, total]);
+  }, [gsap, active, reducedMotion, total]);
 
   const select = useCallback(
     (i: number) => {
@@ -576,11 +587,11 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
       if (tl) {
         // seek() skips callbacks, so the state is set above.
         tl.seek(`s${next}`);
-        if (tokenRef.current) gsap.set(tokenRef.current, { opacity: 0 });
+        if (gsap && tokenRef.current) gsap.set(tokenRef.current, { opacity: 0 });
         syncPlayback();
       }
     },
-    [total, syncPlayback]
+    [gsap, total, syncPlayback]
   );
 
   const togglePause = () => {
@@ -595,7 +606,7 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
   };
 
   const onCoinHover = (i: number, over: boolean) => {
-    if (i === active || reducedMotion) return;
+    if (!gsap || i === active || reducedMotion) return;
     const coin = svgRef.current?.querySelector(`.cycle-stage[data-index="${i}"] .cycle-coin`);
     if (!coin) return;
     gsap.to(coin, over ? { y: -8, duration: 0.25 } : { y: 0, duration: 0.4 });
@@ -668,7 +679,7 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
         {edges.map((e, i) => (
           <path
             key={`edge-${i}`}
-            className={cn("cycle-connection", !reducedMotion && "is-flowing")}
+            className={cn("cycle-connection", visible && !reducedMotion && "is-flowing")}
             d={e}
             stroke="currentColor"
             strokeWidth="1.5"
@@ -687,7 +698,6 @@ export default function CrmCycle({ stages, hub, className }: CrmCycleProps) {
             <Coin
               key={n.id}
               stage={n}
-              total={total}
               active={n.index === active}
               arrowMarker={iconArrow}
               onSelect={select}

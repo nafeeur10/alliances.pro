@@ -7,6 +7,7 @@ import "./globals.css";
 
 import { NavbarShell } from "@/components/layout/navbar-shell";
 import { AttributionTracker } from "@/components/marketing/attribution-tracker";
+import { DeferredThirdParties } from "@/components/marketing/deferred-third-parties";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { OrganizationSchema, WebSiteSchema } from "@/components/seo/json-ld";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
@@ -71,12 +72,6 @@ export default function RootLayout({
         {PLAUSIBLE_DOMAIN ? (
           <link rel="preconnect" href={PLAUSIBLE_HOST} crossOrigin="anonymous" />
         ) : null}
-        {GA_MEASUREMENT_ID ? (
-          <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-        ) : null}
-        {CRISP_WEBSITE_ID ? (
-          <link rel="preconnect" href="https://client.crisp.chat" crossOrigin="anonymous" />
-        ) : null}
       </head>
       <body
         className={cn("from-muted to-primary/5 min-h-screen bg-gradient-to-tl")}
@@ -108,25 +103,11 @@ export default function RootLayout({
             </Script>
           </>
         ) : null}
-        {GA_MEASUREMENT_ID ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_MEASUREMENT_ID}', { anonymize_ip: true });`}
-            </Script>
-          </>
-        ) : null}
-        {CRISP_WEBSITE_ID ? (
-          <Script id="crisp-chat" strategy="afterInteractive">
-            {`window.$crisp=[];window.CRISP_WEBSITE_ID="${CRISP_WEBSITE_ID}";(function(){var d=document,s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`}
-          </Script>
-        ) : null}
+        {/* GA and Crisp wait for the first interaction; see the component. */}
+        <DeferredThirdParties
+          gaMeasurementId={GA_MEASUREMENT_ID}
+          crispWebsiteId={CRISP_WEBSITE_ID}
+        />
       </body>
     </html>
   );

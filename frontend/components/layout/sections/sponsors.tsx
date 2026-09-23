@@ -9,7 +9,7 @@ export const SponsorsSection = () => {
   return (
     <section className="pb-12 lg:pb-24">
       <div className="container mask-r-from-50% mask-r-to-90% mask-l-from-50% mask-l-to-90%">
-        <InfiniteSlider gap={50} speedOnHover={40}>
+        <InfiniteSlider gap={50} duration={25}>
           {sponsors.map(({ name, logo }) => (
             <div
               key={name}

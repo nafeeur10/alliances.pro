@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardTitle } from "@/components/ui/card";
@@ -35,6 +37,26 @@ export const TestimonialSectionClient = ({
   title = "Loved by Teams Worldwide",
   description = "Don't just take our word for it. See what our customers have to say about their experience."
 }: Props) => {
+  // Embla measures every slide when it starts, which forces a layout during
+  // page load. Start it only as the section approaches the viewport.
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [nearView, setNearView] = useState(false);
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNearView(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <SectionContainer id="testimonials" className="bg-primary/5">
       <div className="mx-auto mb-10 max-w-2xl text-center lg:mb-12">
@@ -51,7 +73,8 @@ export const TestimonialSectionClient = ({
         ) : null}
       </div>
       <Carousel
-        opts={{ align: "start" }}
+        ref={carouselRef}
+        opts={{ align: "start", active: nearView }}
         className="relative mx-auto w-[80%] sm:w-[90%] lg:max-w-(--breakpoint-xl)"
       >
         <CarouselContent className="items-stretch">

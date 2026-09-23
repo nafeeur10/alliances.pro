@@ -1,100 +1,52 @@
-"use client";
+import React from "react";
 
-import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { useMotionValue, animate, motion } from "motion/react";
-import useMeasure from "react-use-measure";
 
 export type InfiniteSliderProps = {
   children: React.ReactNode;
   gap?: number;
-  speed?: number;
-  speedOnHover?: number;
-  direction?: "horizontal" | "vertical";
+  /** Seconds for one full pass of the content. */
+  duration?: number;
   reverse?: boolean;
   className?: string;
 };
 
+/**
+ * Horizontal marquee in pure CSS. The content is rendered twice, each copy
+ * padded by one `gap`, so sliding the strip by exactly -50% lands the second
+ * copy where the first began and the loop is seamless.
+ */
 export function InfiniteSlider({
   children,
   gap = 16,
-  speed = 80,
-  speedOnHover,
-  direction = "horizontal",
+  duration = 30,
   reverse = false,
   className
 }: InfiniteSliderProps) {
-  const [currentSpeed, setCurrentSpeed] = useState(speed);
-  const [ref, { width, height }] = useMeasure();
-  const translation = useMotionValue(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    let controls;
-    const size = direction === "horizontal" ? width : height;
-    const contentSize = size + gap;
-    const from = reverse ? -contentSize / 2 : 0;
-    const to = reverse ? 0 : -contentSize / 2;
-
-    const distanceToTravel = Math.abs(to - from);
-    const duration = distanceToTravel / currentSpeed;
-
-    if (isTransitioning) {
-      const remainingDistance = Math.abs(translation.get() - to);
-      const transitionDuration = remainingDistance / currentSpeed;
-
-      controls = animate(translation, [translation.get(), to], {
-        ease: "linear",
-        duration: transitionDuration,
-        onComplete: () => {
-          setIsTransitioning(false);
-          setKey((prevKey) => prevKey + 1);
-        }
-      });
-    } else {
-      controls = animate(translation, [from, to], {
-        ease: "linear",
-        duration: duration,
-        repeat: Infinity,
-        repeatType: "loop",
-        repeatDelay: 0,
-        onRepeat: () => {
-          translation.set(from);
-        }
-      });
-    }
-
-    return controls?.stop;
-  }, [key, translation, currentSpeed, width, height, gap, isTransitioning, direction, reverse]);
-
-  const hoverProps = speedOnHover
-    ? {
-        onHoverStart: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speedOnHover);
-        },
-        onHoverEnd: () => {
-          setIsTransitioning(true);
-          setCurrentSpeed(speed);
-        }
-      }
-    : {};
+  const group = (hidden: boolean) => (
+    <div
+      className="flex shrink-0 items-center"
+      style={{ gap, paddingRight: gap }}
+      aria-hidden={hidden || undefined}
+    >
+      {children}
+    </div>
+  );
 
   return (
     <div className={cn("overflow-hidden", className)}>
-      <motion.div
-        className="flex w-max"
+      <div
+        className="infinite-slider flex w-max"
         style={{
-          ...(direction === "horizontal" ? { x: translation } : { y: translation }),
-          gap: `${gap}px`,
-          flexDirection: direction === "horizontal" ? "row" : "column"
+          animation: `infinite-slider ${duration}s linear infinite ${reverse ? "reverse" : "normal"}`
         }}
-        ref={ref}
-        {...hoverProps}>
-        {children}
-        {children}
-      </motion.div>
+      >
+        {group(false)}
+        {group(true)}
+      </div>
+      <style>{`
+@keyframes infinite-slider { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .infinite-slider { animation: none !important; } }`}</style>
     </div>
   );
 }

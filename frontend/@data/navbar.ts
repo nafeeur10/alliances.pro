@@ -43,7 +43,7 @@ interface NavLogo {
 export const navLogo: NavLogo = {
   text: "Alliances PRO",
   iconName: "SunDim",
-  imageUrl: "/logo.png"
+  imageUrl: "/logo-64.webp"
 };
 
 // ---------- Top-level menu items ----------

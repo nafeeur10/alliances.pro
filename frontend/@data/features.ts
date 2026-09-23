@@ -22,7 +22,7 @@ export const featureList: FeaturesProps[] = [
     title: "Lead Follow-up",
     description:
       "Organize each lead's tasks, track their communication history and notes, and store important files all in one centralized database.",
-    image: "/features/lead-follow-up.png",
+    image: "/features/lead-follow-up.webp",
     href: "/features/lead-management",
     bgColor: "#E6F1FB",
     slug: "lead-management",
@@ -33,7 +33,7 @@ export const featureList: FeaturesProps[] = [
     title: "Organization-level lead management",
     description:
       "Every organization holds every lead, every deal, and every shared file — proposals, catalogues, contracts — under one record. Reach the right contact when you need to.",
-    image: "/features/organizaition.jpg",
+    image: "/features/organizaition.webp",
     href: "/features/organization-leads",
     bgColor: "#E1F5EE",
     slug: "organization-leads",
@@ -44,7 +44,7 @@ export const featureList: FeaturesProps[] = [
     title: "Tasks management with overdue alerts",
     description:
       "Track every task across leads, deals, and projects in one table. Overdue items flag in red, push them into the Pipeline, and finish without leaving the page.",
-    image: "/features/task.jpg",
+    image: "/features/task.webp",
     href: "/features/task-management",
     bgColor: "#FAEEDA",
     slug: "task-management",
@@ -55,7 +55,7 @@ export const featureList: FeaturesProps[] = [
     title: "Member roles and permissions",
     description:
       "Invite members, assign custom roles, and pick exactly what each role can do — add, edit, or delete by resource. Granular per-action control, per workspace.",
-    image: "/features/roles.jpg",
+    image: "/features/roles.webp",
     href: "/features/roles-and-permissions",
     bgColor: "#EEEDFE",
     slug: "roles-and-permissions",
@@ -66,7 +66,7 @@ export const featureList: FeaturesProps[] = [
     title: "Email campaigns from your own domain",
     description:
       "Build campaigns inside the CRM and send them from your own Gmail, Outlook, or company SMTP — so leads see your domain in the From line, not a marketing relay.",
-    image: "/features/email-marketing.jpg",
+    image: "/features/email-marketing.webp",
     href: "/features/email-campaigns",
     bgColor: "#FBEAF0",
     slug: "email-campaigns",
@@ -77,7 +77,7 @@ export const featureList: FeaturesProps[] = [
     title: "AI summary and email drafts",
     description:
       "AI summarizes any lead or deal in seconds, then drafts follow-up emails based on the conversation — so you skip the reading and the typing.",
-    image: "/features/ai_bot.jpg",
+    image: "/features/ai_bot.webp",
     href: "/features/ai-summary-and-drafts",
     bgColor: "#FAECE7",
     slug: "ai-summary-and-drafts",

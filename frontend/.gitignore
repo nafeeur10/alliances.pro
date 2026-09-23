@@ -41,3 +41,6 @@ next-env.d.ts
 /public/sitemap.xml
 /public/sitemap-*.xml
 /public/robots.txt
+
+# perf builds that run beside the dev server
+.next-prod

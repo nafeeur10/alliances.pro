@@ -1,20 +1,87 @@
-"use client";
+import React from "react";
 
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useRef, useState, useEffect } from "react";
 
-type BeamOptions = {
-  initialX?: number;
-  translateX?: number;
-  initialY?: number;
-  translateY?: number;
-  rotate?: number;
-  className?: string;
-  duration?: number;
+/**
+ * Falling beams that burst when they hit the bottom edge.
+ *
+ * Pure CSS: each beam gets its own keyframes, and its burst (glow + particles)
+ * runs on the same cycle so it fires exactly when the beam lands. Keyframes
+ * only touch transform and opacity with fixed values (no var()), so Chrome
+ * runs every animation on the compositor, off the main thread. This used to
+ * be framer-motion with a 50 ms getBoundingClientRect() poll per beam, which
+ * forced a layout on every tick and kept React re-rendering the hero.
+ */
+
+type Beam = {
+  x: number; // px from the left edge
+  fall: number; // seconds from top to bottom edge
+  rest: number; // seconds of quiet after the burst
   delay?: number;
-  repeatDelay?: number;
+  className?: string;
 };
+
+const BEAMS: Beam[] = [
+  { x: 30, fall: 3.5, rest: 3, delay: 2 },
+  { x: 600, fall: 1.5, rest: 3, delay: 4 },
+  { x: 100, fall: 3.5, rest: 7, className: "h-6" },
+  { x: 400, fall: 2.5, rest: 14, delay: 4 },
+  { x: 800, fall: 5.5, rest: 2, className: "h-20" },
+  { x: 1000, fall: 2, rest: 2, className: "h-12" },
+  { x: 1200, fall: 3, rest: 4, delay: 2, className: "h-6" }
+];
+
+const BURST = 1.6; // seconds the burst takes to fade
+const PARTICLES = 8;
+const SPARK_REACH = 40; // px a spark travels at scale 1
+
+// Deterministic scatter so server output is stable between renders. Each
+// spark flies up and out at an angle; distance varies through scale.
+function particle(beam: number, i: number) {
+  const seed = Math.sin((beam + 1) * 97.13 + (i + 1) * 12.9898) * 43758.5453;
+  const r = seed - Math.floor(seed);
+  const r2 = (r * 7.31) % 1;
+  return {
+    angle: Math.round(-165 + (150 * (i + r)) / PARTICLES), // fan across the upper half
+    scale: +(0.5 + r2 * 0.9).toFixed(2)
+  };
+}
+
+const pct = (n: number) => `${Math.min(n, 100).toFixed(3)}%`;
+
+function beamCss(b: Beam, i: number) {
+  const cycle = b.fall + BURST + b.rest;
+  const land = (b.fall / cycle) * 100;
+  const after = land + 0.01;
+  const burstEnd = ((b.fall + BURST) / cycle) * 100;
+  const sparkEnd = ((b.fall + BURST * 0.8) / cycle) * 100;
+
+  return `
+@keyframes bb-fall-${i} {
+  0% { transform: translateY(calc(-100% - 120px)); opacity: 1; }
+  ${pct(land)} { transform: translateY(0); opacity: 1; }
+  ${pct(after)} { transform: translateY(0); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+@keyframes bb-glow-${i} {
+  0%, ${pct(land)} { opacity: 0; }
+  ${pct(after)} { opacity: 1; animation-timing-function: ease-out; }
+  ${pct(burstEnd)}, 100% { opacity: 0; }
+}
+@keyframes bb-spark-${i} {
+  0%, ${pct(land)} { transform: translateX(0); opacity: 0; }
+  ${pct(after)} { transform: translateX(0); opacity: 1; animation-timing-function: ease-out; }
+  ${pct(sparkEnd)}, 100% { transform: translateX(${SPARK_REACH}px); opacity: 0; }
+}
+.bb-${i} { --bb-anim: ${cycle}s linear ${b.delay ?? 0}s infinite both; }`;
+}
+
+const CSS =
+  BEAMS.map(beamCss).join("\n") +
+  `
+@media (prefers-reduced-motion: reduce) {
+  .bb-track, .bb-glow, .bb-spark { animation: none !important; opacity: 0 !important; }
+}`;
 
 export function BackgroundBeamsWithCollision({
   children,
@@ -23,162 +90,60 @@ export function BackgroundBeamsWithCollision({
   children: React.ReactNode;
   className?: string;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const parentRef = useRef<HTMLDivElement>(null);
-
-  const beams: BeamOptions[] = [
-    { initialX: 30, translateX: 30, duration: 7, repeatDelay: 3, delay: 2 },
-    { initialX: 600, translateX: 600, duration: 3, repeatDelay: 3, delay: 4 },
-    { initialX: 100, translateX: 100, duration: 7, repeatDelay: 7, className: "h-6" },
-    { initialX: 400, translateX: 400, duration: 5, repeatDelay: 14, delay: 4 },
-    { initialX: 800, translateX: 800, duration: 11, repeatDelay: 2, className: "h-20" },
-    { initialX: 1000, translateX: 1000, duration: 4, repeatDelay: 2, className: "h-12" },
-    { initialX: 1200, translateX: 1200, duration: 6, repeatDelay: 4, delay: 2, className: "h-6" }
-  ];
-
   return (
     <div
-      ref={parentRef}
-      className={cn("relative flex w-full items-center justify-center overflow-hidden", className)}>
-      {beams.map((beam, i) => (
-        <CollisionBeam
-          key={`beam-${i}`}
-          beamOptions={beam}
-          containerRef={containerRef}
-          parentRef={parentRef}
-        />
+      className={cn("relative flex w-full items-center justify-center overflow-hidden", className)}
+    >
+      <style>{CSS}</style>
+
+      {BEAMS.map((b, i) => (
+        <React.Fragment key={i}>
+          {/* The track spans the container's height; sliding it by its own
+              height moves the beam from above the top edge to the bottom. */}
+          <div
+            aria-hidden
+            className={`bb-${i} bb-track pointer-events-none absolute inset-y-0 w-px will-change-transform`}
+            style={{ left: b.x, animation: `bb-fall-${i} var(--bb-anim)` }}
+          >
+            <div
+              className={cn(
+                "from-primary via-secondary absolute bottom-0 left-0 h-14 w-px rounded-full bg-gradient-to-t to-transparent",
+                b.className
+              )}
+            />
+          </div>
+
+          <div
+            aria-hidden
+            className={`bb-${i} pointer-events-none absolute bottom-0 z-50 h-2 w-2`}
+            style={{ left: b.x, transform: "translate(-50%, 50%)" }}
+          >
+            <div
+              className="bb-glow via-primary absolute -inset-x-10 top-0 m-auto h-2 w-10 rounded-full bg-gradient-to-r from-transparent to-transparent blur-sm"
+              style={{ animation: `bb-glow-${i} var(--bb-anim)` }}
+            />
+            {Array.from({ length: PARTICLES }, (_, p) => {
+              const { angle, scale } = particle(i, p);
+              return (
+                // The wrapper aims and sizes the flight; the spark only moves
+                // along its own x axis.
+                <span
+                  key={p}
+                  className="absolute top-0 left-0"
+                  style={{ transform: `rotate(${angle}deg) scale(${scale})` }}
+                >
+                  <span
+                    className="bb-spark bg-primary block h-1 w-1 rounded-full"
+                    style={{ animation: `bb-spark-${i} var(--bb-anim)` }}
+                  />
+                </span>
+              );
+            })}
+          </div>
+        </React.Fragment>
       ))}
 
       {children}
-
-      <div
-        ref={containerRef}
-        className="pointer-events-none absolute bottom-0 w-full bg-neutral-100"
-      />
-    </div>
-  );
-}
-
-function CollisionBeam({
-  beamOptions = {},
-  containerRef,
-  parentRef
-}: {
-  beamOptions: BeamOptions;
-  containerRef: React.RefObject<HTMLDivElement | null>;
-  parentRef: React.RefObject<HTMLDivElement | null>;
-}) {
-  const beamRef = useRef<HTMLDivElement>(null);
-  const [collision, setCollision] = useState<{
-    detected: boolean;
-    coordinates: { x: number; y: number } | null;
-  }>({ detected: false, coordinates: null });
-
-  const [beamKey, setBeamKey] = useState(0);
-  const [cycleLock, setCycleLock] = useState(false);
-
-  useEffect(() => {
-    const check = () => {
-      if (!beamRef.current || !containerRef.current || !parentRef.current || cycleLock) return;
-
-      const beamRect = beamRef.current.getBoundingClientRect();
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const parentRect = parentRef.current.getBoundingClientRect();
-
-      if (beamRect.bottom >= containerRect.top) {
-        const relativeX = beamRect.left - parentRect.left + beamRect.width / 2;
-        const relativeY = beamRect.bottom - parentRect.top;
-
-        setCollision({ detected: true, coordinates: { x: relativeX, y: relativeY } });
-        setCycleLock(true);
-      }
-    };
-
-    const interval = setInterval(check, 50);
-    return () => clearInterval(interval);
-  }, [cycleLock, containerRef]);
-
-  useEffect(() => {
-    if (collision.detected) {
-      const timer = setTimeout(() => {
-        setCollision({ detected: false, coordinates: null });
-        setCycleLock(false);
-        setBeamKey((prev) => prev + 1); // restart animation
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [collision]);
-
-  return (
-    <>
-      <motion.div
-        key={beamKey}
-        ref={beamRef}
-        initial={{
-          translateY: beamOptions.initialY ?? -200,
-          translateX: beamOptions.initialX ?? 0,
-          rotate: beamOptions.rotate ?? 0
-        }}
-        animate={{
-          translateY: beamOptions.translateY ?? 1800,
-          translateX: beamOptions.translateX ?? 0,
-          rotate: beamOptions.rotate ?? 0
-        }}
-        transition={{
-          duration: beamOptions.duration ?? 8,
-          repeat: Infinity,
-          repeatType: "loop",
-          ease: "linear",
-          delay: beamOptions.delay ?? 0,
-          repeatDelay: beamOptions.repeatDelay ?? 0
-        }}
-        className={cn(
-          "from-primary via-secondary absolute top-20 left-0 h-14 w-px rounded-full bg-gradient-to-t to-transparent",
-          beamOptions.className
-        )}
-      />
-      <AnimatePresence>
-        {collision.detected && collision.coordinates && (
-          <Explosion
-            key={`explosion-${collision.coordinates.x}-${collision.coordinates.y}`}
-            style={{
-              left: `${collision.coordinates.x}px`,
-              top: `${collision.coordinates.y}px`,
-              transform: "translate(-50%, -50%)"
-            }}
-          />
-        )}
-      </AnimatePresence>
-    </>
-  );
-}
-
-function Explosion(props: React.HTMLProps<HTMLDivElement>) {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    dx: Math.floor(Math.random() * 80 - 40),
-    dy: Math.floor(Math.random() * -50 - 10)
-  }));
-
-  return (
-    <div {...props} className={cn("absolute z-50 h-2 w-2", props.className)}>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="via-primary absolute -inset-x-10 top-0 m-auto h-2 w-10 rounded-full bg-gradient-to-r from-transparent to-transparent blur-sm"
-      />
-      {particles.map((p) => (
-        <motion.span
-          key={p.id}
-          initial={{ x: 0, y: 0, opacity: 1 }}
-          animate={{ x: p.dx, y: p.dy, opacity: 0 }}
-          transition={{ duration: Math.random() * 1.5 + 0.5, ease: "easeOut" }}
-          className="bg-primary absolute h-1 w-1 rounded-full"
-        />
-      ))}
     </div>
   );
 }

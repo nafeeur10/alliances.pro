@@ -33,7 +33,7 @@ interface FooterNewsletter {
 export const footerLogo: FooterLogo = {
   text: "Alliances PRO",
   iconName: "SunDim",
-  imageUrl: "/logo.png"
+  imageUrl: "/logo-64.webp"
 };
 
 // ---------- Blurb ----------
