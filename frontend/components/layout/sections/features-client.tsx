@@ -6,7 +6,7 @@ import { CheckIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import SectionContainer from "@/components/layout/section-container";
 import type { CrmCycleStage } from "@/@data/features";
-import CrmCycle from "@/components/marketing/crm-cycle";
+import { CrmCycleLazy } from "@/components/marketing/crm-cycle-lazy";
 
 export interface FeatureItem {
   icon: string;
@@ -49,7 +49,7 @@ export const FeaturesSectionClient = ({
         ) : null}
       </div>
       <div className="mx-auto mt-10 mb-12 w-full max-w-(--breakpoint-xl) lg:mb-20">
-        <CrmCycle stages={cycle.stages} hub={cycle.hub} />
+        <CrmCycleLazy stages={cycle.stages} hub={cycle.hub} />
       </div>
       <div className="mx-auto grid max-w-(--breakpoint-xl) grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         {items.map((card) => (
