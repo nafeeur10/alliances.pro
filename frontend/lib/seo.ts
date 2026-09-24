@@ -6,7 +6,7 @@ export const SITE_URL =
 export const SITE_NAME = "Alliances PRO";
 
 export const SITE_DESCRIPTION =
-  "The CRM platform built for service businesses that grow sideways.";
+  "The CRM built for Shopify Partners — every install, uninstall and merchant email in one pipeline.";
 
 export const SOCIAL = {
   twitter: "@alliances_pro",
@@ -48,7 +48,7 @@ function resolveOgImage(input: BuildMetadataInput): string {
 
   const params = new URLSearchParams({
     title: input.title,
-    subtitle: SITE_NAME
+    subtitle: input.description
   });
   return absoluteUrl(`/api/og?${params.toString()}`);
 }

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest): Promise<ImageResponse> {
   const title = truncate(searchParams.get("title") ?? "Alliances PRO", 90);
   const subtitle = truncate(
     searchParams.get("subtitle") ??
-      "The CRM platform built for service businesses that grow sideways.",
+      "The CRM built for Shopify Partners — every install, uninstall and merchant email in one pipeline.",
     160
   );
   const eyebrow = truncate(searchParams.get("eyebrow") ?? "alliances.pro", 60);

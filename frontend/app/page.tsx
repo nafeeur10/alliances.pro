@@ -13,9 +13,9 @@ import { TestimonialSection } from "@/components/layout/sections/testimonial";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Alliances PRO — The CRM Platform for Service Businesses",
+  title: "Alliances PRO — The CRM Platform for Shopify Partners",
   description:
-    "One CRM, every vertical. Flat $19/mo for 10 users or $39/mo unlimited — never per-seat. 14-day free trial, no credit card. Sales CRM live, Education CRM in beta.",
+    "Sync Shopify app installs and uninstalls into your CRM, collect merchant emails after OAuth, and win back churned stores. Flat $19/mo. 14-day free trial.",
   path: "/",
   type: "website"
 });

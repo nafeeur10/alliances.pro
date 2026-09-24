@@ -27,7 +27,7 @@ const publicSans = Public_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — The CRM Platform for Service Businesses`,
+    default: `${SITE_NAME} — The CRM Platform for Shopify Partners`,
     template: `%s — ${SITE_NAME}`
   },
   description: SITE_DESCRIPTION,

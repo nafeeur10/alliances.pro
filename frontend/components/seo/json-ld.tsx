@@ -23,7 +23,7 @@ export function OrganizationSchema() {
         "@id": absoluteUrl("/#organization"),
         name: SITE_NAME,
         url: SITE_URL,
-        logo: absoluteUrl("/og/logo.png"),
+        logo: absoluteUrl("/logo.png"),
         sameAs: [
           SOCIAL.twitterUrl,
           SOCIAL.linkedinUrl,
