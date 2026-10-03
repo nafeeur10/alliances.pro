@@ -23,6 +23,18 @@ export const blogSection = {
 
 export const featuredBlogPosts: BlogPost[] = [
   {
+    slug: "company-follow-up-history",
+    title: "Follow-ups That Tell the Whole Story",
+    excerpt:
+      'Completing a follow-up now asks "What happened?", every email you send lands in the company\'s history, and Follow-ups is the first tab you see.',
+    category: "Product Update",
+    readTime: "3 min read",
+    date: "2026-10-03",
+    cover: "/blog/cover-follow-up-history.svg",
+    author: "Nafeeur",
+    authorAvatar: "/avatars/nafeeur-96.webp"
+  },
+  {
     slug: "shopify-partner-crm-for-app-developers",
     title: "Shopify Partner Integration: A CRM for Shopify App Developers",
     excerpt:

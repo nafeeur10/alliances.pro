@@ -33,7 +33,7 @@ function toSummary(p: (typeof featuredBlogPosts)[number], i: number): BlogPostSu
 }
 
 const PINNED_SLUGS = [
-  "shopify-partner-crm-for-app-developers",
+  "company-follow-up-history",
   "whatsapp-campaign-bulk-personal-messaging"
 ] as const;
 

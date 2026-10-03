@@ -107,10 +107,10 @@ export const resourceGroups: ResourceGroup[] = [
 
 export const resourceFeatured: ResourceFeatured = {
   eyebrow: "New release",
-  title: "Shopify Partner integration",
-  description: "Every install in your CRM, uninstalls flagged, merchants followed up.",
-  href: "/blog/shopify-partner-crm-for-app-developers",
-  image: "/blog/cover-shopify-partner.svg",
+  title: "Follow-ups that tell the whole story",
+  description: "Summaries on every follow-up, and every email logged to the company.",
+  href: "/blog/company-follow-up-history",
+  image: "/blog/cover-follow-up-history.svg",
   cta: "Read the update"
 };
 

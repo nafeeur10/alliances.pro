@@ -12,6 +12,37 @@ export interface ChangelogEntry {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    date: "2026-10-03",
+    version: "v2.2",
+    type: "Feature",
+    title: "Follow-up summaries",
+    body: 'Follow-ups is now the first tab when you open a company. Completing a follow-up asks "What happened?" and saves your summary to the company\'s history, so your whole team sees the outcome.'
+  },
+  {
+    date: "2026-10-03",
+    type: "Feature",
+    title: "Emails added to follow-up history",
+    body: "Every email you send to a company or its contacts, including campaign emails, is added to its history automatically. When you send one, you can tick a box to complete the pending follow-up too."
+  },
+  {
+    date: "2026-10-03",
+    type: "Improvement",
+    title: "Redesigned follow-up history",
+    body: "An easy-to-scan list showing who you spoke to, when, their contact details, the summary and your notes, with an icon for Email, WhatsApp, Call or Meeting."
+  },
+  {
+    date: "2026-10-03",
+    type: "Improvement",
+    title: "One main contact per company",
+    body: "Each company has exactly one main contact, shown with their name and job title in the Leads tab. Importing contacts keeps the current main contact."
+  },
+  {
+    date: "2026-10-03",
+    type: "Feature",
+    title: "Test your email settings",
+    body: "Send a test email before you save, so you know your mailbox works. The form also tells you exactly what's missing and warns you when settings won't work with your provider."
+  },
+  {
     date: "2026-09-21",
     version: "v2.1",
     type: "Feature",
