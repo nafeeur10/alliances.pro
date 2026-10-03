@@ -110,7 +110,7 @@ export const resourceFeatured: ResourceFeatured = {
   title: "Follow-ups that tell the whole story",
   description: "Summaries on every follow-up, and every email logged to the company.",
   href: "/blog/company-follow-up-history",
-  image: "/blog/cover-follow-up-history.svg",
+  image: "/blog/cover-follow-up-history-v2.svg",
   cta: "Read the update"
 };
 

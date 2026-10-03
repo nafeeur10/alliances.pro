@@ -19,7 +19,7 @@ const POST_PATH = "/blog/company-follow-up-history";
 const POST_TITLE = "Follow-ups That Tell the Whole Story";
 const POST_DESCRIPTION =
   "Follow-up summaries, emails logged to company history automatically, a redesigned follow-up history, one main contact per company and test emails for your mailbox settings.";
-const POST_COVER = "/blog/cover-follow-up-history.svg";
+const POST_COVER = "/blog/cover-follow-up-history-v2.svg";
 const PUBLISHED_AT = "2026-10-03T00:00:00.000Z";
 const PUBLISHED_DISPLAY = "October 3, 2026";
 const READING_MINUTES = 3;

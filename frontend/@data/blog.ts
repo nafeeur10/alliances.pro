@@ -30,7 +30,7 @@ export const featuredBlogPosts: BlogPost[] = [
     category: "Product Update",
     readTime: "3 min read",
     date: "2026-10-03",
-    cover: "/blog/cover-follow-up-history.svg",
+    cover: "/blog/cover-follow-up-history-v2.svg",
     author: "Nafeeur",
     authorAvatar: "/avatars/nafeeur-96.webp"
   },
