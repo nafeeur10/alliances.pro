@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { trackEvent } from "@/lib/analytics";
-import { getAttribution } from "@/lib/attribution";
+import { sendContactEmail } from "@/app/actions/contact";
 
 const formSchema = z.object({
   firstName: z.string().trim().min(1).max(20),
@@ -32,9 +32,6 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 type Status = "idle" | "submitting" | "success" | "error";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "/api/v1/marketing";
-const RECAPTCHA_PLACEHOLDER = "dev-noop";
-
 interface Props {
   contactEmail: string;
 }
@@ -42,6 +39,7 @@ interface Props {
 export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -52,36 +50,15 @@ export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
     setStatus("submitting");
     setErrorMsg(null);
 
-    const fullName = `${values.firstName} ${values.lastName}`.trim();
-    const message = `Subject: ${values.subject}\n\n${values.message}`;
-
     try {
-      const res = await fetch(`${API_BASE}/leads`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          source: "contact_form",
-          name: fullName,
-          email: values.email,
-          message,
-          consent_given: true,
-          recaptcha_token: RECAPTCHA_PLACEHOLDER,
-          page_url: typeof window !== "undefined" ? window.location.href : undefined,
-          ...getAttribution()
-        })
+      const result = await sendContactEmail({
+        ...values,
+        pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+        website: honeypot
       });
 
-      if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as {
-          message?: string;
-          errors?: Record<string, string[]>;
-        } | null;
-        const firstError =
-          data?.errors && Object.values(data.errors)[0] ? Object.values(data.errors)[0]?.[0] : null;
-        setErrorMsg(firstError ?? data?.message ?? "Submission failed. Please try again.");
+      if (!result.ok) {
+        setErrorMsg(result.error);
         setStatus("error");
         return;
       }
@@ -204,6 +181,18 @@ export const ContactForm = ({ contactEmail: _contactEmail }: Props) => {
                   </FormControl>
                 </FormItem>
               )}
+            />
+
+            {/* Honeypot — hidden from people, filled by bots. */}
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden
+              className="hidden"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
             />
 
             {errorMsg ? (
