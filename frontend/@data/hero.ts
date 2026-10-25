@@ -19,6 +19,8 @@ interface HeroContent {
   imageWidth: number;
   imageHeight: number;
   imageAlt: string;
+  videoYoutubeId: string; // demo video shown on the right of the hero (YouTube ID)
+  videoTitle: string;
   primaryCta: HeroCta;
   secondaryCta: HeroCta;
   trustChecks: TrustCheck[];
@@ -36,6 +38,8 @@ export const heroContent: HeroContent = {
   imageHeight: 722,
   imageAlt:
     "Companies table in Alliances PRO with Shopify merchants, follow-up dates and assigned owners",
+  videoYoutubeId: "JWz3ELpHk0w",
+  videoTitle: "Alliances PRO demo",
   primaryCta: { label: "Start Free Trial", url: "https://crm.alliances.pro/signup" },
   secondaryCta: { label: "Contact Us", url: "#contact" },
   trustChecks: [{ label: "No credit card" }, { label: "14-day trial" }, { label: "Cancel anytime" }]

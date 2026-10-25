@@ -5,6 +5,7 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/extras/background-
 import { HeroHeadline } from "@/components/marketing/hero-headline";
 import { HeroCtas } from "@/components/marketing/hero-ctas";
 import { HeroEyebrow } from "@/components/marketing/hero-eyebrow";
+import { HeroVideo } from "@/components/marketing/hero-video";
 
 export const HeroSection = () => {
   const {
@@ -16,6 +17,8 @@ export const HeroSection = () => {
     imageWidth,
     imageHeight,
     imageAlt,
+    videoYoutubeId,
+    videoTitle,
     primaryCta,
     secondaryCta,
     trustChecks
@@ -28,30 +31,37 @@ export const HeroSection = () => {
     <section className="container w-full">
       <div className="mx-auto grid place-items-center py-16 pb-8 md:py-32 md:pb-14 lg:max-w-(--breakpoint-xl)">
         <BackgroundBeamsWithCollision>
-          <div className="space-y-8 pb-8 text-center lg:pb-20">
-            <HeroEyebrow badgeText={eyebrowBadge.trim() || "New"} tail={eyebrowTail} />
-            <div className="mx-auto max-w-(--breakpoint-md) text-center text-4xl font-bold md:text-6xl">
-              <HeroHeadline text={headline} />
-            </div>
-            <p className="text-muted-foreground mx-auto max-w-(--breakpoint-sm) text-xl">
-              {subheadline}
-            </p>
-            <HeroCtas
-              signupUrl={primaryCta.url}
-              signupLabel={primaryCta.label}
-              demoUrl={secondaryCta.url}
-              demoLabel={secondaryCta.label}
-            />
-            {trustChecks.length > 0 ? (
-              <div className="text-muted-foreground mt-6 flex flex-col items-center justify-center gap-4 text-sm md:flex-row!">
-                {trustChecks.map(({ label }) => (
-                  <div key={label} className="flex items-center gap-1">
-                    <CheckIcon className="text-primary size-4" />
-                    <span>{label}</span>
-                  </div>
-                ))}
+          <div className="grid w-full items-center gap-12 pb-8 lg:grid-cols-2 lg:gap-10 lg:pb-20">
+            <div className="space-y-8 text-center lg:text-left">
+              <HeroEyebrow badgeText={eyebrowBadge.trim() || "New"} tail={eyebrowTail} />
+              <div className="mx-auto max-w-(--breakpoint-md) text-4xl font-bold md:text-6xl lg:mx-0 lg:text-5xl xl:text-6xl">
+                <HeroHeadline text={headline} />
               </div>
-            ) : null}
+              <p className="text-muted-foreground mx-auto max-w-(--breakpoint-sm) text-xl lg:mx-0">
+                {subheadline}
+              </p>
+              <HeroCtas
+                signupUrl={primaryCta.url}
+                signupLabel={primaryCta.label}
+                demoUrl={secondaryCta.url}
+                demoLabel={secondaryCta.label}
+                className="lg:justify-start"
+              />
+              {trustChecks.length > 0 ? (
+                <div className="text-muted-foreground mt-6 flex flex-col items-center justify-center gap-4 text-sm md:flex-row! lg:justify-start">
+                  {trustChecks.map(({ label }) => (
+                    <div key={label} className="flex items-center gap-1">
+                      <CheckIcon className="text-primary size-4" />
+                      <span>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+            <div className="relative">
+              <div className="bg-primary/40 absolute inset-6 -z-10 rounded-full blur-3xl" />
+              <HeroVideo youtubeId={videoYoutubeId} title={videoTitle} />
+            </div>
           </div>
         </BackgroundBeamsWithCollision>
 

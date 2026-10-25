@@ -12,6 +12,7 @@
 export type AnalyticsEvent =
   | "signup_clicked"
   | "demo_requested"
+  | "demo_video_played"
   | "pricing_plan_clicked"
   | "contact_submitted"
   | "newsletter_subscribed"
