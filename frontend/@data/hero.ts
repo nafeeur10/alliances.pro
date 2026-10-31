@@ -38,7 +38,7 @@ export const heroContent: HeroContent = {
   imageHeight: 722,
   imageAlt:
     "Companies table in Alliances PRO with Shopify merchants, follow-up dates and assigned owners",
-  videoYoutubeId: "JWz3ELpHk0w",
+  videoYoutubeId: "mkERav_75zQ",
   videoTitle: "Alliances PRO demo",
   primaryCta: { label: "Start Free Trial", url: "https://crm.alliances.pro/signup" },
   secondaryCta: { label: "Contact Us", url: "#contact" },
