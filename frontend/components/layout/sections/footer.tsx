@@ -61,6 +61,7 @@ export const FooterSection = () => {
                       <Link
                         key={`${col.heading}-${l.label}`}
                         href={l.url}
+                        {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         className="text-muted-foreground hover:text-foreground group inline-flex items-center gap-1.5 text-sm transition-colors"
                       >
                         <ArrowRight

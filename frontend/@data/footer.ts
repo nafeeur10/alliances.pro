@@ -10,6 +10,7 @@ interface FooterLogo {
 interface FooterLink {
   label: string;
   url: string;
+  external?: boolean;
 }
 
 export interface FooterLinkColumn {
@@ -71,6 +72,7 @@ export const footerColumns: FooterLinkColumn[] = [
       { label: "FAQs", url: "/help" },
       { label: "Roadmap", url: "/roadmap" },
       { label: "Cleaning Price Calculator", url: "/tools/cleaning-price-calculator" },
+      { label: "Watch For Tools", url: "https://watchfor.tools/", external: true },
       { label: "Contact Us", url: "/#contact" }
     ]
   },
